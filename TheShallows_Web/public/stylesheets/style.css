@@ -6,3 +6,9 @@ body {
 a {
   color: #00B7FF;
 }
+
+.menucontainer{
+  margin: 5em auto;
+    max-width: 90%;
+    width: 40em;
+}
