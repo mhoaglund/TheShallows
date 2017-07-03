@@ -1,14 +1,39 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 1em "Roboto", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
 }
 
-.menucontainer{
-  margin: 5em auto;
+/*End Element Styles*/
+
+/*Class Styles*/
+  /*Structural Stuff*/
+  .column{
+    width: 75%;
+    margin: 0px auto;
+  }
+  .menucontainer{
+    margin: 5em auto;
     max-width: 90%;
     width: 40em;
-}
+  }
+  .titlecard{
+  }
+    .titlecard h1{
+      font-size: 2em;
+      color: black;
+      text-align: center;
+    }
+    .logo img{
+      width: 74%;
+      max-width: 580px;
+      height: auto;
+      margin: 0px auto;
+      display: block;
+    }
+  /*End Structural Stuff*/
+  /*Details*/
+  /*End Details*/
+/*End Class Styles*/
