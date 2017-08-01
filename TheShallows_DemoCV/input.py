@@ -22,6 +22,8 @@ class InputStream(Process):
         self.exit_event = Event()
         self.hasStarted = False
         self.hasMasked = False
+        self.gridx = 5
+        self.gridy = 4
 
     def run(self):
         while not self.exit_event.is_set():
@@ -74,6 +76,14 @@ class InputStream(Process):
                                    cv2.THRESH_BINARY)[1]
             thresh = cv2.dilate(thresh, None, iterations=3)
             #TODO: some bitwise stuff with the thresh so we can spot "levels of movement" within sectors
+
+            cv2.imshow("view", gray)
+            cv2.waitKey(20)
+        self.vcap.release()
+        print 'Released Capture'
+        cv2.waitKey(1)
+        cv2.destroyAllWindows()
+        cv2.waitKey(1)
 
     def stop(self):
         print 'Terminating...'
