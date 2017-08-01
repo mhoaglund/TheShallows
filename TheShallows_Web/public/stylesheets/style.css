@@ -1,9 +1,16 @@
 body {
-  font: 1em "Roboto", Helvetica, Arial, sans-serif;
+  font: 1em "Work Sans", Georgia, Times, serif;
+  line-height: 1.5;
 }
 
 a {
   color: #00B7FF;
+}
+h1{
+  font-family: "Roboto", Georgia, Times, serif;
+}
+p{
+  font-weight: 300;
 }
 
 /*End Element Styles*/
@@ -24,11 +31,9 @@ a {
     .titlecard h1{
       font-size: 2em;
       color: black;
-      text-align: center;
     }
     .logo img{
-      width: 74%;
-      max-width: 580px;
+      max-width: 430px;
       height: auto;
       margin: 0px auto;
       display: block;
