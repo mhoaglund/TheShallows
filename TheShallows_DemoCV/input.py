@@ -3,6 +3,7 @@ import time
 import cv2
 import imutils
 import numpy as np
+from classes import Region
 
 from multiprocessing import Process, Queue, Event
 from random import randint
@@ -24,6 +25,7 @@ class InputStream(Process):
         self.hasMasked = False
         self.gridx = 5
         self.gridy = 4
+        self.regions = []
 
     def run(self):
         while not self.exit_event.is_set():
@@ -96,5 +98,26 @@ class InputStream(Process):
         self.hasStarted = False
 
     #Intent: generate grid of masks in consistent space
+    #desired output is a grid of rects
     def generateMasks(self, _frame):
+        unitw = _frame.shape[1]/self.gridx
+        unith = _frame.shape[0]/self.gridy
+        #img = img[c1:c1+25,r1:r1+25]
+        for x in range(0, self.gridx):
+            for y in range(0, self.gridy):
+                _thisregion = Region(
+                    x*unitw,
+                    y*unith,
+                    unitw,
+                    unith
+                )
+                self.regions.append()
+        return 0
+
+    def updateRegions(self, _frame):
+        for region in self.regions:
+            img = _frame[region.x:region.x+region.w,region.y:region.y+region.h]
+            #TODO avg op here
+
+    def avg_region(self, _region):
         return 0
