@@ -38,3 +38,25 @@ class CVInputSettings(object):
         self.data_queue = _data_queue
         self.job_queue = _job_queue
         self.shouldflip = _shouldflip
+
+class CVOutputSettings(object):
+        """
+        Settings object for setting up a video output stream.
+        _accumulation (float, alpha for background segmentation accumulation algo)
+        _data_queue (Queue for outputting detected contours)
+        _job_queue (Queue for responding to directives from the main process)
+    """
+    def __init__(self, _accumulation, _data_queue, _job_queue, width, height):
+        self.default_accumulation = _accumulation
+        self.job_queue = _job_queue
+        self.data_queue = _data_queue
+        self.shape = (width,height)
+
+class PlayerJob(object):
+    """
+        _job (string, ex. 'resize' or 'adjust' etc.)
+        _data (payload pertaining to chosen job)
+    """
+    def __init__(self, _job, _payload, _frompid):
+        self.job = _job
+        self.payload = _payload

@@ -3,7 +3,7 @@ import time
 import cv2
 import imutils
 import numpy as np
-from classes import Region
+from classes import Region, PlayerJob
 
 from multiprocessing import Process, Queue, Event
 from random import randint
@@ -60,6 +60,8 @@ class InputStream(Process):
             #frame = imutils.resize(frame, width=1720)
             if not self.hasMasked:
                 self.shouldmask = self.generateMasks(frame)
+                sizejob = PlayerJob("RESIZE", frame.shape)
+                self.job_queue.put(sizejob)
                 self.hasMasked = True
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
