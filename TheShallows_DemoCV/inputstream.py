@@ -78,8 +78,8 @@ class InputStream(Process):
                                    cv2.THRESH_BINARY)[1]
             thresh = cv2.dilate(thresh, None, iterations=3)
             #TODO: some bitwise stuff with the thresh so we can spot "levels of movement" within sectors
+            self.updateRegions(frame)
 
-            cv2.imshow("view", gray)
             cv2.waitKey(20)
         self.vcap.release()
         print 'Released Capture'
@@ -100,16 +100,21 @@ class InputStream(Process):
     #Intent: generate grid of masks in consistent space
     #desired output is a grid of rects
     def generateMasks(self, _frame):
+        """
+        Generate a grid of masks using frame.
+        """
         unitw = _frame.shape[1]/self.gridx
         unith = _frame.shape[0]/self.gridy
         #img = img[c1:c1+25,r1:r1+25]
         for x in range(0, self.gridx):
             for y in range(0, self.gridy):
+                _subimg = _frame[x*unitw:x*unitw+unitw,y*unith:y*unith+unith]
                 _thisregion = Region(
                     x*unitw,
                     y*unith,
                     unitw,
-                    unith
+                    unith,
+                    _subimg
                 )
                 self.regions.append()
         return 0
@@ -117,7 +122,3 @@ class InputStream(Process):
     def updateRegions(self, _frame):
         for region in self.regions:
             img = _frame[region.x:region.x+region.w,region.y:region.y+region.h]
-            #TODO avg op here
-
-    def avg_region(self, _region):
-        return 0
