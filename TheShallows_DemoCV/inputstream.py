@@ -82,6 +82,7 @@ class InputStream(Process):
             thresh = cv2.dilate(thresh, None, iterations=3)
             #TODO: some bitwise stuff with the thresh so we can spot "levels of movement" within sectors
             #self.updateRegions(frame)
+            cv2.imshow("view", avgres)
             self.data_queue.put(avgres)
             cv2.waitKey(20)
         self.vcap.release()
