@@ -57,6 +57,6 @@ class PlayerJob(object):
         _job (string, ex. 'resize' or 'adjust' etc.)
         _data (payload pertaining to chosen job)
     """
-    def __init__(self, _job, _payload, _frompid):
+    def __init__(self, _job, _payload):
         self.job = _job
         self.payload = _payload
