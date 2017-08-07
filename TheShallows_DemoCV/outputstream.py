@@ -37,7 +37,7 @@ class OutputStream(Process):
         while not self.hasStarted:
             cv2.startWindowThread()
             cv2.namedWindow("view", cv2.WND_PROP_FULLSCREEN)
-            cv2.setWindowProperty("view",cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
+            #cv2.setWindowProperty("view",cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
         while self.cont:
             if not self.job_queue.empty():
                 currentjob = self.job_queue.get()
@@ -73,3 +73,8 @@ class OutputStream(Process):
         """
         cv2.imshow("view", frame)
         return 0
+
+    def stop(self):
+        print 'Terminating...'
+        self.cont = False
+        self.exit_event.set()

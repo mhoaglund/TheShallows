@@ -59,7 +59,8 @@ spinupstreams()
 
 try:
     while True:
-        print 0 #pretty sure there'll be something here
+        #print 0 #pretty sure there'll be something here
+        thing = 0
 except (KeyboardInterrupt, SystemExit):
     time.sleep(1)
     stopworkerthreads()

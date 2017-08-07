@@ -119,7 +119,7 @@ class InputStream(Process):
                     unith,
                     _subimg
                 )
-                self.regions.append()
+                self.regions.append(_thisregion)
         return 0
 
     def updateRegions(self, _frame):
