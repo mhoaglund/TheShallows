@@ -34,6 +34,10 @@ class OutputStream(Process):
         self.cont = True
 
     def run(self):
+        while not self.hasStarted:
+            cv2.startWindowThread()
+            cv2.namedWindow("view", cv2.WND_PROP_FULLSCREEN)
+            cv2.setWindowProperty("view",cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
         while self.cont:
             if not self.job_queue.empty():
                 currentjob = self.job_queue.get()
@@ -41,9 +45,10 @@ class OutputStream(Process):
                     self.adjustFrame(currentjob.payload)
             if not self.dataqueue.empty():
                 ROIs = self.dataqueue.get()
-                self.compile(ROIs)
+                #self.compile(ROIs)
+                self.outframe = ROIs
             if self.hasSize:
-                self.play()
+                self.play(self.outframe)
 
     def adjustFrame(self, shape):
         """
@@ -58,11 +63,13 @@ class OutputStream(Process):
         """
             Do our parameterized averaging procedure and whatever else doesn't happen every frame.
         """
+        
         return 0
 
-    def play(self):
+    def play(self, frame):
         """
             Step between current frame and desired one somehow.
             Intended output is the self.outframe image.
         """
+        cv2.imshow("view", frame)
         return 0

@@ -18,6 +18,7 @@ class InputStream(Process):
         self.settings = InputSettings
         self.vcap = cv2.VideoCapture()
         self.job_queue = InputSettings.job_queue
+        self.data_queue = InputSettings.data_queue
         self.firstFrame = None
         self.avg = None
         self.exit_event = Event()
@@ -80,8 +81,8 @@ class InputStream(Process):
                                    cv2.THRESH_BINARY)[1]
             thresh = cv2.dilate(thresh, None, iterations=3)
             #TODO: some bitwise stuff with the thresh so we can spot "levels of movement" within sectors
-            self.updateRegions(frame)
-
+            #self.updateRegions(frame)
+            self.data_queue.put(avgres)
             cv2.waitKey(20)
         self.vcap.release()
         print 'Released Capture'
