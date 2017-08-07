@@ -40,7 +40,7 @@ class CVInputSettings(object):
         self.shouldflip = _shouldflip
 
 class CVOutputSettings(object):
-        """
+    """
         Settings object for setting up a video output stream.
         _accumulation (float, alpha for background segmentation accumulation algo)
         _data_queue (Queue for outputting detected contours)
