@@ -46,7 +46,7 @@ class InputStream(Process):
                 self.vcap = cv2.VideoCapture(self.settings.stream_location)
                 cv2.startWindowThread()
                 self.output = cv2.namedWindow("view", cv2.WINDOW_NORMAL)
-                cv2.setWindowProperty("view", cv2.WND_PROP_FULLSCREEN,1)
+                #cv2.setWindowProperty("view", cv2.WND_PROP_FULLSCREEN,1)
                 self.hasStarted = True
 
             try:
@@ -54,18 +54,20 @@ class InputStream(Process):
             except cv2.error as e:
                 logging.error('Opencv: %s', e)
                 continue
-
             if not grabbed or type(frame) is None:
                 logging.info('Grab failed...')
                 continue
-            camshot = frame[200:800, 100:600]
-            frame = imutils.resize(camshot, width=self.settings.resize)
+            #print frame.shape
+            #camshot = frame[100:620, 100:1180]
+            frame = imutils.resize(frame, width=self.settings.resize)
             if not self.hasMasked:
                 self.shouldmask = self.generateMasks(frame)
-                sizejob = PlayerJob("RESIZE", frame.shape)
-                self.job_queue.put(sizejob)
+                #sizejob = PlayerJob("RESIZE", frame.shape)
+                #print frame.shape
+                #self.job_queue.put(sizejob)
                 self.hasMasked = True
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            gray = frame
 
             if self.avg == None:
                 self.avg = np.float32(gray)
@@ -77,7 +79,7 @@ class InputStream(Process):
             avgres = cv2.convertScaleAbs(self.avg)
             cv2.imshow("view", avgres)
             self.data_queue.put("Hello World")
-            cv2.waitKey(35)
+            cv2.waitKey(20)
         self.vcap.release()
         print 'Released Capture'
         cv2.waitKey(1)
