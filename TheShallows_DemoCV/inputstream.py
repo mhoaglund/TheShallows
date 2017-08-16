@@ -45,8 +45,8 @@ class InputStream(Process):
                 logging.info('Performing stream setup on input stream')
                 self.vcap = cv2.VideoCapture(self.settings.stream_location)
                 cv2.startWindowThread()
-                self.output = cv2.namedWindow("view", cv2.CV_WINDOW_AUTOSIZE)
-                cv2.setWindowProperty("view",cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
+                self.output = cv2.namedWindow("view", cv2.WINDOW_NORMAL)
+                cv2.setWindowProperty("view", cv2.WND_PROP_FULLSCREEN,1)
                 self.hasStarted = True
 
             try:
