@@ -58,13 +58,14 @@ class InputStream(Process):
                 logging.info('Grab failed...')
                 continue
 
-            #frame = imutils.resize(frame, width=1720)
+            frame = imutils.resize(frame, width=700)
             if not self.hasMasked:
                 self.shouldmask = self.generateMasks(frame)
                 sizejob = PlayerJob("RESIZE", frame.shape)
                 self.job_queue.put(sizejob)
                 self.hasMasked = True
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            gray = frame
 
             if self.avg == None:
                 self.avg = np.float32(gray)
@@ -82,7 +83,7 @@ class InputStream(Process):
             thresh = cv2.dilate(thresh, None, iterations=3)
             #TODO: some bitwise stuff with the thresh so we can spot "levels of movement" within sectors
             #self.updateRegions(frame)
-            #cv2.imshow("view", avgres)
+            cv2.imshow("view", avgres)
             self.data_queue.put(avgres)
             cv2.waitKey(70)
         self.vcap.release()
