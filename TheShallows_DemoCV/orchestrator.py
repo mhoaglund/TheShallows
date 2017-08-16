@@ -21,7 +21,7 @@ SHALLOWS_STREAM = CVInputSettings(
     cv2.THRESH_BINARY,
     40,
     24,
-    0.03,
+    0.09,
     5,
     DATAQUEUE,
     JOBQUEUE,
