@@ -44,8 +44,9 @@ class InputStream(Process):
             if self.hasStarted is False:
                 logging.info('Performing stream setup on input stream')
                 self.vcap = cv2.VideoCapture(self.settings.stream_location)
-                #cv2.startWindowThread()
-                #self.output = cv2.namedWindow("view", cv2.CV_WINDOW_AUTOSIZE)
+                cv2.startWindowThread()
+                self.output = cv2.namedWindow("view", cv2.CV_WINDOW_AUTOSIZE)
+                cv2.setWindowProperty("view",cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
                 self.hasStarted = True
 
             try:
@@ -64,8 +65,8 @@ class InputStream(Process):
                 sizejob = PlayerJob("RESIZE", frame.shape)
                 self.job_queue.put(sizejob)
                 self.hasMasked = True
-            #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            gray = frame
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            #gray = frame
 
             if self.avg == None:
                 self.avg = np.float32(gray)

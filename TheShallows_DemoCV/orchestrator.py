@@ -45,8 +45,8 @@ def spinupstreams():
     if __name__ == "__main__":
         _inputprocess = InputStream(SHALLOWS_STREAM)
         PROCESSES.append(_inputprocess)
-        _outputprocess = OutputStream(SHALLOWS_OUT)
-        PROCESSES.append(_outputprocess)
+        #_outputprocess = OutputStream(SHALLOWS_OUT)
+        #PROCESSES.append(_outputprocess)
         for proc in PROCESSES:
             proc.start()
 
