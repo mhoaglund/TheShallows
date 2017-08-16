@@ -44,8 +44,8 @@ class InputStream(Process):
             if self.hasStarted is False:
                 logging.info('Performing stream setup on input stream')
                 self.vcap = cv2.VideoCapture(self.settings.stream_location)
-                cv2.startWindowThread()
-                self.output = cv2.namedWindow("view", cv2.CV_WINDOW_AUTOSIZE)
+                #cv2.startWindowThread()
+                #self.output = cv2.namedWindow("view", cv2.CV_WINDOW_AUTOSIZE)
                 self.hasStarted = True
 
             try:
@@ -82,7 +82,7 @@ class InputStream(Process):
             thresh = cv2.dilate(thresh, None, iterations=3)
             #TODO: some bitwise stuff with the thresh so we can spot "levels of movement" within sectors
             #self.updateRegions(frame)
-            cv2.imshow("view", avgres)
+            #cv2.imshow("view", avgres)
             self.data_queue.put(avgres)
             cv2.waitKey(70)
         self.vcap.release()

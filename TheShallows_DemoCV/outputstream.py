@@ -36,7 +36,7 @@ class OutputStream(Process):
     def run(self):
         while not self.hasStarted:
             cv2.startWindowThread()
-            cv2.namedWindow("view", cv2.WND_PROP_FULLSCREEN)
+            cv2.namedWindow("view", cv2.CV_WINDOW_AUTOSIZE)
             #cv2.setWindowProperty("view",cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
         while self.cont:
             if not self.job_queue.empty():
