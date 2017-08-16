@@ -57,23 +57,17 @@ class InputStream(Process):
             if not grabbed or type(frame) is None:
                 logging.info('Grab failed...')
                 continue
-            #print frame.shape
-            #camshot = frame[100:620, 100:1180]
+
             frame = imutils.resize(frame, width=self.settings.resize)
             if not self.hasMasked:
                 self.shouldmask = self.generateMasks(frame)
-                #sizejob = PlayerJob("RESIZE", frame.shape)
-                #print frame.shape
-                #self.job_queue.put(sizejob)
                 self.hasMasked = True
-            #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            gray = frame
 
             if self.avg == None:
-                self.avg = np.float32(gray)
-            cv2.accumulateWeighted(gray, self.avg, self.settings.accumulation)
+                self.avg = np.float32(frame)
+            cv2.accumulateWeighted(frame, self.avg, self.settings.accumulation)
             if self.firstFrame is None:
-                self.firstFrame = gray
+                self.firstFrame = frame
                 continue
 
             avgres = cv2.convertScaleAbs(self.avg)
