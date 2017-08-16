@@ -84,7 +84,7 @@ class InputStream(Process):
             #self.updateRegions(frame)
             cv2.imshow("view", avgres)
             self.data_queue.put(avgres)
-            cv2.waitKey(20)
+            cv2.waitKey(40)
         self.vcap.release()
         print 'Released Capture'
         cv2.waitKey(1)

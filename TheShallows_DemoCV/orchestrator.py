@@ -17,7 +17,7 @@ DATAQUEUE = Queue()
 SHALLOWS_STREAM = CVInputSettings(
     "rtsp://10.254.239.5:554/11.cgi",
     0,
-    1270,
+    700,
     cv2.THRESH_BINARY,
     40,
     24,
