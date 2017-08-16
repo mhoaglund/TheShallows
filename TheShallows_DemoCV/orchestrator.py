@@ -37,6 +37,7 @@ SHALLOWS_OUT = CVOutputSettings(
 )
 
 PROCESSES = []
+WATCHDOG = 0
 
 def spinupstreams():
     """Set up the two opencv stream processes"""
@@ -55,12 +56,23 @@ def stopworkerthreads():
     for proc in PROCESSES:
         proc.stop()
 
+def reclaim_streams():
+    """If a stream hasn't reported anything in a while, kill the process and start again."""
+    for proc in PROCESSES:
+        print 'found worker'
+        proc.stop()
+    time.sleep(0.5)
+    spinupstreams()
+
 spinupstreams()
 
 try:
     while True:
-        #print 0 #pretty sure there'll be something here
-        thing = 0
+        if WATCHDOG > 8000:
+            reclaim_streams()
+            WATCHDOG = 0
+        if not DATAQUEUE.empty():
+            WATCHDOG = 0
 except (KeyboardInterrupt, SystemExit):
     time.sleep(1)
     stopworkerthreads()

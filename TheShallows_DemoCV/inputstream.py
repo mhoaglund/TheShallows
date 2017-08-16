@@ -58,15 +58,14 @@ class InputStream(Process):
             if not grabbed or type(frame) is None:
                 logging.info('Grab failed...')
                 continue
-
-            frame = imutils.resize(frame, width=700)
+            camshot = frame[200:800, 100:600]
+            frame = imutils.resize(camshot, width=self.settings.resize)
             if not self.hasMasked:
                 self.shouldmask = self.generateMasks(frame)
                 sizejob = PlayerJob("RESIZE", frame.shape)
                 self.job_queue.put(sizejob)
                 self.hasMasked = True
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            #gray = frame
 
             if self.avg == None:
                 self.avg = np.float32(gray)
@@ -76,17 +75,9 @@ class InputStream(Process):
                 continue
 
             avgres = cv2.convertScaleAbs(self.avg)
-            frame_delta = cv2.absdiff(avgres, gray)
-            thresh = cv2.threshold(frame_delta,
-                                   self.settings.thresh_sensitivity,
-                                   255,
-                                   cv2.THRESH_BINARY)[1]
-            thresh = cv2.dilate(thresh, None, iterations=3)
-            #TODO: some bitwise stuff with the thresh so we can spot "levels of movement" within sectors
-            #self.updateRegions(frame)
             cv2.imshow("view", avgres)
-            self.data_queue.put(avgres)
-            cv2.waitKey(70)
+            self.data_queue.put("Hello World")
+            cv2.waitKey(35)
         self.vcap.release()
         print 'Released Capture'
         cv2.waitKey(1)
