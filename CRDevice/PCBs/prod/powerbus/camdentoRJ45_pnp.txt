@@ -1,0 +1,38 @@
+*Pick And Place List
+*Company=
+*Author=
+*eMail=
+*
+*Project=camdentoRJ45
+*Date=09:39:23
+*CreatedBy=Fritzing 0.9.3b.04.19.5c895d327c44a3114e5fcc9d8260daf0cbb52806
+*
+*
+*Coordinates in mm, always center of component
+*Origin 0/0=Lower left corner of PCB
+*Rotation in degree (0-360, math. pos.)
+*
+*No;Value;Package;X;Y;Rotation;Side;Name
+1;;;45.9486;-26.7175;0;Bottom;Copper Fill5
+2;;;49.9364;-16.5321;0;Bottom;Copper Fill8
+3;;;78.6638;-26.8191;0;Bottom;Copper Fill4
+4;;rj45-8;25.1547;-22.1123;0;Bottom;B
+5;;;49.8094;-17.7767;0;Bottom;Copper Fill1
+6;;;13.4112;-26.8445;0;Bottom;Copper Fill3
+7;;;49.7332;-33.2199;0;Bottom;Copper Fill2
+8;;;3.57006;-10.0052;0;Bottom;Hole5
+9;;rj45-8;41.3627;-23.3265;0;Bottom;C
+10;;THT;37.6808;-4.48951;90;Bottom;VCC
+11;;rj45-8;74.125;-23.2938;0;Bottom;E
+12;;rj45-8;8.89489;-23.3091;0;Bottom;A
+13;;THT;60.9019;-4.49047;90;Bottom;GND
+14;;;90.5256;-21.6629;0;Bottom;Copper Fill7
+15;;THT;16.9585;-13.552;-90;Bottom;+
+16;;rj45-8;90.4409;-22.1123;0;Bottom;F
+17;;;96.1626;-10.0052;0;Bottom;Hole6
+18;;THT;82.498;-13.4433;-90;Bottom;+
+19;;;49.8244;-35.9219;0;Bottom;Hole4
+20;;;9.144;-21.7137;0;Bottom;Copper Fill6
+21;;;49.9752;-3.52025;0;Bottom;IMG1
+22;;THT;49.6754;-13.8139;-90;Bottom;+
+23;;rj45-8;57.8304;-22.1663;0;Bottom;D
