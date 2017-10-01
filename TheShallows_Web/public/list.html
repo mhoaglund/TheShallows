@@ -12,6 +12,24 @@
   <link href='https://fonts.googleapis.com/css?family=Cardo:400,700' rel='stylesheet' type='text/css'/>
   <link rel="stylesheet" href="stylesheets/style.css" type="text/css"/>
   <link rel="stylesheet" href="stylesheets/slicknav.css" type="text/css"/>
+  <script id="profile-template">
+      <div class="defaultdisplay">
+          <div class="top"><div class="inner"><h2>{Name}</h2><span>{Abstract}</span></div><div class="overlay"></div></div>
+          <div class="content">
+            {?order}
+                {#moves}
+                    <div class="moves">To do! Visualize</div>
+                {/moves}
+                {#rules}
+                    <div class="rules">To do! Visualize</div>
+                {/rules}
+                {?thesis}
+                  <div class="thesis"><p>{thesis}</p></div>
+                {/thesis}
+            {/order}
+          </div>
+      </div>
+  </script>
   </head>
   <body>
     <section class="menucontainer" style="display: none;">

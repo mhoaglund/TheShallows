@@ -1,0 +1,19 @@
+{
+    "id":"abc1",
+    "timestamp":"1506820723",
+    "author":"Human",
+    "order":[
+        {
+            "id":"ddd11122",
+            "moves":[
+                {"from":"d1","to":"g5"},
+                {"from":"a6","to":"g4"},
+                {"from":"b2","to":"g3"},
+                {"from":"h8","to":"g2"}
+            ],
+            "rules":[
+                {"type":"always", "condition":""}
+            ]
+        }
+    ]
+}
