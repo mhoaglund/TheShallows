@@ -57,3 +57,19 @@ typings/
 # dotenv environment variables file
 .env
 
+CRDevice/PCBs/arduinoproto2.fzz
+CRDevice/PCBs/prod/relay/relaysketch_drill.txt
+CRDevice/PCBs/prod/relay/relaysketch_maskBottom.zip
+CRDevice/PCBs/prod/relay/relaysketch_pnp.txt
+CRDevice/PCBs/prod/powerbus/camdentoRJ45_copperBottom.gbl
+CRDevice/PCBs/prod/powerbus/camdentoRJ45_copperTop.gtl
+CRDevice/PCBs/prod/powerbus/camdentoRJ45_drill.txt
+CRDevice/PCBs/prod/powerbus/camdentoRJ45_drill.zip
+CRDevice/PCBs/prod/powerbus/camdentoRJ45_maskBottom.gbs
+CRDevice/PCBs/prod/powerbus/camdentoRJ45_maskTop.gts
+CRDevice/PCBs/prod/powerbus/camdentoRJ45_pnp.txt
+CRDevice/PCBs/prod/powerbus/camdentoRJ45_silkBottom.gbo
+CRDevice/PCBs/prod/powerbus/camdentoRJ45_silkTop.gto
+CRDevice/PCBs/prod/relay/relaysketch_drill.txt
+CRDevice/PCBs/prod/relay/relaysketch_maskBottom.zip
+CRDevice/PCBs/prod/relay/relaysketch_pnp.txt
