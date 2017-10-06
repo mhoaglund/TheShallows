@@ -1,19 +1,59 @@
 {
+    "board":[8,8],
+    "results":[
+    {
     "id":"abc1",
     "timestamp":"1506820723",
-    "author":"Human",
-    "order":[
-        {
-            "id":"ddd11122",
-            "moves":[
-                {"from":"d1","to":"g5"},
-                {"from":"a6","to":"g4"},
-                {"from":"b2","to":"g3"},
-                {"from":"h8","to":"g2"}
-            ],
-            "rules":[
-                {"type":"always", "condition":""}
-            ]
-        }
-    ]
+    "author":"Sleve McDichael",
+    "order":{
+        "id":"ddd11122",
+        "moves":[
+            {"from":"d1","to":"g5"},
+            {"from":"a6","to":"g4"},
+            {"from":"b2","to":"g3"},
+            {"from":"h8","to":"g2"}
+        ],
+        "rules":[
+            {"type":"always", "condition":"g3>g2"}
+        ],
+        "thesis":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+    }
+    },
+    {
+    "id":"abc1",
+    "timestamp":"1506820723",
+    "author":"Jeromy Gride",
+    "order":{
+        "id":"ddd11122",
+        "moves":[
+            {"from":"d1","to":"g5"},
+            {"from":"a6","to":"g4"},
+            {"from":"b2","to":"g3"},
+            {"from":"h8","to":"g2"}
+        ],
+        "rules":[
+            {"type":"always", "condition":"g3>g2"}
+        ],
+        "thesis":"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+    }
+    },
+    {
+    "id":"abc1",
+    "timestamp":"1506820723",
+    "author":"Kevin Nigolny",
+    "order":{
+        "id":"ddd11122",
+        "moves":[
+            {"from":"d1","to":"g5"},
+            {"from":"d2","to":"g12"},
+            {"from":"b8","to":"g12"},
+            {"from":"b6","to":"b7"}
+        ],
+        "rules":[
+            {"type":"always", "condition":"g3>g2"}
+        ],
+        "thesis":"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable."
+    }
+    }
+]
 }

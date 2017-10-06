@@ -12,23 +12,45 @@
   <link href='https://fonts.googleapis.com/css?family=Cardo:400,700' rel='stylesheet' type='text/css'/>
   <link rel="stylesheet" href="stylesheets/style.css" type="text/css"/>
   <link rel="stylesheet" href="stylesheets/slicknav.css" type="text/css"/>
-  <script id="profile-template">
-      <div class="defaultdisplay">
-          <div class="top"><div class="inner"><h2>{Name}</h2><span>{Abstract}</span></div><div class="overlay"></div></div>
+  <script src="javascripts/dust-full.min.js"></script>
+  <script src="javascripts/dust-helpers.min.js"></script>
+  <script id="co-template">
+    {?results}
+      {#results}
+        <div class="defaultdisplay">
+          <div class="top">
+            <div class="inner">
+              <h2>{author}</h2>
+              <span>{timestamp}</span>
+              <span>{Abstract}</span>
+            </div>
+            <div class="overlay"></div>
+              <div class="gridhost">
+                  {@loop from=1 to="{board[0]}"}
+                    {@loop from=1 to="{board[1]}"}
+                      <div class="tile" id="{.}"></div>
+                    {/loop}
+                  {/loop}
+                </div>
+            </div>
           <div class="content">
-            {?order}
-                {#moves}
-                    <div class="moves">To do! Visualize</div>
-                {/moves}
-                {#rules}
-                    <div class="rules">To do! Visualize</div>
-                {/rules}
-                {?thesis}
-                  <div class="thesis"><p>{thesis}</p></div>
-                {/thesis}
-            {/order}
+              {?order.moves}
+                <div class="moves">
+                {#order.moves}
+                  {from} to {to}{@sep}, </br>{/sep}
+                {/order.moves}
+                </div>
+              {/order.moves}
+              {#order.rules}
+                  <div class="rules">{type}, {condition}{@sep}, </br>{/sep}</div>
+              {/order.rules}
+              {?order.thesis}
+                <div class="thesis"><p>{order.thesis}</p></div>
+              {/order.thesis}
           </div>
       </div>
+      {/results}
+    {/results}
   </script>
   </head>
   <body>
@@ -45,5 +67,5 @@
     </section>
   </body>
   <script src="javascripts/jquery.slicknav.min.js"></script>
-  <script src="javascripts/load.js"></script>
+  <script src="javascripts/list.js"></script>
 </html>

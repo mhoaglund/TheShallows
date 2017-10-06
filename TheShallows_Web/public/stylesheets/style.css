@@ -38,7 +38,42 @@ p{
       margin: 0px auto;
       display: block;
     }
+
+    .gridhost{
+      display: flex;
+      flex-flow: row wrap;
+      width: 554px;
+      margin: auto;
+    }
+
+      .gridhost .tile{
+        margin: 10px;
+        flex-grow: 1;
+        height: 50px;
+        width: calc(100% * (1/8) - 20px );
+        border: 1px solid black;
+        box-sizing: border-box;
+        border-collapse: collapse;
+      }
   /*End Structural Stuff*/
   /*Details*/
   /*End Details*/
 /*End Class Styles*/
+@media screen and (max-width: 600px){
+  .gridhost{
+    display: flex;
+    flex-flow: row wrap;
+    width: 300px;
+    margin: auto;
+  }
+
+    .gridhost .tile{
+      margin: 5px;
+      flex-grow: 1;
+      height: 28px;
+      width: calc(100% * (1/8) - 10px );
+      border: 1px solid black;
+      box-sizing: border-box;
+      border-collapse: collapse;
+    }
+}
