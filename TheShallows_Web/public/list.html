@@ -12,12 +12,13 @@
   <link href='https://fonts.googleapis.com/css?family=Cardo:400,700' rel='stylesheet' type='text/css'/>
   <link rel="stylesheet" href="stylesheets/style.css" type="text/css"/>
   <link rel="stylesheet" href="stylesheets/slicknav.css" type="text/css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="javascripts/dust-full.min.js"></script>
   <script src="javascripts/dust-helpers.min.js"></script>
   <script id="co-template">
     {?results}
       {#results}
-        <div class="defaultdisplay">
+        <div class="change-order closed">
           <div class="top">
             <div class="inner">
               <h2>{author}</h2>
@@ -62,6 +63,7 @@
         <li><a href="#">item 4</a></li>
       </ul>
     </section>
+    <aside id="time"></aside>
     <section class="mainlist" id="list_host">
 
     </section>

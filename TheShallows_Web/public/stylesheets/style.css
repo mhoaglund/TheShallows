@@ -1,16 +1,30 @@
 body {
-  font: 1em "Work Sans", Georgia, Times, serif;
+  font: 1em "Cutive Mono", Georgia, Times, serif;
   line-height: 1.5;
 }
 
 a {
   color: #00B7FF;
 }
-h1{
+h1, h2{
   font-family: "Roboto", Georgia, Times, serif;
 }
+h1,h2,h3,h4,h5,h6{
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+}
+.inner h2{
+  font-style: italic;
+}
+
 p{
   font-weight: 300;
+}
+
+p:last-child{
+  -webkit-margin-after: 0em;
 }
 
 /*End Element Styles*/
@@ -39,6 +53,22 @@ p{
       display: block;
     }
 
+    .change-order{
+      box-sizing: border-box;
+      border: 1px solid grey;
+      padding: 10px;
+      margin-bottom: 12px;
+      background-color: white;
+    }
+
+    .change-order:last-child{
+      margin-bottom: 0px;
+    }
+
+    .change-order.closed .gridhost{height: 0px;}
+    .change-order.closed .gridhost .tile{display: none; opacity: 0.0;}
+    .change-order.closed .thesis{display:none;}
+
     .gridhost{
       display: flex;
       flex-flow: row wrap;
@@ -59,6 +89,13 @@ p{
   /*Details*/
   /*End Details*/
 /*End Class Styles*/
+#time{
+  position: fixed;
+  top:0px;
+  left:10px;
+  box-shadow: 10px 5px 5px white;
+  background: white;
+}
 @media screen and (max-width: 600px){
   .gridhost{
     display: flex;

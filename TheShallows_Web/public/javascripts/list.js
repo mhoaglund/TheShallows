@@ -1,4 +1,5 @@
 var data = {
+	active: set_time,
 	google : {families: ['Cardo:italic', 'Roboto:300,100', 'Cutive Mono', 'Work Sans:100,300,500', 'Montserrat:300,500']}
 };
 
@@ -6,6 +7,11 @@ WebFont.load(data);
 //Dev: dust compilation
 var _co_template = $('#co-template').html();
 var cocompiled = dust.compile(_co_template, 'CH_ORD');
+
+function set_time(){
+	var time = moment().format();
+	$("#time").html(time);
+}
 
 dust.loadSource(cocompiled);
 dust.helpers.loop = function(chunk, context, bodies, params) {
@@ -20,11 +26,18 @@ dust.helpers.loop = function(chunk, context, bodies, params) {
 	}
   
 	return chunk.render(bodies.block, context.push(from, from, len));
-  }
+}
 
-$( window ).resize(function() {
-    setOalls();
-});
+function close_all(){
+	$('.change-order').addClass('closed');
+}
+
+function expand(element){
+	close_all();
+	if(element.hasClass('closed')){
+		element.removeClass('closed');
+	}
+}
 
 var oallht;
 var oallwth;
@@ -69,6 +82,21 @@ function displayAll(_data, _target, _template = 'CH_ORD', _cb = null){
 		if(_cb )_cb();
 	});
 }
+
+
+$(function(){	
+	$( window ).resize(function() {
+		setOalls();
+	});
+
+	$(document).on('scroll', function() {
+		set_time();
+	});
+
+	$(document).on('click', '.change-order', function(){
+		expand($(this));
+	});
+});
 
 getProjectData(data_location);
 
