@@ -1,0 +1,34 @@
+{
+    "results":[
+        {
+            "id":"guid1",
+            "name":"Lithium",
+            "byline":"Sample in ampoule",
+            "materials":["Glass", "Argon", "Lithium"],
+            "img":"https://s3.amazonaws.com/shallows/images/sem00279.jpg",
+            "thumb":"https://s3.amazonaws.com/shallows/images/sem00279.jpg",
+            "selector":"Maxwell Hoaglund",
+            "dateselected":"10.8.2017",
+            "restrictions":[
+                "fragile"
+            ],
+            "rationale":"",
+            "reptype":"actual"
+        },
+        {
+            "id":"guid2",
+            "name":"HEAD Radical Racket",
+            "byline":"Formerly used by Andre Agassi",
+            "materials":["Fiberglass", "Nylon", "Rubber"],
+            "img":"https://s3.amazonaws.com/shallows/images/sem00279.jpg",
+            "thumb":"https://s3.amazonaws.com/shallows/images/sem00279.jpg",
+            "selector":"AJ Warnick",
+            "dateselected":"10.8.2017",
+            "restrictions":[
+                "valuable"
+            ],
+            "rationale":"",
+            "reptype":"replica"
+        }
+    ]
+}
