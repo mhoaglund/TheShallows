@@ -36,6 +36,7 @@ function expand(element){
 	close_all();
 	if(element.hasClass('closed')){
 		element.removeClass('closed');
+		element.find('.tile, .vector').addClass('animate');
 	}
 }
 
@@ -95,6 +96,10 @@ $(function(){
 
 	$(document).on('click', '.change-order', function(){
 		expand($(this));
+	});
+
+	$('.change-order').on('appear', function(event, ){
+
 	});
 });
 

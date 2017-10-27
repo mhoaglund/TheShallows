@@ -15,10 +15,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="javascripts/dust-full.min.js"></script>
   <script src="javascripts/dust-helpers.min.js"></script>
+  <script src="javascripts/jquery.appear.js"></script>
   <script id="co-template">
     {?results}
       {#results}
-        <div class="change-order closed">
+        <div class="change-order closed" data-appear-top-offset="200">
           <div class="top">
             <div class="inner">
               <h2>{author}</h2>
@@ -38,7 +39,7 @@
               {?order.moves}
                 <div class="moves">
                 {#order.moves}
-                  {from} to {to}{@sep}, </br>{/sep}
+                  <span>{from} to {to}</span>{@sep},{/sep}
                 {/order.moves}
                 </div>
               {/order.moves}
@@ -64,6 +65,7 @@
       </ul>
     </section>
     <aside id="time"></aside>
+    <aside id="status"></aside>
     <section class="mainlist" id="list_host">
 
     </section>

@@ -15,8 +15,12 @@ h1,h2,h3,h4,h5,h6{
   -webkit-margin-start: 0px;
   -webkit-margin-end: 0px;
 }
+.top{
+  position: relative;
+}
 .inner h2{
   font-style: italic;
+
 }
 
 p{
@@ -53,6 +57,12 @@ p:last-child{
       display: block;
     }
 
+    .tile{
+      transition: .25s ease-in-out;
+      -moz-transition: .25s ease-in-out;
+      -webkit-transition: .25s ease-in-out;
+    }
+
     .change-order{
       box-sizing: border-box;
       border: 1px solid grey;
@@ -60,14 +70,37 @@ p:last-child{
       margin-bottom: 12px;
       background-color: white;
     }
+    
+    .change-order .inner{
+      position: absolute;
+      top: 0px;
+      left: 0px;
+    }
+
+      .change-order.closed .inner{position: static;} 
+
+    .change-order .thesis p{
+      column-count: 2;
+      column-gap: 1.5em;
+      -webkit-margin-before: 0em;
+      -webkit-margin-after: 0em;
+      column-rule: 1px solid cornflowerblue;
+    }
 
     .change-order:last-child{
       margin-bottom: 0px;
     }
 
     .change-order.closed .gridhost{height: 0px;}
-    .change-order.closed .gridhost .tile{display: none; opacity: 0.0;}
+    .change-order.closed .gridhost .tile{display: none; opacity: 0.0; height:0px;}
     .change-order.closed .thesis{display:none;}
+    .change-order.closed h2{font-size: 0.8rem;}
+
+    .change-order.drowsy .gridhost{
+      height: auto;      
+    }
+    .change-order.drowsy .gridhost .tile{height: 4px; opacity: 0.4;}
+    .change-order.drowsy .thesis{display:none;}
 
     .gridhost{
       display: flex;
@@ -76,7 +109,7 @@ p:last-child{
       margin: auto;
     }
 
-      .gridhost .tile{
+    .change-order .gridhost .tile{
         margin: 10px;
         flex-grow: 1;
         height: 50px;
@@ -84,6 +117,7 @@ p:last-child{
         border: 1px solid black;
         box-sizing: border-box;
         border-collapse: collapse;
+        opacity: 1;
       }
   /*End Structural Stuff*/
   /*Details*/
@@ -91,12 +125,34 @@ p:last-child{
 /*End Class Styles*/
 #time{
   position: fixed;
-  top:0px;
-  left:10px;
-  box-shadow: 10px 5px 5px white;
+  top: 0px;
+  right: 4px;
+  box-shadow: inset 0 0 1em white, -5px 0 1em white;
   background: white;
+  z-index: 999;
+}
+#status{
+  position: fixed;
+  bottom: 4px;
+  right: 4px;
+  box-shadow: 
+    inset 0 0 1em cornflowerblue, 
+    0px 0 1.2em white, 
+    0px 0 0.8em cornflowerblue;
+  background: cornflowerblue;
+  z-index: 999;
+  height: 1em;
+  width: 1em;
+  border-radius: 12px;
+}
+@media screen and (max-width: 900px){
+  .change-order .inner{
+    position: static;
+  }
 }
 @media screen and (max-width: 600px){
+
+
   .gridhost{
     display: flex;
     flex-flow: row wrap;
@@ -104,7 +160,7 @@ p:last-child{
     margin: auto;
   }
 
-    .gridhost .tile{
+  .change-order .gridhost .tile{
       margin: 5px;
       flex-grow: 1;
       height: 28px;
@@ -113,4 +169,20 @@ p:last-child{
       box-sizing: border-box;
       border-collapse: collapse;
     }
+}
+
+.gridhost .tile.animate  {
+  animation: SHW .5s;
+  animation-fill-mode: both
+}
+
+@keyframes SHW {
+  from {
+      filter: blur(10px);
+      opacity:0
+  }
+  to {
+      filter: blur(0px);
+      opacity:1
+  }
 }
