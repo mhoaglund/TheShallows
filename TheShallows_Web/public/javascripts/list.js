@@ -40,9 +40,7 @@ function expand(element){
 	}
 }
 
-var oallht;
-var oallwth;
-var oallctr;
+var oallht, oallwth, oallctr;
 var useOverlay = true;
 var lightnessmod = 1.2;
 var datamain = {};

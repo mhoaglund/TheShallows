@@ -179,10 +179,12 @@ p:last-child{
 @keyframes SHW {
   from {
       filter: blur(10px);
+      border-color: blue;
       opacity:0
   }
   to {
       filter: blur(0px);
+      border-color: black;
       opacity:1
   }
 }
