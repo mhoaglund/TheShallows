@@ -100,7 +100,7 @@ p:last-child{
     .change-order.closed .gridhost .tile{display: none; opacity: 0.0; height:0px;}
     .change-order.closed .gridhost .marker{display: none;}
     .change-order.closed .thesis{display:none;}
-    .change-order.closed h2{font-size: 0.8rem;}
+    .change-order.closed h2, .change-order.drowsy h2{font-size: 0.8rem;}
 
     .change-order.drowsy .gridhost{
       height: auto;      
@@ -108,6 +108,11 @@ p:last-child{
     .change-order.drowsy .gridhost .tile{height: 4px; opacity: 0.4;}
     .change-order.drowsy .gridhost .marker, .change-order.drowsy .gridhost .vector{display: none;}
     .change-order.drowsy .thesis{display:none;}
+
+    .change-order.closed .tile span,
+    .change-order.drowsy .tile span{
+      display: none;
+    }
 
     .gridhost{
       display: flex;
@@ -203,7 +208,8 @@ p:last-child{
   animation-fill-mode: both
 }
 
-.gridhost .vector.animate  {
+.gridhost .vector.animate,
+.gridhost .marker.animate  {
   animation: vectorfade .7s;
   animation-fill-mode: both
 }

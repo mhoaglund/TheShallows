@@ -38,7 +38,7 @@ function expand(element){
 	close_all();
 	if(element.hasClass('closed')){
 		element.removeClass('closed');
-		element.find('.tile, .vector').addClass('animate');
+		element.find('.tile, .vector, .marker').addClass('animate');
 	}
 	element.prev(".change-order").addClass('drowsy');
 	element.prev(".change-order").removeClass('closed');
