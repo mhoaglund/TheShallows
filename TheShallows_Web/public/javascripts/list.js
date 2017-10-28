@@ -30,6 +30,7 @@ dust.helpers.loop = function(chunk, context, bodies, params) {
 
 function close_all(){
 	$('.change-order').addClass('closed');
+	$('.vector').removeClass('animate');
 }
 
 function expand(element){
@@ -63,7 +64,7 @@ function getProjectData(myUrl){
 		cache: false,
 		data: '',
 		success: function(data) { 
-			datamain = data;
+			datamain = clean_and_supplement(data);
 			displayAll(datamain, '#list_host', 'CH_ORD', function(){
 				console.log("done");
 			});
@@ -73,6 +74,25 @@ function getProjectData(myUrl){
 		}
 	});
 	return result;
+}
+
+function clean_and_supplement(data){
+	data['results'].forEach(function(element) {
+		var moves = element['order']['moves'];
+		if(moves.length > 0){
+			moves.forEach(function(_move){
+				_move["alphabetized"] = [];
+				_move["alphabetized"][0] = letter_of_alphabet[_move.from[0]] + _move.from[1].toString();
+				_move["alphabetized"][1] = letter_of_alphabet[_move.to[0]] + _move.to[1].toString();
+			});
+		}
+	});
+	return data;
+}
+
+function letter_of_alphabet(num){
+	var alphabet = ["a","b","c","d","e","f","g","h","i","j","k"];
+	return alphabet[num];
 }
 
 function displayAll(_data, _target, _template = 'CH_ORD', _cb = null){

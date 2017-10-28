@@ -46,7 +46,7 @@
                           y1="{@math key=69.25 method="multiply" operand=from[1]/}" 
                           x2="{@math key=69 method="multiply" operand=to[0]/}" 
                           y2="{@math key=69.25 method="multiply" operand=to[1]/}" 
-                          stroke="url(#{timestamp})"
+                          stroke="{idcolor}"
                         />
                     </svg>
                   {/order.moves}
@@ -56,7 +56,7 @@
               {?order.moves}
                 <div class="moves">
                 {#order.moves}
-                  <span>{from} to {to}</span>{@sep},{/sep}
+                  <span>{from} to {to}</span>{@sep}, {/sep}
                 {/order.moves}
                 </div>
               {/order.moves}
