@@ -28,11 +28,11 @@
             </div>
             <div class="overlay"></div>
               <div class="gridhost">
-                  {@loop from=1 to="{board[0]}"}
+                  {#alpha_board}
                     {@loop from=1 to="{board[1]}"}
-                      <div class="tile" id="{.}"></div>
+                      <div class="tile" id="{.}{alpha_board[$idx]}">{alpha_board[$idx]}{.}</div>
                     {/loop}
-                  {/loop}
+                  {/alpha_board}
                   {#order.moves}
                     <svg class="vector">
                       <defs>
@@ -42,13 +42,14 @@
                         </linearGradient>
                       </defs>
                         <line stroke-linecap="round"
-                          x1="{@math key=69.25 method="multiply" operand=from[0]/}" 
-                          y1="{@math key=69.25 method="multiply" operand=from[1]/}" 
-                          x2="{@math key=69 method="multiply" operand=to[0]/}" 
-                          y2="{@math key=69.25 method="multiply" operand=to[1]/}" 
+                          y1="{@math key=69.25 method="multiply" operand=from[0]/}" 
+                          x1="{@math key=69.25 method="multiply" operand=from[1]/}" 
+                          y2="{@math key=69.25 method="multiply" operand=to[0]/}" 
+                          x2="{@math key=69.25 method="multiply" operand=to[1]/}" 
                           stroke="{idcolor}"
                         />
                     </svg>
+                    <div class="marker" style="top:{@math key=69.25 method="multiply" operand=to[0]/}px;left:{@math key=69.25 method="multiply" operand=to[1]/}px;background:{idcolor}"></div>
                   {/order.moves}
                 </div>
             </div>
@@ -56,7 +57,7 @@
               {?order.moves}
                 <div class="moves">
                 {#order.moves}
-                  <span>{from} to {to}</span>{@sep}, {/sep}
+                  <span>{alphabetized[0]} to {alphabetized[1]}</span>{@sep}, {/sep}
                 {/order.moves}
                 </div>
               {/order.moves}

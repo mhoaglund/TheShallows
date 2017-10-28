@@ -77,22 +77,32 @@ function getProjectData(myUrl){
 }
 
 function clean_and_supplement(data){
+	data['alpha_board'] = letter_of_alphabet(data['board'][0], true);
+
 	data['results'].forEach(function(element) {
 		var moves = element['order']['moves'];
 		if(moves.length > 0){
 			moves.forEach(function(_move){
 				_move["alphabetized"] = [];
-				_move["alphabetized"][0] = letter_of_alphabet[_move.from[0]] + _move.from[1].toString();
-				_move["alphabetized"][1] = letter_of_alphabet[_move.to[0]] + _move.to[1].toString();
+				_move["alphabetized"][0] = letter_of_alphabet(_move.from[0]-1, false) + _move.from[1].toString();
+				_move["alphabetized"][1] = letter_of_alphabet(_move.to[0]-1, false) + _move.to[1].toString();
 			});
 		}
 	});
 	return data;
 }
 
-function letter_of_alphabet(num){
-	var alphabet = ["a","b","c","d","e","f","g","h","i","j","k"];
-	return alphabet[num];
+function letter_of_alphabet(num, shouldSlice){
+	var alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+	if(shouldSlice){
+		if(num.constructor === Array){
+			num = num.length;
+		}
+		return alphabet.slice(0, num);
+	}
+	else{
+		return alphabet[num];
+	}
 }
 
 function displayAll(_data, _target, _template = 'CH_ORD', _cb = null){
