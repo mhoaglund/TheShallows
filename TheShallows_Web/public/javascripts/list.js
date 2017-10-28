@@ -30,6 +30,7 @@ dust.helpers.loop = function(chunk, context, bodies, params) {
 
 function close_all(){
 	$('.change-order').addClass('closed');
+	$('.change-order').removeClass('drowsy');
 	$('.vector').removeClass('animate');
 }
 
@@ -39,6 +40,10 @@ function expand(element){
 		element.removeClass('closed');
 		element.find('.tile, .vector').addClass('animate');
 	}
+	element.prev(".change-order").addClass('drowsy');
+	element.prev(".change-order").removeClass('closed');
+	element.next(".change-order").addClass('drowsy');
+	element.next(".change-order").removeClass('closed');
 }
 
 var oallht, oallwth, oallctr;

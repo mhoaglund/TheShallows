@@ -106,6 +106,7 @@ p:last-child{
       height: auto;      
     }
     .change-order.drowsy .gridhost .tile{height: 4px; opacity: 0.4;}
+    .change-order.drowsy .gridhost .marker, .change-order.drowsy .gridhost .vector{display: none;}
     .change-order.drowsy .thesis{display:none;}
 
     .gridhost{
