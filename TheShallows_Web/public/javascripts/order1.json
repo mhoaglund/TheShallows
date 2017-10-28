@@ -12,7 +12,8 @@
             {"from":[4,1],"to":[7,5]},
             {"from":[1,6],"to":[7,4]},
             {"from":[2,2],"to":[7,3]},
-            {"from":[8,8],"to":[7,2]}
+            {"from":[8,8],"to":[7,2]},
+            {"from":[1,1],"to":[1,7]}
         ],
         "rules":[
             {"type":"always", "condition":"g3>g2"}
@@ -42,7 +43,7 @@
     {
     "id":"abc1",
     "timestamp":"1506820716",
-    "idcolor":"#66CD00",
+    "idcolor":"#666600",
     "author":"Kevin Nigolny",
     "order":{
         "id":"ddd11122",
@@ -57,6 +58,42 @@
         ],
         "thesis":"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable."
     }
-    }
+    },
+    {
+        "id":"abc1",
+        "timestamp":"1506820708",
+        "idcolor":"#55CDCD",
+        "author":"Max Hoaglund",
+        "order":{
+            "id":"ddd11122",
+            "moves":[
+                {"from":[8,1],"to":[8,5]},
+                {"from":[7,2],"to":[8,3]},
+                {"from":[6,2],"to":[8,2]},
+                {"from":[7,6],"to":[1,7]}
+            ],
+            "rules":[
+                {"type":"always", "condition":"g3>g2"}
+            ],
+            "thesis":"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable."
+        }
+        },
+        {
+            "id":"abc1",
+            "timestamp":"1506820716",
+            "idcolor":"#1FCC92",
+            "author":"Rubeus Morgan",
+            "order":{
+                "id":"ddd11122",
+                "moves":[
+                    {"from":[6,1],"to":[7,1]},
+                    {"from":[6,6],"to":[2,2]}
+                ],
+                "rules":[
+                    {"type":"always", "condition":"g3>g2"}
+                ],
+                "thesis":"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable."
+            }
+            }
 ]
 }

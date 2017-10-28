@@ -88,6 +88,10 @@ p:last-child{
       column-rule: 1px solid cornflowerblue;
     }
 
+    .change-order .moves span{
+      font-weight: bold;
+    }
+
     .change-order:last-child{
       margin-bottom: 0px;
     }
