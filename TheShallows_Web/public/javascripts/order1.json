@@ -4,14 +4,15 @@
     {
     "id":"abc1",
     "timestamp":"1506820723",
+    "idcolor":"#CD5555",
     "author":"Sleve McDichael",
     "order":{
         "id":"ddd11122",
         "moves":[
-            {"from":"d1","to":"g5"},
-            {"from":"a6","to":"g4"},
-            {"from":"b2","to":"g3"},
-            {"from":"h8","to":"g2"}
+            {"from":[4,1],"to":[7,5]},
+            {"from":[1,6],"to":[7,4]},
+            {"from":[2,2],"to":[7,3]},
+            {"from":[8,8],"to":[7,2]}
         ],
         "rules":[
             {"type":"always", "condition":"g3>g2"}
@@ -21,15 +22,16 @@
     },
     {
     "id":"abc1",
-    "timestamp":"1506820723",
+    "timestamp":"1506820721",
+    "idcolor":"#66CCCC",
     "author":"Jeromy Gride",
     "order":{
         "id":"ddd11122",
         "moves":[
-            {"from":"d1","to":"g5"},
-            {"from":"a6","to":"g4"},
-            {"from":"b2","to":"g3"},
-            {"from":"h8","to":"g2"}
+            {"from":[1,1],"to":[6,1]},
+            {"from":[1,6],"to":[7,4]},
+            {"from":[2,2],"to":[7,3]},
+            {"from":[2,1],"to":[7,7]}
         ],
         "rules":[
             {"type":"always", "condition":"g3>g2"}
@@ -39,15 +41,16 @@
     },
     {
     "id":"abc1",
-    "timestamp":"1506820723",
+    "timestamp":"1506820716",
+    "idcolor":"#66CD00",
     "author":"Kevin Nigolny",
     "order":{
         "id":"ddd11122",
         "moves":[
-            {"from":"d1","to":"g5"},
-            {"from":"d2","to":"g12"},
-            {"from":"b8","to":"g12"},
-            {"from":"b6","to":"b7"}
+            {"from":[4,1],"to":[7,5]},
+            {"from":[4,2],"to":[7,3]},
+            {"from":[7,2],"to":[5,2]},
+            {"from":[2,6],"to":[2,7]}
         ],
         "rules":[
             {"type":"always", "condition":"g3>g2"}

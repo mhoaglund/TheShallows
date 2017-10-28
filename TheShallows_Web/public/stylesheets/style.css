@@ -107,6 +107,7 @@ p:last-child{
       flex-flow: row wrap;
       width: 554px;
       margin: auto;
+      position: relative;
     }
 
     .change-order .gridhost .tile{
@@ -118,7 +119,16 @@ p:last-child{
         box-sizing: border-box;
         border-collapse: collapse;
         opacity: 1;
-      }
+    }
+
+    .change-order .gridhost .vector{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: -35px;
+      left: -35px;
+      stroke-width: 2;
+    }
   /*End Structural Stuff*/
   /*Details*/
   /*End Details*/
@@ -172,11 +182,16 @@ p:last-child{
 }
 
 .gridhost .tile.animate  {
-  animation: SHW .5s;
+  animation: tilefade .5s;
   animation-fill-mode: both
 }
 
-@keyframes SHW {
+.gridhost .vector.animate  {
+  animation: vectorfade .7s;
+  animation-fill-mode: both
+}
+
+@keyframes tilefade {
   from {
       filter: blur(10px);
       border-color: blue;
@@ -185,6 +200,17 @@ p:last-child{
   to {
       filter: blur(0px);
       border-color: black;
+      opacity:1
+  }
+}
+
+@keyframes vectorfade {
+  from {
+      filter: blur(10px);
+      opacity:0
+  }
+  to {
+      filter: blur(0px);
       opacity:1
   }
 }

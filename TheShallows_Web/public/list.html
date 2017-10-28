@@ -33,6 +33,23 @@
                       <div class="tile" id="{.}"></div>
                     {/loop}
                   {/loop}
+                  {#order.moves}
+                    <svg class="vector">
+                      <defs>
+                        <linearGradient id='{timestamp}'>
+                          <stop stop-color='#888888'/>
+                          <stop offset='100%' stop-color='{idcolor}'/>
+                        </linearGradient>
+                      </defs>
+                        <line stroke-linecap="round"
+                          x1="{@math key=69.25 method="multiply" operand=from[0]/}" 
+                          y1="{@math key=69.25 method="multiply" operand=from[1]/}" 
+                          x2="{@math key=69 method="multiply" operand=to[0]/}" 
+                          y2="{@math key=69.25 method="multiply" operand=to[1]/}" 
+                          stroke="url(#{timestamp})"
+                        />
+                    </svg>
+                  {/order.moves}
                 </div>
             </div>
           <div class="content">
