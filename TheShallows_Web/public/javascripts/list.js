@@ -15,10 +15,30 @@ function set_time(){
 
 ///Determine offset of all visible orders, apply open, drowsy, closed css classes
 function set_focus(){
+	var locs = [];
 	view_data.forEach(function(id){
 		var location = $('#'+id).offset().top - $(window).scrollTop();
-		$('#'+id).find('#show').html(location);
+		locs.push({'id':id,'loc':location});
 	});
+	//var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)-100;
+	var h = 150;
+	var center = closest(locs,h);
+	close_all();
+	$('#'+center['id']).removeClass('closed');
+}
+
+function closest(array,num){
+    var i=0;
+    var minDiff=1000;
+    var ans;
+    for(i in array){
+         var m=Math.abs(num-array[i]['loc']);
+         if(m<minDiff){ 
+                minDiff=m; 
+                ans=array[i]; 
+            }
+      }
+    return ans;
 }
 
 dust.loadSource(cocompiled);
@@ -34,20 +54,6 @@ dust.helpers.loop = function(chunk, context, bodies, params) {
 	}
   
 	return chunk.render(bodies.block, context.push(from, from, len));
-}
-
-function closest(array,num){
-    var i=0;
-    var minDiff=1000;
-    var ans;
-    for(i in array){
-         var m=Math.abs(num-array[i]);
-         if(m<minDiff){ 
-                minDiff=m; 
-                ans=array[i]; 
-            }
-      }
-    return ans;
 }
 
 function close_all(){
