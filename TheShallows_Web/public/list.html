@@ -15,11 +15,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="javascripts/dust-full.min.js"></script>
   <script src="javascripts/dust-helpers.min.js"></script>
-  <script src="javascripts/jquery.appear.js"></script>
+  <script src="javascripts/jquery.waypoints.min.js"></script>
+  <script src="javascripts/inview.min.js"></script>
   <script id="co-template">
     {?results}
       {#results}
-        <div class="change-order closed" data-appear-top-offset="200" id="{id}">
+        <div class="change-order closed" id="{id}">
           <div class="top">
             <div class="inner">
               <h2>{author}</h2>
@@ -42,14 +43,14 @@
                         </linearGradient>
                       </defs>
                         <line stroke-linecap="round"
-                          y1="{@math key=69.25 method="multiply" operand=from[0]/}" 
+                          y1="{@math key=70 method="multiply" operand=from[0]/}" 
                           x1="{@math key=69.25 method="multiply" operand=from[1]/}" 
-                          y2="{@math key=69.25 method="multiply" operand=to[0]/}" 
+                          y2="{@math key=70 method="multiply" operand=to[0]/}" 
                           x2="{@math key=69.25 method="multiply" operand=to[1]/}" 
                           stroke="{idcolor}"
                         />
                     </svg>
-                    <div class="marker" style="top:{@math key=69.25 method="multiply" operand=to[0]/}px;left:{@math key=69.25 method="multiply" operand=to[1]/}px;background:{idcolor}"></div>
+                    <div class="marker" style="top:{@math key=69.75 method="multiply" operand=to[0]/}px;left:{@math key=69.25 method="multiply" operand=to[1]/}px;background:{idcolor}"></div>
                   {/order.moves}
                 </div>
             </div>

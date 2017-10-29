@@ -60,40 +60,61 @@
     }
     },
     {
-        "id":"102d5db8-ae36-42b4-b3ff-6cb86ed6c33f",
-        "timestamp":"1506820708",
-        "idcolor":"#55CDCD",
-        "author":"Max Hoaglund",
+    "id":"102d5db8-ae36-42b4-b3ff-6cb86ed6c33f",
+    "timestamp":"1506820708",
+    "idcolor":"#55CDCD",
+    "author":"Max Hoaglund",
+    "order":{
+        "id":"ddd11122",
+        "moves":[
+            {"from":[8,1],"to":[8,5]},
+            {"from":[7,2],"to":[8,3]},
+            {"from":[6,2],"to":[8,2]},
+            {"from":[7,6],"to":[1,7]}
+        ],
+        "rules":[
+            {"type":"always", "condition":"g3>g2"}
+        ],
+        "thesis":"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable."
+    }
+    },
+    {
+    "id":"9e4d6d84-c46c-44b2-bc65-120dec18818a",
+    "timestamp":"1506820716",
+    "idcolor":"#1FCC92",
+    "author":"Rubeus Morgan",
+    "order":{
+        "id":"ddd11122",
+        "moves":[
+            {"from":[6,1],"to":[7,1]},
+            {"from":[6,6],"to":[2,2]}
+        ],
+        "rules":[
+            {"type":"always", "condition":"g3>g2"}
+        ],
+        "thesis":"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable."
+    }
+    },
+    {
+        "id":"9e4d6d84-c46c-44b2-bc65-120dec18918b",
+        "timestamp":"1506820716",
+        "idcolor":"#FFCCFF",
+        "author":"Brad Leone",
         "order":{
             "id":"ddd11122",
             "moves":[
-                {"from":[8,1],"to":[8,5]},
-                {"from":[7,2],"to":[8,3]},
-                {"from":[6,2],"to":[8,2]},
-                {"from":[7,6],"to":[1,7]}
+                {"from":[6,1],"to":[7,1]},
+                {"from":[6,2],"to":[6,3]},
+                {"from":[6,3],"to":[5,1]},
+                {"from":[6,4],"to":[4,2]},
+                {"from":[6,5],"to":[3,1]},
+                {"from":[6,6],"to":[1,2]}
             ],
             "rules":[
                 {"type":"always", "condition":"g3>g2"}
             ],
             "thesis":"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable."
         }
-        },
-        {
-            "id":"9e4d6d84-c46c-44b2-bc65-120dec18818a",
-            "timestamp":"1506820716",
-            "idcolor":"#1FCC92",
-            "author":"Rubeus Morgan",
-            "order":{
-                "id":"ddd11122",
-                "moves":[
-                    {"from":[6,1],"to":[7,1]},
-                    {"from":[6,6],"to":[2,2]}
-                ],
-                "rules":[
-                    {"type":"always", "condition":"g3>g2"}
-                ],
-                "thesis":"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable."
-            }
-            }
+        }
 ]
 }

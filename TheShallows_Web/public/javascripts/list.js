@@ -13,6 +13,10 @@ function set_time(){
 	$("#time").html(time);
 }
 
+function set_focus(){
+
+}
+
 dust.loadSource(cocompiled);
 dust.helpers.loop = function(chunk, context, bodies, params) {
 	var from = parseInt(dust.helpers.tap(params.from, chunk, context), 10) || 1,
@@ -50,6 +54,7 @@ var oallht, oallwth, oallctr;
 var useOverlay = true;
 var lightnessmod = 1.2;
 var datamain = {};
+var view_data = [];
 
 function setOalls(){
 	 oallht = $(window).height();
@@ -72,6 +77,18 @@ function getProjectData(myUrl){
 			datamain = clean_and_supplement(data);
 			displayAll(datamain, '#list_host', 'CH_ORD', function(){
 				console.log("done");
+				$('.change-order').each(function(){
+					var waypoints = new Waypoint.Inview({
+						element: this,
+						entered: function(direction) {
+							if(view_data.indexOf(this.element.id) == -1) view_data.push(this.element.id);
+						},
+						exited: function(direction) {
+							view_data = view_data.filter(val => val !== this.element.id);
+						}
+					});
+				});
+				
 			});
 		},
 		error: function(data){
@@ -125,14 +142,11 @@ $(function(){
 
 	$(document).on('scroll', function() {
 		set_time();
+		set_focus();
 	});
 
 	$(document).on('click', '.change-order', function(){
 		expand($(this));
-	});
-
-	$('.change-order').on('appear', function(event, ){
-
 	});
 });
 
