@@ -13,8 +13,12 @@ function set_time(){
 	$("#time").html(time);
 }
 
+///Determine offset of all visible orders, apply open, drowsy, closed css classes
 function set_focus(){
-
+	view_data.forEach(function(id){
+		var location = $('#'+id).offset().top - $(window).scrollTop();
+		$('#'+id).find('#show').html(location);
+	});
 }
 
 dust.loadSource(cocompiled);
@@ -30,6 +34,20 @@ dust.helpers.loop = function(chunk, context, bodies, params) {
 	}
   
 	return chunk.render(bodies.block, context.push(from, from, len));
+}
+
+function closest(array,num){
+    var i=0;
+    var minDiff=1000;
+    var ans;
+    for(i in array){
+         var m=Math.abs(num-array[i]);
+         if(m<minDiff){ 
+                minDiff=m; 
+                ans=array[i]; 
+            }
+      }
+    return ans;
 }
 
 function close_all(){
@@ -81,7 +99,9 @@ function getProjectData(myUrl){
 					var waypoints = new Waypoint.Inview({
 						element: this,
 						entered: function(direction) {
-							if(view_data.indexOf(this.element.id) == -1) view_data.push(this.element.id);
+							if(view_data.indexOf(this.element.id) == -1){
+								view_data.push(this.element.id);
+							} 
 						},
 						exited: function(direction) {
 							view_data = view_data.filter(val => val !== this.element.id);
