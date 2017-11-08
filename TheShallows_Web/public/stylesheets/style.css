@@ -1,13 +1,14 @@
 body {
-  font: 1em "Cutive Mono", Georgia, Times, serif;
+  font: 1em "ibm-plex-sans", Georgia, Times, serif;
   line-height: 1.5;
+  background: #efefef;
 }
 
 a {
   color: #00B7FF;
 }
 h1, h2{
-  font-family: "Roboto", Georgia, Times, serif;
+  font-family: "ibm-plex-serif", Georgia, Times, serif;
 }
 h1,h2,h3,h4,h5,h6{
   -webkit-margin-before: 0em;
@@ -18,9 +19,9 @@ h1,h2,h3,h4,h5,h6{
 .top{
   position: relative;
 }
-.inner h2{
-  font-style: italic;
 
+.inner h2{
+  font-weight: 400;
 }
 
 p{
@@ -68,7 +69,7 @@ p:last-child{
       border: 1px solid grey;
       padding: 10px;
       margin-bottom: 12px;
-      background-color: white;
+      background-color: #efefef;
     }
     
     .change-order .inner{
@@ -80,7 +81,6 @@ p:last-child{
       .change-order.closed .inner{position: static;} 
 
     .change-order .thesis p{
-      letter-spacing: -2px;
       column-count: 2;
       column-gap: 1.5em;
       -webkit-margin-before: 0em;
@@ -88,9 +88,9 @@ p:last-child{
       column-rule: 1px solid cornflowerblue;
     }
 
-    .change-order .moves span{
+    /* .change-order .moves span{
       font-weight: bold;
-    }
+    } */
 
     .change-order:last-child{
       margin-bottom: 0px;
@@ -100,7 +100,7 @@ p:last-child{
     .change-order.closed .gridhost .tile{display: none; opacity: 0.0; height:0px;}
     .change-order.closed .gridhost .marker{display: none;}
     .change-order.closed .thesis{display:none;}
-    .change-order.closed h2, .change-order.drowsy h2{font-size: 0.8rem;}
+    .change-order.closed h2, .change-order.closed span, .change-order.drowsy h2, .change-order.drowsy span{font-size: 0.8rem;}
 
     .change-order.drowsy .gridhost{
       height: auto;      
@@ -129,6 +129,7 @@ p:last-child{
         width: calc(100% * (1/8) - 20px );
         padding-left: 4px;
         border: 1px solid black;
+        background: white;
         box-sizing: border-box;
         border-collapse: collapse;
         opacity: 1;
@@ -171,11 +172,11 @@ p:last-child{
 }
 .marker{
   position: absolute;
-  height: 1em;
-  width: 1em;
+  height: 0.7em;
+  width: 0.7em;
   border-radius: 0.5em;
-  margin-left: -43px;
-  margin-top: -40px;
+  margin-left: -40px;
+  margin-top: -37px;
 }
 @media screen and (max-width: 900px){
   .change-order .inner{

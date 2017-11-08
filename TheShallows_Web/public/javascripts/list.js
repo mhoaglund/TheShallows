@@ -25,6 +25,8 @@ function set_focus(){
 	var center = closest(locs,h);
 	close_all();
 	$('#'+center['id']).removeClass('closed');
+	$('#'+center['id']).prev('.change-order').addClass('drowsy');
+	$('#'+center['id']).next('.change-order').addClass('drowsy');
 }
 
 function closest(array,num){
