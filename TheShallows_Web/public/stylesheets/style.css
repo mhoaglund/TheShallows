@@ -22,6 +22,7 @@ h1,h2,h3,h4,h5,h6{
 
 .inner h2{
   font-weight: 400;
+  display: inline;
 }
 
 p{
@@ -44,6 +45,10 @@ p:last-child{
     margin: 5em auto;
     max-width: 90%;
     width: 40em;
+  }
+
+  #overlay > div.inner.flexfill{
+    flex-basis: 100%;
   }
   .titlecard{
   }
@@ -71,34 +76,34 @@ p:last-child{
       margin-bottom: 12px;
       background-color: #efefef;
     }
+
+      .change-order:first-child{
+        margin-top: 250px;
+      }
+      .change-order:last-child{
+        margin-bottom: 250px;
+      }
     
     .change-order .inner{
-      position: absolute;
+      /* position: absolute;
       top: 0px;
-      left: 0px;
+      left: 0px; */
     }
 
       .change-order.closed .inner{position: static;} 
 
     .change-order .thesis p{
-      column-count: 2;
-      column-gap: 1.5em;
+      /* column-count: 2;
+      column-gap: 1.5em; */
       -webkit-margin-before: 0em;
       -webkit-margin-after: 0em;
       column-rule: 1px solid cornflowerblue;
     }
 
-    /* .change-order .moves span{
-      font-weight: bold;
-    } */
-
-    .change-order:last-child{
-      margin-bottom: 0px;
-    }
-
     .change-order.closed .gridhost{height: 0px;}
     .change-order.closed .gridhost .tile{display: none; opacity: 0.0; height:0px;}
-    .change-order.closed .gridhost .marker{display: none;}
+    .change-order.closed .gridhost .marker,
+    .change-order.closed .rules span{display: none;}
     .change-order.closed .thesis{display:none;}
     .change-order.closed h2, .change-order.closed span, .change-order.drowsy h2, .change-order.drowsy span{font-size: 0.8rem;}
 
@@ -135,6 +140,10 @@ p:last-child{
         opacity: 1;
     }
 
+    .change-order.highlighted{
+      background: white;
+    }
+
     .change-order .gridhost .vector{
       width: 101%;
       height: 101%;
@@ -152,10 +161,11 @@ p:last-child{
   position: fixed;
   top: 0px;
   right: 4px;
-  box-shadow: inset 0 0 1em white, -5px 0 1em white;
-  background: white;
+  box-shadow: inset 0 0 1em #efefef, -5px 0 1em #efefef;
+  background: #efefef;
   z-index: 999;
 }
+
 #status{
   position: fixed;
   bottom: 4px;
@@ -170,6 +180,28 @@ p:last-child{
   width: 1em;
   border-radius: 0.5em;
 }
+
+#overlay{
+  position: fixed;
+  right: 0%;
+  top: 10%;
+  width: 65%;
+  height: 80%;
+  border: 1px solid black;
+  border-right: 0px;
+  background: #efefef;
+}
+
+#overlay.change-order{
+  display: flex;
+  flex-flow: row wrap;
+  align-content: start;
+}
+
+#overlay.change-order > div{
+  flex-basis: 50%;
+}
+
 .marker{
   position: absolute;
   height: 0.7em;

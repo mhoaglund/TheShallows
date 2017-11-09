@@ -22,13 +22,19 @@
     {?results}
       {#results}
         <div class="change-order closed" id="{id}">
-          <div class="top">
-            <div class="inner">
-              <h2>{author}</h2>
+          <div class="inner flexfill">
+              <h2>{author}  </h2>
               <span>{timestamp}</span>
               <span>{Abstract}</span>
+              {?order.moves}
+                <div class="moves">
+                {#order.moves}
+                  <span style="color:{idcolor};">{alphabetized[0]} ➞ {alphabetized[1]}</span>{@sep}, {/sep}
+                {/order.moves}
+                </div>
+              {/order.moves}
             </div>
-            <div class="overlay"></div>
+          <div class="top">
               <div class="gridhost">
                   {#alpha_board}
                     {@loop from=1 to="{board[1]}"}
@@ -56,13 +62,7 @@
                 </div>
             </div>
           <div class="content">
-              {?order.moves}
-                <div class="moves">
-                {#order.moves}
-                  <span style="color:{idcolor};">{alphabetized[0]} ➞ {alphabetized[1]}</span>{@sep}, {/sep}
-                {/order.moves}
-                </div>
-              {/order.moves}
+              
               {#order.rules}
                   <div class="rules"><span>{type}, {condition}{@sep}, </br>{/sep}</span></div>
               {/order.rules}
@@ -89,6 +89,7 @@
     <section class="mainlist" id="list_host">
 
     </section>
+    <section id="overlay" class="change-order"></section>
   </body>
   <script src="javascripts/jquery.slicknav.min.js"></script>
   <script src="javascripts/list.js"></script>

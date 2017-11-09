@@ -22,10 +22,11 @@ function set_focus(){
 	});
 	var h = (Math.max(document.documentElement.clientHeight, window.innerHeight || 0)/2)-100;
 	var center = closest(locs,h);
-	close_all();
-	$('#'+center['id']).removeClass('closed');
-	$('#'+center['id']).prev('.change-order').addClass('drowsy');
-	$('#'+center['id']).next('.change-order').addClass('drowsy');
+	 close_all();
+	 $('#'+center['id']).addClass('highlighted');
+	// $('#'+center['id']).prev('.change-order').addClass('drowsy');
+	// $('#'+center['id']).next('.change-order').addClass('drowsy');
+	$('#overlay').html($('#'+center['id']).html())
 }
 
 function closest(array,num){
@@ -58,8 +59,9 @@ dust.helpers.loop = function(chunk, context, bodies, params) {
 }
 
 function close_all(){
-	$('.change-order').addClass('closed');
+	//$('.change-order').addClass('closed');
 	$('.change-order').removeClass('drowsy');
+	$('.change-order').removeClass('highlighted');
 }
 
 function expand(element){
