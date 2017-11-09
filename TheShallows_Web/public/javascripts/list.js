@@ -20,8 +20,7 @@ function set_focus(){
 		var location = $('#'+id).offset().top - $(window).scrollTop();
 		locs.push({'id':id,'loc':location});
 	});
-	//var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0)-100;
-	var h = 150;
+	var h = (Math.max(document.documentElement.clientHeight, window.innerHeight || 0)/2)-100;
 	var center = closest(locs,h);
 	close_all();
 	$('#'+center['id']).removeClass('closed');
@@ -61,14 +60,12 @@ dust.helpers.loop = function(chunk, context, bodies, params) {
 function close_all(){
 	$('.change-order').addClass('closed');
 	$('.change-order').removeClass('drowsy');
-	$('.vector').removeClass('animate');
 }
 
 function expand(element){
 	close_all();
 	if(element.hasClass('closed')){
 		element.removeClass('closed');
-		element.find('.tile, .vector, .marker').addClass('animate');
 	}
 	element.prev(".change-order").addClass('drowsy');
 	element.prev(".change-order").removeClass('closed');

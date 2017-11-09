@@ -32,11 +32,11 @@
               <div class="gridhost">
                   {#alpha_board}
                     {@loop from=1 to="{board[1]}"}
-                      <div class="tile" id="{.}{alpha_board[$idx]}"><span>{alpha_board[$idx]}{.}</span></div>
+                      <div class="tile animate" id="{.}{alpha_board[$idx]}"><span>{alpha_board[$idx]}{.}</span></div>
                     {/loop}
                   {/alpha_board}
                   {#order.moves}
-                    <svg class="vector">
+                    <svg class="vector animate">
                       <defs>
                         <linearGradient id='{timestamp}'>
                           <stop stop-color='#888888'/>
@@ -51,7 +51,7 @@
                           stroke="{idcolor}"
                         />
                     </svg>
-                    <div class="marker" style="top:{@math key=69.75 method="multiply" operand=to[0]/}px;left:{@math key=69.25 method="multiply" operand=to[1]/}px;background:{idcolor}"></div>
+                    <div class="marker animate" style="top:{@math key=69.75 method="multiply" operand=to[0]/}px;left:{@math key=69.25 method="multiply" operand=to[1]/}px;background:{idcolor}"></div>
                   {/order.moves}
                 </div>
             </div>
