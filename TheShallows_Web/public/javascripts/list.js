@@ -13,6 +13,7 @@ function set_time(){
 	$("#time").html(time);
 }
 
+var current_focus = ''
 ///Determine offset of all visible orders, apply open, drowsy, closed css classes
 function set_focus(){
 	var locs = [];
@@ -20,13 +21,22 @@ function set_focus(){
 		var location = $('#'+id).offset().top - $(window).scrollTop();
 		locs.push({'id':id,'loc':location});
 	});
+
+	// if($(window).scrollTop() + $(window).height() > $(document).height() - 100){
+	// 	alert('at bottom')
+	// }
+
 	var h = (Math.max(document.documentElement.clientHeight, window.innerHeight || 0)/2)-100;
 	var center = closest(locs,h);
-	 close_all();
-	 $('#'+center['id']).addClass('highlighted');
-	// $('#'+center['id']).prev('.change-order').addClass('drowsy');
-	// $('#'+center['id']).next('.change-order').addClass('drowsy');
-	$('#overlay').html($('#'+center['id']).html())
+	if(current_focus != '#'+center['id']){
+		close_all();
+		$('#'+center['id']).addClass('highlighted');
+	   // $('#'+center['id']).prev('.change-order').addClass('drowsy');
+	   // $('#'+center['id']).next('.change-order').addClass('drowsy');
+	   $('#overlay').html($('#'+center['id']).html())
+	   current_focus = '#'+center['id']
+	}
+
 }
 
 function closest(array,num){

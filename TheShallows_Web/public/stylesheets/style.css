@@ -78,10 +78,10 @@ p:last-child{
     }
 
       .change-order:first-child{
-        margin-top: 250px;
+        margin-top: 50vh;
       }
       .change-order:last-child{
-        margin-bottom: 250px;
+        margin-bottom: 50vh;
       }
     
     .change-order .inner{
