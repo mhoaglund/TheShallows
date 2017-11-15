@@ -22,19 +22,13 @@ function set_focus(){
 		locs.push({'id':id,'loc':location});
 	});
 
-	// if($(window).scrollTop() + $(window).height() > $(document).height() - 100){
-	// 	alert('at bottom')
-	// }
-
 	var h = (Math.max(document.documentElement.clientHeight, window.innerHeight || 0)/2)-100;
 	var center = closest(locs,h);
 	if(current_focus != '#'+center['id']){
 		close_all();
 		$('#'+center['id']).addClass('highlighted');
-	   // $('#'+center['id']).prev('.change-order').addClass('drowsy');
-	   // $('#'+center['id']).next('.change-order').addClass('drowsy');
-	   $('#overlay').html($('#'+center['id']).html())
-	   current_focus = '#'+center['id']
+	    $('#overlay').html($('#'+center['id']).html())
+	    current_focus = '#'+center['id']
 	}
 
 }
@@ -69,7 +63,6 @@ dust.helpers.loop = function(chunk, context, bodies, params) {
 }
 
 function close_all(){
-	//$('.change-order').addClass('closed');
 	$('.change-order').removeClass('drowsy');
 	$('.change-order').removeClass('highlighted');
 }

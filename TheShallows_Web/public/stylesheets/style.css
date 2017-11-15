@@ -77,17 +77,12 @@ p:last-child{
       background-color: #efefef;
     }
 
-      .change-order:first-child{
-        margin-top: 50vh;
-      }
-      .change-order:last-child{
-        margin-bottom: 50vh;
-      }
-    
     .change-order .inner{
-      /* position: absolute;
-      top: 0px;
-      left: 0px; */
+    }
+
+    .bumper{
+      height: 50vh;
+      /* background-color: cornflowerblue; */
     }
 
       .change-order.closed .inner{position: static;} 
