@@ -30,7 +30,6 @@ function set_focus(){
 	    $('#overlay').html($('#'+center['id']).html())
 	    current_focus = '#'+center['id']
 	}
-
 }
 
 function closest(array,num){
