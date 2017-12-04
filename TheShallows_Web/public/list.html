@@ -10,40 +10,62 @@
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.10/webfont.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js" type="text/javascript"></script>
   <link href='https://fonts.googleapis.com/css?family=Cardo:400,700' rel='stylesheet' type='text/css'/>
+  <link rel="stylesheet" href="stylesheets/ibm-type.min.css" type="text/css"/>
   <link rel="stylesheet" href="stylesheets/style.css" type="text/css"/>
   <link rel="stylesheet" href="stylesheets/slicknav.css" type="text/css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="javascripts/dust-full.min.js"></script>
   <script src="javascripts/dust-helpers.min.js"></script>
+  <script src="javascripts/jquery.waypoints.min.js"></script>
+  <script src="javascripts/inview.min.js"></script>
   <script id="co-template">
+    <div class="bumper"></div>
     {?results}
       {#results}
-        <div class="change-order closed">
-          <div class="top">
-            <div class="inner">
-              <h2>{author}</h2>
+        <div class="change-order closed" id="{id}">
+          <div class="inner flexfill">
+              <h2>{author}  </h2>
               <span>{timestamp}</span>
               <span>{Abstract}</span>
-            </div>
-            <div class="overlay"></div>
-              <div class="gridhost">
-                  {@loop from=1 to="{board[0]}"}
-                    {@loop from=1 to="{board[1]}"}
-                      <div class="tile" id="{.}"></div>
-                    {/loop}
-                  {/loop}
-                </div>
-            </div>
-          <div class="content">
               {?order.moves}
                 <div class="moves">
                 {#order.moves}
-                  {from} to {to}{@sep}, </br>{/sep}
+                  <span style="color:{idcolor};">{alphabetized[0]} ➞ {alphabetized[1]}</span>{@sep}, {/sep}
                 {/order.moves}
                 </div>
               {/order.moves}
+            </div>
+          <div class="top">
+              <div class="gridhost">
+                  {#alpha_board}
+                    {@loop from=1 to="{board[1]}"}
+                      <div class="tile animate" id="{.}{alpha_board[$idx]}"><span>{alpha_board[$idx]}{.}</span></div>
+                    {/loop}
+                  {/alpha_board}
+                  {#order.moves}
+                    <svg class="vector animate">
+                      <defs>
+                        <linearGradient id='{timestamp}'>
+                          <stop stop-color='#888888'/>
+                          <stop offset='100%' stop-color='{idcolor}'/>
+                        </linearGradient>
+                      </defs>
+                        <line stroke-linecap="round"
+                          y1="{@math key=70 method="multiply" operand=from[0]/}" 
+                          x1="{@math key=69.25 method="multiply" operand=from[1]/}" 
+                          y2="{@math key=70 method="multiply" operand=to[0]/}" 
+                          x2="{@math key=69.25 method="multiply" operand=to[1]/}" 
+                          stroke="{idcolor}"
+                        />
+                    </svg>
+                    <div class="marker animate" style="top:{@math key=69.75 method="multiply" operand=to[0]/}px;left:{@math key=69.25 method="multiply" operand=to[1]/}px;background:{idcolor}"></div>
+                  {/order.moves}
+                </div>
+            </div>
+          <div class="content">
+              
               {#order.rules}
-                  <div class="rules">{type}, {condition}{@sep}, </br>{/sep}</div>
+                  <div class="rules"><span>{type}, {condition}{@sep}, </br>{/sep}</span></div>
               {/order.rules}
               {?order.thesis}
                 <div class="thesis"><p>{order.thesis}</p></div>
@@ -52,6 +74,7 @@
       </div>
       {/results}
     {/results}
+    <div class="bumper"></div>
   </script>
   </head>
   <body>
@@ -64,9 +87,11 @@
       </ul>
     </section>
     <aside id="time"></aside>
+    <aside id="status"></aside>
     <section class="mainlist" id="list_host">
 
     </section>
+    <section id="overlay" class="change-order"></section>
   </body>
   <script src="javascripts/jquery.slicknav.min.js"></script>
   <script src="javascripts/list.js"></script>

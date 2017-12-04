@@ -1,13 +1,14 @@
 body {
-  font: 1em "Cutive Mono", Georgia, Times, serif;
+  font: 1em "ibm-plex-sans", Georgia, Times, serif;
   line-height: 1.5;
+  background: #efefef;
 }
 
 a {
   color: #00B7FF;
 }
 h1, h2{
-  font-family: "Roboto", Georgia, Times, serif;
+  font-family: "ibm-plex-serif", Georgia, Times, serif;
 }
 h1,h2,h3,h4,h5,h6{
   -webkit-margin-before: 0em;
@@ -15,8 +16,13 @@ h1,h2,h3,h4,h5,h6{
   -webkit-margin-start: 0px;
   -webkit-margin-end: 0px;
 }
+.top{
+  position: relative;
+}
+
 .inner h2{
-  font-style: italic;
+  font-weight: 400;
+  display: inline;
 }
 
 p{
@@ -40,6 +46,10 @@ p:last-child{
     max-width: 90%;
     width: 40em;
   }
+
+  #overlay > div.inner.flexfill{
+    flex-basis: 100%;
+  }
   .titlecard{
   }
     .titlecard h1{
@@ -53,50 +63,156 @@ p:last-child{
       display: block;
     }
 
+    .tile{
+      transition: .25s ease-in-out;
+      -moz-transition: .25s ease-in-out;
+      -webkit-transition: .25s ease-in-out;
+    }
+
     .change-order{
       box-sizing: border-box;
       border: 1px solid grey;
       padding: 10px;
       margin-bottom: 12px;
-      background-color: white;
+      background-color: #efefef;
     }
 
-    .change-order:last-child{
-      margin-bottom: 0px;
+    .change-order .inner{
+    }
+
+    .bumper{
+      height: 50vh;
+      /* background-color: cornflowerblue; */
+    }
+
+      .change-order.closed .inner{position: static;} 
+
+    .change-order .thesis p{
+      /* column-count: 2;
+      column-gap: 1.5em; */
+      -webkit-margin-before: 0em;
+      -webkit-margin-after: 0em;
+      column-rule: 1px solid cornflowerblue;
     }
 
     .change-order.closed .gridhost{height: 0px;}
-    .change-order.closed .gridhost .tile{display: none; opacity: 0.0;}
+    .change-order.closed .gridhost .tile{display: none; opacity: 0.0; height:0px;}
+    .change-order.closed .gridhost .marker,
+    .change-order.closed .rules span{display: none;}
     .change-order.closed .thesis{display:none;}
+    .change-order.closed h2, .change-order.closed span, .change-order.drowsy h2, .change-order.drowsy span{font-size: 0.8rem;}
+
+    .change-order.drowsy .gridhost{
+      height: auto;      
+    }
+    .change-order.drowsy .gridhost .tile{height: 4px; opacity: 0.4;}
+    .change-order.drowsy .gridhost .marker, .change-order.drowsy .gridhost .vector{display: none;}
+    .change-order.drowsy .thesis{display:none;}
+
+    .change-order.closed .tile span,
+    .change-order.drowsy .tile span{
+      display: none;
+    }
 
     .gridhost{
       display: flex;
       flex-flow: row wrap;
       width: 554px;
       margin: auto;
+      position: relative;
     }
 
-      .gridhost .tile{
+    .change-order .gridhost .tile{
         margin: 10px;
         flex-grow: 1;
         height: 50px;
         width: calc(100% * (1/8) - 20px );
+        padding-left: 4px;
         border: 1px solid black;
+        background: white;
         box-sizing: border-box;
         border-collapse: collapse;
-      }
+        opacity: 1;
+    }
+
+    .change-order.highlighted{
+      background: white;
+    }
+
+    .change-order .gridhost .vector{
+      width: 101%;
+      height: 101%;
+      position: absolute;
+      top: -35px;
+      left: -35px;
+      stroke-width: 2;
+      opacity: 1;
+    }
   /*End Structural Stuff*/
   /*Details*/
   /*End Details*/
 /*End Class Styles*/
 #time{
   position: fixed;
-  top:0px;
-  left:10px;
-  box-shadow: 10px 5px 5px white;
-  background: white;
+  top: 0px;
+  right: 4px;
+  box-shadow: inset 0 0 1em #efefef, -5px 0 1em #efefef;
+  background: #efefef;
+  z-index: 999;
+}
+
+#status{
+  position: fixed;
+  bottom: 4px;
+  right: 4px;
+  box-shadow: 
+    inset 0 0 1em cornflowerblue, 
+    0px 0 1.2em white, 
+    0px 0 0.8em cornflowerblue;
+  background: cornflowerblue;
+  z-index: 999;
+  height: 1em;
+  width: 1em;
+  border-radius: 0.5em;
+}
+
+#overlay{
+  position: fixed;
+  right: 0%;
+  top: 10%;
+  width: 65%;
+  height: 80%;
+  border: 1px solid black;
+  border-right: 0px;
+  background: #efefef;
+}
+
+#overlay.change-order{
+  display: flex;
+  flex-flow: row wrap;
+  align-content: start;
+}
+
+#overlay.change-order > div{
+  flex-basis: 50%;
+}
+
+.marker{
+  position: absolute;
+  height: 0.7em;
+  width: 0.7em;
+  border-radius: 0.5em;
+  margin-left: -40px;
+  margin-top: -37px;
+}
+@media screen and (max-width: 900px){
+  .change-order .inner{
+    position: static;
+  }
 }
 @media screen and (max-width: 600px){
+
+
   .gridhost{
     display: flex;
     flex-flow: row wrap;
@@ -104,7 +220,7 @@ p:last-child{
     margin: auto;
   }
 
-    .gridhost .tile{
+  .change-order .gridhost .tile{
       margin: 5px;
       flex-grow: 1;
       height: 28px;
@@ -113,4 +229,39 @@ p:last-child{
       box-sizing: border-box;
       border-collapse: collapse;
     }
+}
+
+.gridhost .tile.animate  {
+  animation: tilefade .5s;
+  animation-fill-mode: both
+}
+
+.gridhost .vector.animate,
+.gridhost .marker.animate  {
+  animation: vectorfade .7s;
+  animation-fill-mode: both
+}
+
+@keyframes tilefade {
+  from {
+      filter: blur(10px);
+      border-color: blue;
+      opacity:0;
+  }
+  to {
+      filter: blur(0px);
+      border-color: black;
+      opacity:1;
+  }
+}
+
+@keyframes vectorfade {
+  from {
+      filter: blur(10px);
+      opacity:0;
+  }
+  to {
+      filter: blur(0px);
+      opacity:1;
+  }
 }
