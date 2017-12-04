@@ -1,3 +1,5 @@
+#include <Mouse.h>
+
 #include <bitswap.h>
 #include <chipsets.h>
 #include <color.h>
@@ -29,6 +31,7 @@
 
 #define PIN 17
 const int LEDs = 8;
+int prev_pos = 0;
 
 #define BRIGHTNESS  64
 #define LED_TYPE    WS2811
@@ -38,7 +41,7 @@ CRGB leds[LEDs];
 
 Encoder wheel(11,12);
 void setup() {
-  Serial.begin(9600);
+  //Serial.begin(9600);
   // put your setup code here, to run once:
 
 }
@@ -46,5 +49,13 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   int pos = wheel.read();
-  Serial.println(pos, DEC);
+  if(pos != prev_pos){
+    double delta = (prev_pos - pos);
+    if(delta < 0) delta = -0.5;
+    else delta = 0.5;
+    Mouse.scroll(delta);
+    prev_pos = pos;
+  }
+
+  //Serial.println(pos, DEC);
 }
