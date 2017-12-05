@@ -1,5 +1,6 @@
 var items = {}
 var host = "https://myapi/"
+var enumerate = "/*/GET/change-orders/all"
 
 function do_post(url, payload, callback){
     $.ajax({
@@ -42,7 +43,7 @@ var initialized = false;
 
 function update(cb){
     if(!initialized) return;
-    
+
 }
 
 if(Object.keys(items).length === 0 && items.constructor === Object){

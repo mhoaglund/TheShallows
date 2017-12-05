@@ -13,10 +13,29 @@ function set_time(){
 	$("#time").html(time);
 }
 
+//user has scrolled down to the bottom. get change orders from the past and populate.
+function get_before_oldest(){
+
+}
+
+//user has scrolled to the top, get newer change orders if there are any.
+function check_and_get_newest(){
+	//GET etc
+	//add
+	$('html, body').animate({scrollTop: '0px'}, 300);
+}
+
 var current_focus = ''
-///Determine offset of all visible orders, apply open, drowsy, closed css classes
 function set_focus(){
 	var locs = [];
+	var isAtTop = ($(window).scrollTop() == 0) ? true : false;
+	var isAtBottom = ($(window).scrollTop() >= $(document).height() - window.innerHeight) ? true : false;
+	if(isAtTop){
+		return;
+	}
+	if(isAtBottom){
+		return;
+	}
 	view_data.forEach(function(id){
 		var location = $('#'+id).offset().top - $(window).scrollTop();
 		locs.push({'id':id,'loc':location});
@@ -165,6 +184,10 @@ function displayAll(_data, _target, _template = 'CH_ORD', _cb = null){
 
 
 $(function(){	
+	$("body").niceScroll({
+		scrollspeed: 5,
+		mousescrollstep: 5
+	});
 	$( window ).resize(function() {
 		setOalls();
 	});
@@ -177,6 +200,10 @@ $(function(){
 	$(document).on('click', '.change-order', function(){
 		expand($(this));
 	});
+	
+	if(document.body.requestFullscreen){
+		document.body.requestFullscreen();
+	}
 });
 
 getProjectData(data_location);
