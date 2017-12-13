@@ -14,7 +14,38 @@
         <link rel="stylesheet" href="stylesheets/style.css" type="text/css"/>
         <link rel="stylesheet" href="stylesheets/slicknav.css" type="text/css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+        <script src="javascripts/dust-full.min.js"></script>
+        <script src="javascripts/dust-helpers.min.js"></script>
         <script src="javascripts/jquery.nicescroll.min.js"></script>
+        <script src="javascripts/inview.min.js"></script>
+        <script id="co-template">
+        //TODO: create links to object image sources in tiles somehow, and populate a draggable element in the UI somehow
+          <div class="bumper"></div>
+              <div class="change-order closed" id="{id}">
+                <div class="inner flexfill">
+                    <h2>{author}  </h2>
+                    <span>{timestamp}</span>
+                    <span>{Abstract}</span>
+                    {?order.moves}
+                      <div class="moves">
+                      {#order.moves}
+                        <span style="color:{idcolor};">{alphabetized[0]} ➞ {alphabetized[1]}</span>{@sep}, {/sep}
+                      {/order.moves}
+                      </div>
+                    {/order.moves}
+                  </div>
+                <div class="top">
+                    <div class="gridhost">
+                        {#alpha_board}
+                          {@loop from=1 to="{board[1]}"}
+                            <div class="tile animate" id="{.}{alpha_board[$idx]}"><span>{alpha_board[$idx]}{.}</span></div>
+                          {/loop}
+                        {/alpha_board}
+                      </div>
+                  </div>
+            </div>
+          <div class="bumper"></div>
+        </script>
     </head>
     <body>
         <section class="menucontainer" style="display: none;">
@@ -27,6 +58,16 @@
           </section>
           <aside id="time"></aside>
           <aside id="status"></aside>
+          <form>
+            <div class="fb-text form-group">
+                <label for="momentwhat" class="fb-text-label">Author <span class="tooltip-element" tooltip="How you want to be known">?</span></label> 
+                <input type="text" class="form-control" name="author" id="authorentry">
+            </div>
+            <div class="fb-text form-group">
+                <label for="momentwhat" class="fb-text-label">Thesis <span class="tooltip-element" tooltip="Why?">?</span></label> 
+                <input type="text" class="form-control" name="author" id="authorentry">
+            </div>
+          </form>
           <script src="javascripts/jquery.slicknav.min.js"></script>
           <script src="javascripts/upload.js"></script>
     </body>
