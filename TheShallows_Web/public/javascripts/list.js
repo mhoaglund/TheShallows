@@ -85,17 +85,6 @@ function close_all(){
 	$('.change-order').removeClass('highlighted');
 }
 
-function expand(element){
-	close_all();
-	if(element.hasClass('closed')){
-		element.removeClass('closed');
-	}
-	element.prev(".change-order").addClass('drowsy');
-	element.prev(".change-order").removeClass('closed');
-	element.next(".change-order").addClass('drowsy');
-	element.next(".change-order").removeClass('closed');
-}
-
 var oallht, oallwth, oallctr;
 var useOverlay = true;
 var lightnessmod = 1.2;
@@ -198,7 +187,7 @@ $(function(){
 	});
 
 	$(document).on('click', '.change-order', function(){
-		expand($(this));
+		//expand($(this));
 	});
 	
 	if(document.body.requestFullscreen){
