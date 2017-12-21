@@ -97,7 +97,7 @@ function setOalls(){
 	 oallctr = {x: (oallwth/2), y: (oallht/2) };
 }
 
-var data_location = 'https://s3.amazonaws.com/shallows/glossary.json';
+var data_location = 'https://s3.amazonaws.com/shallows/glossary1.json';
 function getProjectData(myUrl){
 	var result = null;
 	$.ajax( { url: myUrl, 
