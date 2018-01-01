@@ -1,4 +1,67 @@
+var data_location = 'https://s3.amazonaws.com/shallows/current_array.json';
+var data = {
+	active: set_time,
+	google : {families: ['Cardo:italic', 'Roboto:300,100', 'Cutive Mono', 'Work Sans:100,300,500', 'Montserrat:300,500']}
+};
+
+WebFont.load(data);
+//Dev: dust compilation
+var _obj_template = $('#obj-template').html();
+var cocompiled = dust.compile(_obj_template, 'ARR_OBJ');
+
+function getProjectData(myUrl){
+	var result = null;
+	$.ajax( { url: myUrl, 
+		type: 'GET', 
+		dataType: 'json',
+        crossDomain: true,
+		contentType: 'application/json',
+		async: true,
+		cache: false,
+		data: '',
+		success: function(data) { 
+			datamain = clean_and_supplement(data);
+			displayAll(datamain, '#objecthost', 'ARR_OBJ', function(){
+				console.log("done");
+				$('.array-object').each(function(){
+                    //TODO attach anything we need for draggable shit down there
+				});
+			});
+		},
+		error: function(data){
+			alert("problem");
+		}
+	});
+	return result;
+}
+
+function displayAll(_data, _target, _template = 'CH_ORD', _cb = null){
+	dust.render(_template, _data, function(err, out) {
+        $(_target).html(out);
+		if(_cb )_cb();
+	});
+}
+
+function clean_and_supplement(data){
+	data['alpha_board'] = letter_of_alphabet(data['board'][0], true);
+
+	data['results'].forEach(function(element) {
+		var moves = element['order']['moves'];
+		if(moves.length > 0){
+			moves.forEach(function(_move){
+				_move["alphabetized"] = [];
+				_move["alphabetized"][0] = letter_of_alphabet(_move.from[0]-1, false) + _move.from[1].toString();
+				_move["alphabetized"][1] = letter_of_alphabet(_move.to[0]-1, false) + _move.to[1].toString();
+			});
+		}
+	});
+	return data;
+}
+
 $(function(){
+    
+    getObjectData(data_location);
+    
     interact('.draggable')
     .draggable({
         inertia: false,
