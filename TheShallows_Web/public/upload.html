@@ -30,7 +30,19 @@
                       {/loop}
                     {/alpha_board}
                   </div>
-              </div>
+            </div>
+            <div class="tempstorage" id="{current}_{id}">
+              {?objects}
+                {#objects}
+                  <div class="object-main" style="background: url(https://s3.amazonaws.com/shallows/images/{image}) no-repeat contain">
+                    <h2 class="object-name">{name}</h2>
+                    <p class="object-author">
+                      {author}
+                    </p>
+                  </div>
+                {/objects}
+              {/objects}
+            </div>
           <div class="bumper"></div>
         </script>
     </head>

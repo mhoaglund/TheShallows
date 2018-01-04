@@ -8,6 +8,20 @@ WebFont.load(data);
 //Dev: dust compilation
 var _obj_template = $('#obj-template').html();
 var cocompiled = dust.compile(_obj_template, 'ARR_OBJ');
+dust.loadSource(cocompiled);
+dust.helpers.loop = function(chunk, context, bodies, params) {
+	var from = parseInt(dust.helpers.tap(params.from, chunk, context), 10) || 1,
+		  to = parseInt(dust.helpers.tap(params.to, chunk, context), 10) || 1,
+		  len = Math.abs(to - from) + 1,
+		  increment = (to - from) / (len - 1) || 1;
+  
+	while(from !== to) {
+		chunk = bodies.block(chunk, context.push(from, from, len));
+		from += increment;
+	}
+  
+	return chunk.render(bodies.block, context.push(from, from, len));
+}
 
 function getObjectData(myUrl){
 	var result = null;

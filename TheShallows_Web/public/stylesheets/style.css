@@ -148,6 +148,17 @@ p:last-child{
       stroke-width: 2;
       opacity: 1;
     }
+
+    .object-main{
+
+    }
+    .object-main .object-name{
+
+    }
+    .object-main .object-author{
+      
+    }
+    
   /*End Structural Stuff*/
   /*Details*/
   /*End Details*/
