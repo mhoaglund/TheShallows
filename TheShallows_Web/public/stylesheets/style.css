@@ -117,7 +117,7 @@ p:last-child{
     .gridhost{
       display: flex;
       flex-flow: row wrap;
-      width: 554px;
+      width: 80%;
       margin: auto;
       position: relative;
     }
@@ -135,6 +135,17 @@ p:last-child{
         opacity: 1;
     }
 
+    .object-array .gridhost .tile{
+      margin: 10px;
+      height: 50px;
+      padding-left: 4px;
+      border: 1px solid black;
+      background: white;
+      box-sizing: border-box;
+      border-collapse: collapse;
+      opacity: 1;
+  }
+
     .change-order.highlighted{
       background: white;
     }
@@ -150,7 +161,6 @@ p:last-child{
     }
 
     .object-main{
-
     }
     .object-main .object-name{
 

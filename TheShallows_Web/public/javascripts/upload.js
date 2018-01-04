@@ -36,9 +36,11 @@ function getObjectData(myUrl){
 		success: function(data) { 
 			datamain = clean_and_supplement(data);
 			displayAll(datamain, '#objecthost', 'ARR_OBJ', function(){
-				console.log("done");
-				$('.array-object').each(function(){
-                    //TODO attach anything we need for draggable shit down there
+                adjustTileSize();
+				$('.object-main').each(function(){
+                    var location = reverseString($(this).attr('id').split('_')[0]).toLowerCase()
+                    console.log(location);
+                    $('#'+location).append($(this))
 				});
 			});
 		},
@@ -47,6 +49,14 @@ function getObjectData(myUrl){
 		}
 	});
 	return result;
+}
+
+function adjustTileSize(){
+    var cols = 100/(datamain.board[0]);
+    $('.tile').css('width', cols+'%').css('width', '-=24px');
+    $('.tile').each(function(){
+        $(this).css('height', $(this).width())
+    })
 }
 
 function displayAll(_data, _target, _template = 'CH_ORD', _cb = null){
@@ -63,7 +73,6 @@ function set_time(){
 
 function clean_and_supplement(data){
 	data['alpha_board'] = letter_of_alphabet(data['board'][0], true);
-
 	data['objects'].forEach(function(element) {
 
 	});
@@ -83,11 +92,18 @@ function letter_of_alphabet(num, shouldSlice){
 	}
 }
 
+function reverseString(str) {
+    return str.split("").reverse().join("");
+}
+
 
 $(function(){
     
     getObjectData(data_location);
-    
+    $( window ).resize(function() {
+		adjustTileSize();
+	});
+
     interact('.draggable')
     .draggable({
         inertia: false,

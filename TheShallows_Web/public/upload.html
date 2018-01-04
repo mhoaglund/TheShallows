@@ -19,10 +19,9 @@
         <script src="javascripts/jquery.nicescroll.min.js"></script>
         <script id="obj-template">
         //TODO: create links to object image sources in tiles somehow, and populate a draggable element in the UI somehow
-          <div class="bumper"></div>
             <div class="inner flexfill">
             </div>
-            <div class="top">
+            <div class="top object-array">
                 <div class="gridhost">
                     {#alpha_board}
                       {@loop from=1 to="{board[1]}"}
@@ -31,10 +30,10 @@
                     {/alpha_board}
                   </div>
             </div>
-            <div class="tempstorage" id="{current}_{id}">
+            <div class="tempstorage" >
               {?objects}
                 {#objects}
-                  <div class="object-main" style="background: url(https://s3.amazonaws.com/shallows/images/{image}) no-repeat contain">
+                  <div class="object-main" id="{current}_{id}" style="background: url(https://s3.amazonaws.com/shallows/images/{image}) no-repeat contain">
                     <h2 class="object-name">{name}</h2>
                     <p class="object-author">
                       {author}
