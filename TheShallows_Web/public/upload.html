@@ -14,6 +14,10 @@
         <link rel="stylesheet" href="stylesheets/style.css" type="text/css"/>
         <link rel="stylesheet" href="stylesheets/slicknav.css" type="text/css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+        <script
+        src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"
+        integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk="
+        crossorigin="anonymous"></script>
         <script src="javascripts/dust-full.min.js"></script>
         <script src="javascripts/dust-helpers.min.js"></script>
         <script src="javascripts/jquery.nicescroll.min.js"></script>
@@ -21,26 +25,33 @@
         //TODO: create links to object image sources in tiles somehow, and populate a draggable element in the UI somehow
             <div class="inner flexfill">
             </div>
-            <div class="top object-array">
+            <div class="object-array underlay">
                 <div class="gridhost">
                     {#alpha_board}
                       {@loop from=1 to="{board[1]}"}
-                        <div class="tile animate " id="{.}{alpha_board[$idx]}"><span>{alpha_board[$idx]}{.}</span></div>
+                        <div class="tile animate dropzone" id="under_{.}{alpha_board[$idx]}"><span>{alpha_board[$idx]}{.}</span><div class="dropcontain"></div></div>
                       {/loop}
                     {/alpha_board}
                   </div>
             </div>
-            <div class="tempstorage" >
-              {?objects}
-                {#objects}
-                  <div class="object-main" id="{current}_{id}" style="background: url(https://s3.amazonaws.com/shallows/images/{image}) no-repeat contain">
-                    <h2 class="object-name">{name}</h2>
-                    <p class="object-author">
-                      {author}
-                    </p>
+            <div class="object-array overlay" style="z-index: 999;">
+                <div class="gridhost">
+                    {#alpha_board}
+                      {@loop from=1 to="{board[1]}"}
+                        <div class="tile animate invisible dropzone" id="{.}{alpha_board[$idx]}"><div class="dropcontain"></div></div>
+                      {/loop}
+                    {/alpha_board}
                   </div>
+                  {?objects}
+                    {#objects}
+                      <div class="object-main draggable ui-widget-content" id="{current}_{id}" style="background: url(https://s3.amazonaws.com/shallows/images/{image}) no-repeat contain">
+                        <h2 class="object-name">{name}</h2>
+                        <p class="object-author">
+                          {author}
+                        </p>
+                      </div>
+                    {/objects}
                 {/objects}
-              {/objects}
             </div>
           <div class="bumper"></div>
         </script>

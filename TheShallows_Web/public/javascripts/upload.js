@@ -41,7 +41,16 @@ function getObjectData(myUrl){
                     var location = reverseString($(this).attr('id').split('_')[0]).toLowerCase()
                     console.log(location);
                     $('#'+location).append($(this))
-				});
+                });
+                $( ".draggable" ).draggable({ 
+                    revert: true
+                });
+                $('.tile.invisible').droppable({
+                    drop: function(event, ui){
+                        //$(this).addClass('yellow');
+                        $('.underlay').find('#under_' + $(this).attr('id')).addClass('yellow')
+                    }
+                })
 			});
 		},
 		error: function(data){
@@ -52,8 +61,9 @@ function getObjectData(myUrl){
 }
 
 function adjustTileSize(){
-    var cols = 100/(datamain.board[0]);
-    $('.tile').css('width', cols+'%').css('width', '-=24px');
+    var cols = 100/(datamain.board[0]+2);
+    $('.tile').css('width', 'auto');
+    $('.tile').css('width', cols+'%');
     $('.tile').each(function(){
         $(this).css('height', $(this).width())
     })
@@ -74,7 +84,6 @@ function set_time(){
 function clean_and_supplement(data){
 	data['alpha_board'] = letter_of_alphabet(data['board'][0], true);
 	data['objects'].forEach(function(element) {
-
 	});
 	return data;
 }
@@ -96,62 +105,11 @@ function reverseString(str) {
     return str.split("").reverse().join("");
 }
 
-
+var dropzone;
 $(function(){
     
     getObjectData(data_location);
     $( window ).resize(function() {
 		adjustTileSize();
-	});
-
-    interact('.draggable')
-    .draggable({
-        inertia: false,
-        restrict: {
-        restriction: "parent",
-        endOnly: true,
-        elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-        },
-        autoScroll: false,
-        onmove: dragMoveListener,
-        onend: function (event) {}
     });
-
-    function dragMoveListener (event) {
-        var target = event.target,
-            x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
-            y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-        target.style.webkitTransform =
-        target.style.transform =
-        'translate(' + x + 'px, ' + y + 'px)';
-        target.setAttribute('data-x', x);
-        target.setAttribute('data-y', y);
-    }
-    window.dragMoveListener = dragMoveListener;
-    interact('.dropzone').dropzone({
-        accept: '.draggable',
-        overlap: 0.75,
-        ondropactivate: function (event) {
-            event.target.classList.add('drop-active');
-        },
-        ondragenter: function (event) {
-            var draggableElement = event.relatedTarget,
-                dropzoneElement = event.target;
-            dropzoneElement.classList.add('drop-target');
-            draggableElement.classList.add('can-drop');
-            draggableElement.textContent = 'Dragged in';
-        },
-        ondragleave: function (event) {
-            event.target.classList.remove('drop-target');
-            event.relatedTarget.classList.remove('can-drop');
-            event.relatedTarget.textContent = 'Dragged out';
-        },
-        ondrop: function (event) {
-            event.relatedTarget.textContent = 'Dropped';
-        },
-        ondropdeactivate: function (event) {
-            event.target.classList.remove('drop-active');
-            event.target.classList.remove('drop-target');
-        }
-  });
 })

@@ -120,6 +120,7 @@ p:last-child{
       width: 80%;
       margin: auto;
       position: relative;
+      z-index: 9;
     }
 
     .change-order .gridhost .tile{
@@ -127,7 +128,6 @@ p:last-child{
         flex-grow: 1;
         height: 50px;
         width: calc(100% * (1/8) - 20px );
-        padding-left: 4px;
         border: 1px solid black;
         background: white;
         box-sizing: border-box;
@@ -135,16 +135,55 @@ p:last-child{
         opacity: 1;
     }
 
-    .object-array .gridhost .tile{
-      margin: 10px;
-      height: 50px;
-      padding-left: 4px;
-      border: 1px solid black;
-      background: white;
-      box-sizing: border-box;
-      border-collapse: collapse;
-      opacity: 1;
+  .object-array.underlay,
+  .object-array.overlay{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
   }
+
+  .object-array .gridhost .tile{
+    margin: 10px;
+    height: 50px;
+    border: 1px solid black;
+    background: white;
+    box-sizing: border-box;
+    border-collapse: collapse;
+    opacity: 1;
+    position: relative;
+    z-index: 9;
+  }
+
+  .object-array .gridhost .tile.invisible{
+    margin: 10px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0);
+    padding: 1px;
+    border: none;
+    box-sizing: border-box;
+    border-collapse: collapse;
+    opacity: 0;
+    position: relative;
+    z-index: 9;
+}
+
+    .object-array .gridhost .tile > span{
+      position: absolute;
+      top: 2px;
+      left: 2px;
+    }
+
+    .object-main{
+      background-color: #222;
+      width: 100%;
+      height: 100%;
+      z-index: 999;
+    }
+    .object-main > h2{
+      font-size: 0.8em;
+      text-align: right;
+    }
 
     .change-order.highlighted{
       background: white;
@@ -308,4 +347,8 @@ p:last-child{
 
 .glossary-view{
   
+}
+
+.yellow{
+  background-color: yellow !important;
 }
