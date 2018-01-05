@@ -43,7 +43,10 @@ function getObjectData(myUrl){
                     $('#'+location).append($(this))
                 });
                 $( ".draggable" ).draggable({ 
-                    revert: true
+					revert: true,
+					start: function(){
+						clickbuffer = false;
+					}
                 });
                 $('.tile.invisible').droppable({
                     drop: function(event, ui){
@@ -84,6 +87,7 @@ function set_time(){
 function clean_and_supplement(data){
 	data['alpha_board'] = letter_of_alphabet(data['board'][0], true);
 	data['objects'].forEach(function(element) {
+		element['current'] = element['current'].toLowerCase();
 	});
 	return data;
 }
@@ -105,11 +109,22 @@ function reverseString(str) {
     return str.split("").reverse().join("");
 }
 
+function raiseDetailPopup(){
+	alert('detail')
+}
+var clickbuffer = false;
 var dropzone;
 $(function(){
-    
     getObjectData(data_location);
     $( window ).resize(function() {
 		adjustTileSize();
-    });
+	});
+	$(document.body).on('mousedown', '.object-main', function(e){
+		clickbuffer = true;
+	})
+	$(document.body).on('mouseup', '.object-main', function(e){
+		if(clickbuffer){
+			raiseDetailPopup();
+		}
+	})
 })

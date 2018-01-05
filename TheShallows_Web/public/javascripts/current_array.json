@@ -12,7 +12,8 @@
             "previous":"B4",
             "original":"B1",
             "activity":"6",
-            "image":"lisample.png"
+            "image":"lithium.jpg",
+            "txtcolor":"txtwhite"
         },
         {
             "id":"43da7073-4eef-43c5-b59d-984b72dc3b35", 
@@ -24,7 +25,8 @@
             "previous":"C1",
             "original":"C1",
             "activity":"0",
-            "image":"potatoes.png"
+            "image":"potatoes.jpg",
+            "txtcolor":"txtwhite"
         },
         {
             "id":"52bac571-07df-470f-ad1c-f73d6b9744e8", 
@@ -36,7 +38,8 @@
             "previous":"C2",
             "original":"D7",
             "activity":"3",
-            "image":"stone.png"
+            "image":"stone.jpg",
+            "txtcolor":"txtblack"
         }
         ,
         {
@@ -45,11 +48,12 @@
             "author":"moheb",
             "supplement":"Refresh when spoiled",
             "added":"000000",
-            "current":"C2",
+            "current":"C3",
             "previous":"C0",
             "original":"D1",
             "activity":"5",
-            "image":"peach.png"
+            "image":"peach.png",
+            "txtcolor":"txtblack"
         }
     ]
 }

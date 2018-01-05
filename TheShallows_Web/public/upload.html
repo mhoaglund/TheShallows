@@ -22,19 +22,18 @@
         <script src="javascripts/dust-helpers.min.js"></script>
         <script src="javascripts/jquery.nicescroll.min.js"></script>
         <script id="obj-template">
-        //TODO: create links to object image sources in tiles somehow, and populate a draggable element in the UI somehow
             <div class="inner flexfill">
             </div>
             <div class="object-array underlay">
                 <div class="gridhost">
                     {#alpha_board}
                       {@loop from=1 to="{board[1]}"}
-                        <div class="tile animate dropzone" id="under_{.}{alpha_board[$idx]}"><span>{alpha_board[$idx]}{.}</span><div class="dropcontain"></div></div>
+                        <div class="tile animate" id="under_{.}{alpha_board[$idx]}"><span>{alpha_board[$idx]}{.}</span></div>
                       {/loop}
                     {/alpha_board}
                   </div>
             </div>
-            <div class="object-array overlay" style="z-index: 999;">
+            <div class="object-array overlay">
                 <div class="gridhost">
                     {#alpha_board}
                       {@loop from=1 to="{board[1]}"}
@@ -44,11 +43,9 @@
                   </div>
                   {?objects}
                     {#objects}
-                      <div class="object-main draggable ui-widget-content" id="{current}_{id}" style="background: url(https://s3.amazonaws.com/shallows/images/{image}) no-repeat contain">
-                        <h2 class="object-name">{name}</h2>
-                        <p class="object-author">
-                          {author}
-                        </p>
+                      <div class="object-main draggable ui-widget-content {txtcolor}" id="{current}_{id}" style="background-image: url(https://s3.amazonaws.com/shallows/images/{image})">
+                        <span>{current}</span>
+                        <span class="object-name">{name}</span>
                       </div>
                     {/objects}
                 {/objects}
