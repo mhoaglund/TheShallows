@@ -73,10 +73,21 @@ function recordMove(dropped_on){
 		'from': item_info[0],
 		'to':dropped_on.attr('id')
 	}
+	var to_remove = null
 	move.id = move.item + '_from_' + move.from + '_to_' + move.to;
+	for(x = 0; x<moves.length; x++){
+		var _existing = moves[x]
+		if(_existing.item === move.item){
+			to_remove = x
+		}
+	}
 	moves.push(move)
+	if(to_remove != null){
+		moves.splice(to_remove, 1)
+		repaintMoves();
+	} else	paintMove(move);
 	//TODO reduncancy check
-	paintMove(move);
+
 
 	dragging.detach();
 	dragging.css({'position':'relative','top':'0px', 'left':'0px'})
