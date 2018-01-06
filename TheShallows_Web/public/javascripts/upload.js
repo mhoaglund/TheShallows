@@ -75,8 +75,12 @@ function recordMove(dropped_on){
 	}
 	move.id = move.item + '_from_' + move.from + '_to_' + move.to;
 	moves.push(move)
-	//TODO generate SVG path from one block to another
+	//TODO reduncancy check
 	paintMove(move);
+
+	dragging.detach();
+	dragging.css({'position':'relative','top':'0px', 'left':'0px'})
+	dropped_on.append(dragging);
 }
 
 function paintMove(move){
