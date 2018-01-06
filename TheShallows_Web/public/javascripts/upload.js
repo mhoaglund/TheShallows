@@ -180,6 +180,9 @@ var dragging;
 var clickbuffer = false;
 var dropzone;
 $(function(){
+	//setText(0);
+	//TODO localstorage cookie here and check to skip intro
+	playIntro();
     getObjectData(data_location);
     $( window ).resize(function() {
 		adjustTileSize();
@@ -195,14 +198,35 @@ $(function(){
 	})
 	//skipbtn
 	$(document.body).on('click', '.skipbtn', function(e){
-		stopAnimation('#introcontainer');
-		$('#introcontainer').animate({
-			'opacity':'0.0'
-		}, 500, function(){
-			$('#introcontainer').detach();
-		})
+		clearIntro();
 	})
 })
+
+var introcycle;
+function playIntro(){
+	setText();
+	introcycle = setInterval(function(){ 
+		if(current_text < introtexts.length){
+			current_text++;
+			cycleContent('.text-column', 400);
+			
+		}
+		else {
+			//clearInterval(introcycle);
+			clearIntro();
+		}
+	}, 4000);
+}
+
+function clearIntro(){
+	clearInterval(introcycle);
+	stopAnimation('#introcontainer');
+	$('#introcontainer').animate({
+		'opacity':'0.0'
+	}, 500, function(){
+		$('#introcontainer').detach();
+	})
+}
 
 function stopAnimation(element)
 {
@@ -211,3 +235,57 @@ function stopAnimation(element)
     $(element).css("-ms-animation", "none");
     $(element).css("animation", "none");
 }
+
+function addAnimation(element, animation)
+{
+    $(element).css("-webkit-animation", animation);
+    $(element).css("-moz-animation", animation);
+    $(element).css("-ms-animation", animation);
+    $(element).css("animation", animation);
+}
+
+function cycleContent(element, rate, _callback){
+	stopAnimation(element);
+	$(element).animate({
+		'opacity':'0.0'
+	}, rate, function(callback){
+		setText();
+		$(element).animate({
+			'opacity':'1.0'
+		}, rate)
+	})
+}
+
+function setText(){
+	var textpacket = introtexts[current_text];
+	for(var property in textpacket){
+		if(textpacket.hasOwnProperty(property)){
+			$('.'+property).html(textpacket[property]);
+		}
+	}
+	console.log(current_text);
+}
+
+var current_text = 0;
+var introtexts = [
+	{
+		'en':'Welcome to <em>The Shallows</em>',
+		'es':'Bienvenido a <em>The Shallows</em>',
+		'hm':'TODO localization three'
+	},
+	{
+		'en':'<em>The Shallows</em> is a project about substitution, proximity, and control.',
+		'es':'<em>The Shallows</em> es un proyecto sobre sustitución, proximidad y control',
+		'hm':'TODO localization three'
+	},
+	{
+		'en':'You can contribute by changing the location of an object.',
+		'es':'Puede contribuir cambiando la ubicación de un objeto.',
+		'hm':'TODO localization three'
+	},
+	{
+		'en':'Drag objects between stalls in the grid, and tap "send" when youre done.',
+		'es':'Arrastre objetos entre puestos en la grilla, y toque "send" cuando haya terminado.',
+		'hm':'TODO localization three'
+	}
+]
