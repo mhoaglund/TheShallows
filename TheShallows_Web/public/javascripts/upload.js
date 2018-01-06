@@ -7,8 +7,11 @@ var data = {
 WebFont.load(data);
 //Dev: dust compilation
 var _obj_template = $('#obj-template').html();
-var cocompiled = dust.compile(_obj_template, 'ARR_OBJ');
-dust.loadSource(cocompiled);
+var _detail_template = $('#detail-template').html();
+var obj_compiled = dust.compile(_obj_template, 'ARR_OBJ');
+var detail_compiled = dust.compile(_detail_template, 'DET_OBJ');
+dust.loadSource(obj_compiled);
+dust.loadSource(detail_compiled);
 dust.helpers.loop = function(chunk, context, bodies, params) {
 	var from = parseInt(dust.helpers.tap(params.from, chunk, context), 10) || 1,
 		  to = parseInt(dust.helpers.tap(params.to, chunk, context), 10) || 1,
@@ -171,8 +174,30 @@ function reverseString(str) {
     return str.split("").reverse().join("");
 }
 
-function raiseDetailPopup(){
-	alert('detail')
+// function displayAll(_data, _target, _template = 'CH_ORD', _cb = null){
+// 	dust.render(_template, _data, function(err, out) {
+//         $(_target).html(out);
+// 		if(_cb )_cb();
+// 	});
+// }
+
+function raiseDetailPopup(sender, _cb = null){
+	var sender_id = sender.attr('id').split('_')[1]
+	var valid_object = null;
+	if(sender_id){
+		datamain['objects'].forEach(function(element) {
+			if(element['id'] == sender_id){
+				valid_object = element
+			}
+		});
+		if(valid_object){
+			dust.render('DET_OBJ', valid_object, function(err, out) {
+				$('#detailhost').html(out);
+				if(_cb )_cb();
+			});
+		} else alert('Missing object info.')
+
+	}
 }
 
 var oallht;
@@ -204,12 +229,15 @@ $(function(){
 	})
 	$(document.body).on('mouseup', '.object-main', function(e){
 		if(clickbuffer){
-			raiseDetailPopup();
+			raiseDetailPopup($(this));
 		}
 	})
 	//skipbtn
 	$(document.body).on('click', '.skipbtn', function(e){
 		clearIntro();
+	})
+	$(document.body).on('click', '.detailpane', function(e){
+		clearElement($('.detailpane'));
 	})
 })
 
@@ -235,6 +263,14 @@ function clearIntro(){
 		'opacity':'0.0'
 	}, 500, function(){
 		$('#introcontainer').detach();
+	})
+}
+
+function clearElement(element, rate){
+	element.animate({
+		'opacity':'0.0'
+	}, 200, function(){
+		element.detach();
 	})
 }
 

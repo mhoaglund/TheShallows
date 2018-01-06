@@ -32,6 +32,16 @@
     cursor: pointer;
 }
 
+.detailpane{
+    width: 95%;
+    height: 95%;
+    z-index: 9999;
+    position: fixed;
+    top: 8px;
+    left: 2.5%;
+    background: white;
+}
+
 @keyframes colorchange
 {
   0%   {
