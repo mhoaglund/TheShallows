@@ -83,3 +83,32 @@
   75%  {background: green;}
   100% {background: red;}
 }
+
+
+@media screen and (max-width: 1150px){
+    #objecthost .gridhost {
+        width: 80%;
+    }
+    .object-main{
+        padding: 6px;
+    }
+    
+}
+@media screen and (max-width: 900px){
+    #objecthost .gridhost {
+        width: 90%;
+    }
+    .object-main .object-name{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px){
+    #objecthost .gridhost {
+        width: 95%;
+    }
+
+    .object-main{
+        padding: 4px;
+    }
+}

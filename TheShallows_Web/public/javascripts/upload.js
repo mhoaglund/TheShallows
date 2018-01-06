@@ -220,7 +220,6 @@ function playIntro(){
 		if(current_text < introtexts.length){
 			current_text++;
 			cycleContent('.text-column', 400);
-			
 		}
 		else {
 			//clearInterval(introcycle);
@@ -313,6 +312,11 @@ var introtexts = [
 	{
 		'en':'Drag objects between stalls in the grid, and tap "send" when youre done.',
 		'es':'Arrastre objetos entre puestos en la grilla, y toque "send" cuando haya terminado.',
+		'hm':'TODO localization three'
+	},
+	{
+		'en':'Tap an object to view detailed information about it.',
+		'es':'Toca un objeto para ver información detallada sobre él.',
 		'hm':'TODO localization three'
 	}
 ]
