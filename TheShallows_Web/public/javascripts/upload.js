@@ -193,4 +193,21 @@ $(function(){
 			raiseDetailPopup();
 		}
 	})
+	//skipbtn
+	$(document.body).on('click', '.skipbtn', function(e){
+		stopAnimation('#introcontainer');
+		$('#introcontainer').animate({
+			'opacity':'0.0'
+		}, 500, function(){
+			$('#introcontainer').detach();
+		})
+	})
 })
+
+function stopAnimation(element)
+{
+    $(element).css("-webkit-animation", "none");
+    $(element).css("-moz-animation", "none");
+    $(element).css("-ms-animation", "none");
+    $(element).css("animation", "none");
+}

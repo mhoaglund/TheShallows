@@ -12,6 +12,7 @@
         <link href='https://fonts.googleapis.com/css?family=Cardo:400,700' rel='stylesheet' type='text/css'/>
         <link rel="stylesheet" href="stylesheets/ibm-type.min.css" type="text/css"/>
         <link rel="stylesheet" href="stylesheets/style.css" type="text/css"/>
+        <link rel="stylesheet" href="stylesheets/intro.css" type="text/css"/>
         <link rel="stylesheet" href="stylesheets/slicknav.css" type="text/css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
         <script
@@ -54,30 +55,37 @@
         </script>
     </head>
     <body>
-        <section class="menucontainer" style="display: none;">
-            <ul id="menu">
-              <li><a href="#">item 1</a></li>
-              <li><a href="#">item 2</a></li>
-              <li><a href="#">item 3</a></li>
-              <li><a href="#">item 4</a></li>
-            </ul>
-          </section>
-          <aside id="time"></aside>
-          <aside id="status"></aside>
-          <section id="objecthost">
+      <section id="introcontainer">
+        <section id="messages">
+          <div class="text-column">
+            <p class="eng">Welcome to <em>The Shallows.</em></p>  
+            <hr/>
+            <p class="esp">Bienvenido a <em>The Shallows</em></p>  
+            <hr/>
+            <p class="hmo"></p>  
+            <hr/>
+            <a class="skipbtn">Skip? --></a>
+          </div>
+        </section>
+    </section>
 
-          </section>
-          <form>
-            <div class="fb-text form-group">
-                <label for="momentwhat" class="fb-text-label">Author <span class="tooltip-element" tooltip="How you want to be known">?</span></label> 
-                <input type="text" class="form-control" name="author" id="authorentry">
-            </div>
-            <div class="fb-text form-group">
-                <label for="momentwhat" class="fb-text-label">Thesis <span class="tooltip-element" tooltip="Why?">?</span></label> 
-                <input type="text" class="form-control" name="author" id="authorentry">
-            </div>
-          </form>
-          <script src="javascripts/jquery.slicknav.min.js"></script>
-          <script src="javascripts/upload.js"></script>
+    <aside id="time"></aside>
+    <aside id="status"></aside>
+
+    <section id="objecthost">
+
+    </section>
+    <form>
+      <div class="fb-text form-group">
+          <label for="momentwhat" class="fb-text-label">Author <span class="tooltip-element" tooltip="How you want to be known">?</span></label> 
+          <input type="text" class="form-control" name="author" id="authorentry">
+      </div>
+      <div class="fb-text form-group">
+          <label for="momentwhat" class="fb-text-label">Thesis <span class="tooltip-element" tooltip="Why?">?</span></label> 
+          <input type="text" class="form-control" name="author" id="authorentry">
+      </div>
+    </form>
+    <script src="javascripts/jquery.slicknav.min.js"></script>
+    <script src="javascripts/upload.js"></script>
     </body>
 </html>
