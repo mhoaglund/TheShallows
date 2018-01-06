@@ -51,8 +51,6 @@ function getObjectData(myUrl){
                 });
                 $('.tile.invisible').droppable({
                     drop: function(event, ui){
-                        //$(this).addClass('yellow');
-						$('.underlay').find('#under_' + $(this).attr('id')).addClass('yellow')
 						recordMove($(this))
                     }
                 })
@@ -176,17 +174,30 @@ function reverseString(str) {
 function raiseDetailPopup(){
 	alert('detail')
 }
+
+var oallht;
+var oallwth;
+var oallctr;
+
+function setOalls(){
+	 oallht = $(window).height();
+	 oallwth = $(document).width(); 
+	 winht = $(window).height();
+	 oallctr = {x: (oallwth/2), y: (oallht/2) };
+}
+
 var dragging;
 var clickbuffer = false;
 var dropzone;
 $(function(){
-	//setText(0);
+	setOalls();
 	//TODO localstorage cookie here and check to skip intro
 	playIntro();
     getObjectData(data_location);
     $( window ).resize(function() {
 		adjustTileSize();
-		repaintMoves();
+		cycleMovementLines(400);
+		setOalls();
 	});
 	$(document.body).on('mousedown', '.object-main', function(e){
 		clickbuffer = true;
@@ -228,6 +239,10 @@ function clearIntro(){
 	})
 }
 
+function showForm(){
+
+}
+
 function stopAnimation(element)
 {
     $(element).css("-webkit-animation", "none");
@@ -256,6 +271,18 @@ function cycleContent(element, rate, _callback){
 	})
 }
 
+function cycleMovementLines(rate){
+	stopAnimation('.vector.animate');
+	$('.vector.animate').animate({
+		'opacity':'0.0'
+	}, rate, function(callback){
+		repaintMoves();
+		$('.vector.animate').animate({
+			'opacity':'1.0'
+		}, rate)
+	})
+}
+
 function setText(){
 	var textpacket = introtexts[current_text];
 	for(var property in textpacket){
@@ -275,7 +302,7 @@ var introtexts = [
 	},
 	{
 		'en':'<em>The Shallows</em> is a project about substitution, proximity, and control.',
-		'es':'<em>The Shallows</em> es un proyecto sobre sustitución, proximidad y control',
+		'es':'<em>The Shallows</em> es un proyecto sobre sustitución, proximidad y control.',
 		'hm':'TODO localization three'
 	},
 	{

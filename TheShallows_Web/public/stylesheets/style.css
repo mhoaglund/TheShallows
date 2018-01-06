@@ -123,6 +123,10 @@ p:last-child{
       z-index: 9;
     }
 
+    #objecthost .gridhost{
+      width: 50%;
+    }
+
     .change-order .gridhost .tile{
         margin: 10px;
         flex-grow: 1;
@@ -147,7 +151,7 @@ p:last-child{
   }
 
   .object-array .gridhost .tile{
-    margin: 10px;
+    margin: 1%;
     height: 50px;
     border: 1px solid black;
     background: white;
@@ -159,7 +163,6 @@ p:last-child{
   }
 
   .object-array .gridhost .tile.invisible{
-    margin: 10px;
     height: 50px;
     background: rgba(255, 255, 255, 0);
     padding: 1px;
