@@ -22,6 +22,17 @@
         <script src="javascripts/dust-full.min.js"></script>
         <script src="javascripts/dust-helpers.min.js"></script>
         <script src="javascripts/jquery.nicescroll.min.js"></script>
+        <script id="detail-template">
+          <div class="detailpane">
+              <div class="object-detail {txtcolor}" id="detail_{current}_{id}" >
+                <span>{current}</span>
+                <span class="object-name">{name}</span>
+                <span class="object-author">Added by {author}</span>
+                <span class="object-supplement">{supplement}</span>
+                <div class="lgimg" style="background-image: url(https://s3.amazonaws.com/shallows/images/{image})"></div>
+              </div>
+          </div>
+        </script>
         <script id="obj-template">
             <div class="object-array underlay">
                 <div class="gridhost">

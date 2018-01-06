@@ -181,8 +181,8 @@ p:last-child{
 
     .object-array .gridhost .tile > span{
       position: absolute;
-      top: 2px;
-      left: 2px;
+      top: 6px;
+      left: 6px;
     }
 
     .object-main{
@@ -190,7 +190,7 @@ p:last-child{
       width: 100%;
       height: 100%;
       z-index: 999;
-      padding: 8px;
+      padding: 6px;
       box-sizing: border-box;
       border-collapse: collapse;
       background-size: cover;
