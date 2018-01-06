@@ -38,20 +38,22 @@ function getObjectData(myUrl){
 			displayAll(datamain, '#objecthost', 'ARR_OBJ', function(){
                 adjustTileSize();
 				$('.object-main').each(function(){
-                    var location = reverseString($(this).attr('id').split('_')[0]).toLowerCase()
-                    console.log(location);
+                    var location = $(this).attr('id').split('_')[0].toLowerCase()
+                    //console.log(location);
                     $('#'+location).append($(this))
                 });
                 $( ".draggable" ).draggable({ 
 					revert: true,
 					start: function(){
+						dragging = $(this)
 						clickbuffer = false;
 					}
                 });
                 $('.tile.invisible').droppable({
                     drop: function(event, ui){
                         //$(this).addClass('yellow');
-                        $('.underlay').find('#under_' + $(this).attr('id')).addClass('yellow')
+						$('.underlay').find('#under_' + $(this).attr('id')).addClass('yellow')
+						recordMove($(this))
                     }
                 })
 			});
@@ -61,6 +63,53 @@ function getObjectData(myUrl){
 		}
 	});
 	return result;
+}
+
+var moves = []
+function recordMove(dropped_on){
+	var item_info = dragging.attr('id').split('_')
+	var move = {
+		'item': item_info[1],
+		'from': item_info[0],
+		'to':dropped_on.attr('id')
+	}
+	move.id = move.item + '_from_' + move.from + '_to_' + move.to;
+	moves.push(move)
+	//TODO generate SVG path from one block to another
+	paintMove(move);
+}
+
+function paintMove(move){
+	var _startpt = centerpoint($('#' +move.from))
+	var _endpt = centerpoint($('#' +move.to))
+	console.log(_startpt)
+	console.log(_endpt)
+	var _svg = '<svg class="vector animate" id="'+move.id+'"><line stroke-linecap="round" y1="'+_startpt[1]+'" x1="'+_startpt[0]+'" y2="'+_endpt[1]+'" x2="'+_endpt[0]+'" stroke="#FFCCFF"></line></svg>'
+	//$('.overlay .gridhost').append(_svg);
+	$('#objecthost').append(_svg);
+}
+
+function repaintMoves(){
+	$('.vector.animate').detach();
+	moves.forEach(function(move){
+		var _startpt = centerpoint($('#' +move.from))
+		var _endpt = centerpoint($('#' +move.to))
+		console.log(_startpt)
+		console.log(_endpt)
+		var _svg = '<svg class="vector animate" id="'+move.id+'"><line stroke-linecap="round" y1="'+_startpt[1]+'" x1="'+_startpt[0]+'" y2="'+_endpt[1]+'" x2="'+_endpt[0]+'" stroke="#FFCCFF"></line></svg>'
+		//$('.overlay .gridhost').append(_svg);
+		$('#objecthost').append(_svg);
+	})
+}
+
+function centerpoint(element){
+	var offset = element.offset();
+	var width = element.width();
+	var height = element.height();
+
+	var centerX = offset.left + width / 2;
+	var centerY = offset.top + height / 2;
+	return [centerX, centerY]
 }
 
 function adjustTileSize(){
@@ -112,12 +161,14 @@ function reverseString(str) {
 function raiseDetailPopup(){
 	alert('detail')
 }
+var dragging;
 var clickbuffer = false;
 var dropzone;
 $(function(){
     getObjectData(data_location);
     $( window ).resize(function() {
 		adjustTileSize();
+		repaintMoves();
 	});
 	$(document.body).on('mousedown', '.object-main', function(e){
 		clickbuffer = true;

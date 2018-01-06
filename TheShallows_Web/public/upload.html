@@ -28,7 +28,7 @@
                 <div class="gridhost">
                     {#alpha_board}
                       {@loop from=1 to="{board[1]}"}
-                        <div class="tile animate" id="under_{.}{alpha_board[$idx]}"><span>{alpha_board[$idx]}{.}</span></div>
+                        <div class="tile animate" id="under_{alpha_board[$idx]}{.}"><span>{alpha_board[$idx]}{.}</span></div>
                       {/loop}
                     {/alpha_board}
                   </div>
@@ -37,7 +37,7 @@
                 <div class="gridhost">
                     {#alpha_board}
                       {@loop from=1 to="{board[1]}"}
-                        <div class="tile animate invisible dropzone" id="{.}{alpha_board[$idx]}"><div class="dropcontain"></div></div>
+                        <div class="tile animate invisible dropzone" id="{alpha_board[$idx]}{.}"><div class="dropcontain"></div></div>
                       {/loop}
                     {/alpha_board}
                   </div>
