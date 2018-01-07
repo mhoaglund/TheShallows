@@ -247,6 +247,11 @@ $(function(){
 	$(document.body).on('click', '.skipbtn', function(e){
 		skipIntro();
 	})
+	$(document.body).on('click', '#rerun-instructions .rerun', function(e){
+		current_text = 0;
+		returnToIntro();
+		playIntro();
+	})
 	$(document.body).on('click', '.beginbtn', function(e){
 		if(can_proceed){
 			clearIntro();
@@ -265,8 +270,9 @@ var introcycle;
 function playIntro(){
 	setText();
 	introcycle = setInterval(function(){ 
-		if(current_text < introtexts.length){
+		if(current_text < introtexts.length-1){
 			current_text++;
+			console.log(current_text);
 			cycleContent('#messages', 400);
 		}
 		else {
@@ -299,7 +305,18 @@ function clearIntro(){
 	$('#introcontainer').animate({
 		'opacity':'0.0'
 	}, 500, function(){
-		$('#introcontainer').detach();
+		$('#introcontainer').css('z-index','2');
+	})
+}
+
+function returnToIntro(){
+	$('#messages p, #messages div.bottom-form div').html('');
+	
+	$('#introcontainer').css('z-index','9999');
+	$('#introcontainer').animate({
+		'opacity':'1.0'
+	}, 100, function(){
+		addAnimation('#introcontainer','colorchange 15s');
 	})
 }
 
@@ -309,7 +326,6 @@ function skipIntro(){
 	} else return;
 
 	clearInterval(introcycle);
-	stopAnimation('#introcontainer');
 	cycleContent('#messages', 400);
 }
 

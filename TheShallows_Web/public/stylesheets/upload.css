@@ -6,7 +6,7 @@ textarea:focus, input:focus{
 }
 
 #introcontainer{
-    background: green;
+    background: rgb(158, 49, 49);
     position: absolute;
     top: 0px;
     left: 0px;
@@ -86,9 +86,11 @@ textarea:focus, input:focus{
         display: inline-block;
     }
 
+a{
+    cursor: pointer;
+}
 .go-button a{
     padding-left: 6px;
-    cursor: pointer;
 }
 
 .go-button a.disabled{
@@ -105,7 +107,12 @@ textarea:focus, input:focus{
     font-weight: 300;
 }
 
-    
+#rerun-instructions{
+    position: fixed;
+    z-index: 9998;
+    top: 8px;
+    left: 8px;
+}
 .form-field input:focus{
 }
 
