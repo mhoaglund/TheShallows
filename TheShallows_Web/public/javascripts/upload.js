@@ -216,6 +216,7 @@ var dragging;
 var clickbuffer = false;
 var dropzone;
 $(function(){
+	checkName('pptname');
 	setOalls();
 	//TODO localstorage cookie here and check to skip intro
 	playIntro();
@@ -233,28 +234,63 @@ $(function(){
 			raiseDetailPopup($(this));
 		}
 	})
-	//skipbtn
+	$(document.body).on('input', '#authorentry', function(){
+		if($('#authorentry').val() != ''){
+			can_proceed = true;
+			$('.beginbtn').removeClass('disabled')
+			ppt_name = $('#authorentry').val()
+		} else{
+			can_proceed = false;
+			$('.beginbtn').addClass('disabled')
+		}
+	})
 	$(document.body).on('click', '.skipbtn', function(e){
-		clearIntro();
+		skipIntro();
+	})
+	$(document.body).on('click', '.beginbtn', function(e){
+		if(can_proceed){
+			clearIntro();
+			storeItem('pptname', ppt_name);
+			$(this).css({'animation': 'btnpulse 0.3s'})
+		}
 	})
 	$(document.body).on('click', '.detailpane', function(e){
 		clearElement($('#detailhost'), 200, false);
 	})
 })
 
+var ppt_name = '';
+var can_proceed = false;
 var introcycle;
 function playIntro(){
 	setText();
 	introcycle = setInterval(function(){ 
 		if(current_text < introtexts.length){
 			current_text++;
-			cycleContent('.text-column', 400);
+			cycleContent('#messages', 400);
 		}
 		else {
 			//clearInterval(introcycle);
-			clearIntro();
+			//clearIntro();
 		}
 	}, 4000);
+}
+
+function storeItem(keyname, storagevar){
+	localStorage.setItem(keyname, storagevar);
+}
+
+function checkName(keyname){
+	var tryname = localStorage.getItem(keyname);
+	if(tryname){
+		ppt_name = tryname;
+		console.log(tryname +' username applied')
+		return true;
+	}
+	else{
+		console.log('this is a new user.')
+		return false;
+	}
 }
 
 function clearIntro(){
@@ -265,6 +301,16 @@ function clearIntro(){
 	}, 500, function(){
 		$('#introcontainer').detach();
 	})
+}
+
+function skipIntro(){
+	if(current_text != introtexts.length-1){
+		current_text = introtexts.length-1
+	} else return;
+
+	clearInterval(introcycle);
+	stopAnimation('#introcontainer');
+	cycleContent('#messages', 400);
 }
 
 function clearElement(element, rate, remove = false){
@@ -278,9 +324,6 @@ function clearElement(element, rate, remove = false){
 	})
 }
 
-function showForm(){
-
-}
 
 function stopAnimation(element)
 {
@@ -329,7 +372,12 @@ function setText(){
 			$('.'+property).html(textpacket[property]);
 		}
 	}
-	console.log(current_text);
+	//fuckin a
+	if(textpacket['form-field'] && ppt_name != ''){
+		can_proceed = true;
+		$('.beginbtn').removeClass('disabled')
+		$('#authorentry').val(ppt_name);
+	}
 }
 
 var current_text = 0;
@@ -337,26 +385,38 @@ var introtexts = [
 	{
 		'en':'Welcome to <em>The Shallows</em>',
 		'es':'Bienvenido a <em>The Shallows</em>',
-		'hm':'TODO localization three'
+		'hm':'TODO localization three',
+		'go-button':'<a class="skipbtn">Skip? --></a>'
 	},
 	{
 		'en':'<em>The Shallows</em> is a project about substitution, proximity, and control.',
 		'es':'<em>The Shallows</em> es un proyecto sobre sustitución, proximidad y control.',
-		'hm':'TODO localization three'
+		'hm':'TODO localization three',
+		'go-button':'<a class="skipbtn">Skip? --></a>'
 	},
 	{
 		'en':'You can contribute by changing the location of an object.',
 		'es':'Puede contribuir cambiando la ubicación de un objeto.',
-		'hm':'TODO localization three'
+		'hm':'TODO localization three',
+		'go-button':'<a class="skipbtn">Skip? --></a>'
 	},
 	{
 		'en':'Drag objects between stalls in the grid, and tap "send" when youre done.',
 		'es':'Arrastre objetos entre puestos en la grilla, y toque "send" cuando haya terminado.',
-		'hm':'TODO localization three'
+		'hm':'TODO localization three',
+		'go-button':'<a class="skipbtn">Skip? --></a>'
 	},
 	{
 		'en':'Tap an object to view detailed information about it.',
 		'es':'Toca un objeto para ver información detallada sobre él.',
-		'hm':'TODO localization three'
+		'hm':'TODO localization three',
+		'go-button':'<a class="skipbtn">Skip? --></a>'
+	},
+	{
+		'en':'To begin, enter your name.',
+		'es':'Para empezar, entra su nombre.',
+		'hm':'TODO localization three',
+		'form-field':'<label for="author" class="fb-text-label"><span class="tooltip-element" tooltip="How you want to be known"></span></label> <input type="text" class="form-control" name="author" id="authorentry" value="">',
+		'go-button':'<a class="beginbtn disabled">✔</a>'
 	}
 ]
