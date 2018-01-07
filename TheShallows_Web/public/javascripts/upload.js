@@ -193,6 +193,7 @@ function raiseDetailPopup(sender, _cb = null){
 		if(valid_object){
 			dust.render('DET_OBJ', valid_object, function(err, out) {
 				$('#detailhost').html(out);
+				$('#detailhost').css('pointer-events', 'auto').css('opacity', '1').css('z-index', 9999);
 				if(_cb )_cb();
 			});
 		} else alert('Missing object info.')
@@ -237,7 +238,7 @@ $(function(){
 		clearIntro();
 	})
 	$(document.body).on('click', '.detailpane', function(e){
-		clearElement($('.detailpane'));
+		clearElement($('#detailhost'), 200, false);
 	})
 })
 
@@ -266,11 +267,14 @@ function clearIntro(){
 	})
 }
 
-function clearElement(element, rate){
+function clearElement(element, rate, remove = false){
 	element.animate({
 		'opacity':'0.0'
 	}, 200, function(){
-		element.detach();
+		element.css('z-index',0)
+		if(remove){
+			element.detach();
+		}
 	})
 }
 

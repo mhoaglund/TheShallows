@@ -31,16 +31,41 @@
 #messages a{
     cursor: pointer;
 }
-
-.detailpane{
-    width: 95%;
-    height: 95%;
+#detailhost{
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background: rgba(87, 87, 87, 0.308);
+    opacity: 0;
+    pointer-events: none;
     z-index: 9999;
-    position: fixed;
-    top: 8px;
-    left: 2.5%;
-    background: white;
 }
+.detailpane{
+    width: 50%;
+    height: 50%;
+    
+    position: fixed;
+    top: 25%;
+    left: 25%;
+    background: white;
+    border: 1px solid black;
+    flex-flow: flex column;
+}
+
+    .detailpane .object-detail{
+        width: 100%;
+        height: 100%;
+        padding: 8px;
+    }
+
+    .detailpane .lgimg{
+        width: 100%;
+        height: 50%;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
 
 @keyframes colorchange
 {
