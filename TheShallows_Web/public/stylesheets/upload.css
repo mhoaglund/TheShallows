@@ -5,6 +5,17 @@ textarea:focus, input:focus{
     outline: none;
 }
 
+#shade{
+    background-color: rgb(16, 5, 68);
+    opacity: 1.0;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9998;
+}
+
 #introcontainer{
     background: rgb(158, 49, 49);
     position: absolute;
@@ -109,7 +120,7 @@ a{
 
 #rerun-instructions{
     position: fixed;
-    z-index: 9998;
+    z-index: 9997;
     top: 8px;
     left: 8px;
 }

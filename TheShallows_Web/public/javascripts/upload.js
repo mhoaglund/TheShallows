@@ -306,6 +306,11 @@ function clearIntro(){
 		'opacity':'0.0'
 	}, 500, function(){
 		$('#introcontainer').css('z-index','2');
+		$('#shade').animate({
+			'opacity':'0.0'
+		}, 600, function(){
+			$('#shade').detach();
+		})
 	})
 }
 
