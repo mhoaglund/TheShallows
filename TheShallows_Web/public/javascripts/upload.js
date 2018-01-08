@@ -129,7 +129,7 @@ function centerpoint(element){
 }
 
 function adjustTileSize(){
-    var cols = 100/(datamain.board[0]+2);
+    var cols = (100-(datamain.board[0]*2))/(datamain.board[0]); //leaving 1% for margins
     $('.tile').css('width', 'auto');
     $('.tile').css('width', cols+'%');
     $('.tile').each(function(){
@@ -216,10 +216,13 @@ var dragging;
 var clickbuffer = false;
 var dropzone;
 $(function(){
-	checkName('pptname');
+	setText();
+	if(!checkName('pptname')){
+		playIntro();
+	} else clearIntro();
 	setOalls();
 	//TODO localstorage cookie here and check to skip intro
-	playIntro();
+	
     getObjectData(data_location);
     $( window ).resize(function() {
 		adjustTileSize();
