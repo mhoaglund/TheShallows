@@ -26,6 +26,7 @@ function check_and_get_newest(){
 }
 
 var current_focus = ''
+var center = null
 function set_focus(){
 	var locs = [];
 	var isAtTop = ($(window).scrollTop() == 0) ? true : false;
@@ -42,14 +43,85 @@ function set_focus(){
 	});
 
 	var h = (Math.max(document.documentElement.clientHeight, window.innerHeight || 0)/2)-100;
-	var center = closest(locs,h);
+	center = closest(locs,h);
 	if(current_focus != '#'+center['id']){
 		close_all();
 		$('#'+center['id']).addClass('highlighted');
-	    $('#overlay').html($('#'+center['id']).html())
-	    current_focus = '#'+center['id']
+		$('#overlay').html($('#'+center['id']).html())
+		adjustTileSize();
+		//current_focus = '#'+center['id']
+		//TODO new vector drawing routine in here.
+		var centerdata = datamain.results.find(matchesID, center['id'])
+		if(centerdata){
+			repaintMoves(centerdata);
+			current_focus = '#'+center['id']
+		}
+
 	}
 }
+
+var hasunitsize = false;
+function adjustTileSize(){
+    var cols = (100-(datamain.board[0]*2))/(datamain.board[0]); //leaving 1% for margins
+    $('.tile').css('width', 'auto');
+    $('.tile').css('width', cols+'%');
+    $('.tile').each(function(){
+        $(this).css('height', $(this).width())
+	})
+	if(!hasunitsize) updateGridUnit();
+}
+
+function repaintMoves(packet){
+	$('.vector.animate').detach();
+	console.log(packet)
+	packet.order.moves.forEach(function(move){
+		//TODO derive cell size from gridhost size to get a pixel from our percent. build in margin.
+		var _startpt = translateUnit(move.from)
+		var _endpt = translateUnit(move.to)
+		//var _endpt = centerpoint($('#overlay #' + reverseString(move.alphabetized[1])))
+		//console.log(move)
+		//console.log(_startpt)
+		//console.log(_endpt, )
+		// console.log($('#overlay').offset());
+		
+		var _svg = '<svg class="vector animate" id="from_'+reverseString(move.alphabetized[0])+'_to_'+reverseString(move.alphabetized[1])+'_'+packet.id+'"><line stroke-linecap="round" y1="'+_startpt[0]+'" x1="'+_startpt[1]+'" y2="'+_endpt[0]+'" x2="'+_endpt[1]+'" stroke="'+packet.idcolor+'"></line></svg>'
+		var _marker = '<div class="marker animate" style="top:'+_endpt[0]+'px;left:'+_endpt[1]+'px;background:'+packet.idcolor+'"></div>'
+		$('#overlay .gridhost').append(_svg).append(_marker);
+	})
+}
+
+var grid_unit = {'h':0, 'w':0};
+function updateGridUnit(){
+	hasunitsize = true;
+	// grid_unit.h = $('#overlay #1a').height() + (5.5*2); //accounting for margins
+	// grid_unit.w = $('#overlay #1a').width() + (5*2);
+	grid_unit.h = $('#overlay #1a').outerHeight(true); //accounting for margins
+	grid_unit.w = $('#overlay #1a').outerWidth(true);
+	console.log(grid_unit)
+}
+
+function translateUnit(coords, xpad = false, ypad = false){
+	var xpadding = (xpad) ? grid_unit.w*0.5 : 0;
+	return [coords[0]*grid_unit.h + xpadding,coords[1]*grid_unit.w]
+}
+
+function centerpoint(element){
+	var offset = element.offset();
+	var width = element.width();
+	var height = element.height();
+
+	var centerX = (element.position().left + 6.5) + width / 2;
+	var centerY = (element.position().top + 6.5) + height / 2;
+	return [centerX, centerY]
+}
+
+function reverseString(str) {
+    return str.split("").reverse().join("");
+}
+
+function matchesID(element) {
+	return element.id == center.id;
+  }
 
 function closest(array,num){
     var i=0;
@@ -179,6 +251,7 @@ $(function(){
 	});
 	$( window ).resize(function() {
 		setOalls();
+		updateGridUnit();
 	});
 
 	$(document).on('scroll', function() {
@@ -187,7 +260,7 @@ $(function(){
 	});
 
 	$(document).on('click', '.change-order', function(){
-		//expand($(this));
+
 	});
 	
 	if(document.body.requestFullscreen){
