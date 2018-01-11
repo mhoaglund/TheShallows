@@ -87,6 +87,14 @@ function repaintMoves(packet){
 		var _svg = '<svg class="vector animate" id="from_'+reverseString(move.alphabetized[0])+'_to_'+reverseString(move.alphabetized[1])+'_'+packet.id+'"><line stroke-linecap="round" y1="'+_startpt[0]+'" x1="'+_startpt[1]+'" y2="'+_endpt[0]+'" x2="'+_endpt[1]+'" stroke="'+packet.idcolor+'"></line></svg>'
 		var _marker = '<div class="marker animate" style="top:'+_endpt[0]+'px;left:'+_endpt[1]+'px;background:'+packet.idcolor+'"></div>'
 		$('#overlay .gridhost').append(_svg).append(_marker);
+		$('.vector.animate, .marker').css({
+			'margin-top':'-'+grid_unit.h/2+'px',
+			'margin-left':'-'+grid_unit.w/2+'px'
+		})
+		$('.marker').css({
+			'margin-top':'-=0.35em',
+			'margin-left':'-=0.35em'
+		})
 	})
 }
 
