@@ -18,13 +18,6 @@ function get_before_oldest(){
 
 }
 
-//user has scrolled to the top, get newer change orders if there are any.
-function check_and_get_newest(){
-	//GET etc
-	//add
-	$('html, body').animate({scrollTop: '0px'}, 300);
-}
-
 var current_focus = ''
 var center = null
 var recent_refresh = false;
@@ -40,6 +33,10 @@ function set_focus(){
 			recent_refresh = true;
 			do_get('/retrieve?latest=true', function(data){
 				if(data.id == _latestid) return;
+				else {
+					//crank out a new change order and append, figure out how to stabilize scroll throughout
+					//$('html, body').animate({scrollTop: '0px'}, 300);
+				}
 			})
 		}
 		if(!refresh_debouncer){
