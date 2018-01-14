@@ -39,9 +39,9 @@ int prev_pos = 0;
 CRGB leds[LEDs];
 #define UPDATES_PER_SECOND 100
 
-Encoder wheel(11,12);
+Encoder wheel(12,11);
 void setup() {
-  //Serial.begin(9600);
+  Serial.begin(9600);
   // put your setup code here, to run once:
 
 }
@@ -51,11 +51,11 @@ void loop() {
   int pos = wheel.read();
   if(pos != prev_pos){
     double delta = (prev_pos - pos);
-    if(delta < 0) delta = -0.5;
-    else delta = 0.5;
+    if(delta < 0) delta = -1.0;
+    else delta = 1.0;
     Mouse.scroll(delta);
     prev_pos = pos;
   }
 
-  //Serial.println(pos, DEC);
+  Serial.println(pos, DEC);
 }
