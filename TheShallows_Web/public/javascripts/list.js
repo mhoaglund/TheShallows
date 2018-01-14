@@ -27,12 +27,28 @@ function check_and_get_newest(){
 
 var current_focus = ''
 var center = null
+var recent_refresh = false;
+var refresh_debouncer;
 function set_focus(){
 	var locs = [];
 	var isAtTop = ($(window).scrollTop() == 0) ? true : false;
 	var isAtBottom = ($(window).scrollTop() >= $(document).height() - window.innerHeight) ? true : false;
 	if(isAtTop){
-		return;
+		//trigger refresh of latest item
+		if(!recent_refresh){
+			console.log('At top, refreshing...')
+			recent_refresh = true;
+			do_get('/retrieve?latest=true', function(data){
+				if(data.id == _latestid) return;
+			})
+		}
+		if(!refresh_debouncer){
+			window.setTimeout(function(){
+				console.log('Clearing timeout')
+				recent_refresh = false;
+				refresh_debouncer = null;
+			}, 2000)
+		}
 	}
 	if(isAtBottom){
 		return;
