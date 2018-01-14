@@ -2,6 +2,12 @@ var items = {}
 var host = "https://myapi/"
 var enumerate = "/*/GET/change-orders/all"
 
+var _latestid = ''
+
+function hide_spinner(){
+    $('#await').hide();
+}
+
 function do_post(url, payload, callback){
     $.ajax({
         method: "POST",
@@ -10,7 +16,8 @@ function do_post(url, payload, callback){
     })
     .done(function( data ) {
         console.log(data);
-        callback(data)
+        hide_spinner();
+        callback(data);
     });
 }
 
@@ -21,6 +28,7 @@ function do_get(url, callback){
     })
     .done(function( data ) {
         console.log(data);
+        hide_spinner();
         callback(data)
     });
 }
@@ -28,6 +36,11 @@ function do_get(url, callback){
 function do_get_until(url, iterations, callback){
     //do gets in order until iterations are exhausted
     //check if iterations is an int or an array
+    window.setInterval(function(){
+        do_get('/retrieve?latest=true', function(data){
+            if(data.id == _latestid) return;
+        })
+    }, 8000)
 }
 
 function initialize(cb){

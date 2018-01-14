@@ -253,6 +253,7 @@ function displayAll(_data, _target, _template = 'CH_ORD', _cb = null){
 
 
 $(function(){	
+	//$('#await').hide();
 	$("body").niceScroll({
 		scrollspeed: 5,
 		mousescrollstep: 5
