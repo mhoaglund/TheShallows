@@ -221,7 +221,6 @@ $(function(){
 		playIntro();
 	} else clearIntro();
 	setOalls();
-	//TODO localstorage cookie here and check to skip intro
 	
     getObjectData(data_location);
     $( window ).resize(function() {
@@ -264,6 +263,13 @@ $(function(){
 	})
 	$(document.body).on('click', '.detailpane', function(e){
 		clearElement($('#detailhost'), 200, false);
+	})
+	$(document.body).on('click', '#submit-all', function(e){
+		//TODO debounce
+		submitOrder('/upload', {
+			'moves':moves,
+			'author':ppt_name
+		})
 	})
 })
 
@@ -335,6 +341,21 @@ function skipIntro(){
 
 	clearInterval(introcycle);
 	cycleContent('#messages', 400);
+}
+
+function submitOrder(url, payload){
+	$.ajax({
+        method: "POST",
+		url: url,
+		dataType: 'json',
+		contentType: 'application/json',
+		data: JSON.stringify(payload),
+		processData: false
+    })
+    .done(function( data ) {
+        console.log(data);
+        callback(data)
+    });
 }
 
 function clearElement(element, rate, remove = false){
