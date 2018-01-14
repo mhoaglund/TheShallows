@@ -34,6 +34,9 @@ function set_focus(){
 			do_get('/retrieve?latest=true', function(data){
 				if(data.id == _latestid) return;
 				else {
+					var _item = JSON.parse(data)[0];
+					_item.moves = JSON.parse(_item.moves);
+					console.log(_item);
 					//crank out a new change order and append, figure out how to stabilize scroll throughout
 					//$('html, body').animate({scrollTop: '0px'}, 300);
 				}
@@ -86,16 +89,9 @@ function adjustTileSize(){
 
 function repaintMoves(packet){
 	$('.vector').detach();
-	console.log(packet)
-	packet.order.moves.forEach(function(move){
-		//TODO derive cell size from gridhost size to get a pixel from our percent. build in margin.
+	packet.moves.forEach(function(move){
 		var _startpt = translateUnit(move.from)
 		var _endpt = translateUnit(move.to)
-		//var _endpt = centerpoint($('#overlay #' + reverseString(move.alphabetized[1])))
-		//console.log(move)
-		//console.log(_startpt)
-		//console.log(_endpt, )
-		// console.log($('#overlay').offset());
 		
 		var _svg = '<svg class="vector" id="from_'+reverseString(move.alphabetized[0])+'_to_'+reverseString(move.alphabetized[1])+'_'+packet.id+'"><line stroke-linecap="round" y1="'+_startpt[0]+'" x1="'+_startpt[1]+'" y2="'+_endpt[0]+'" x2="'+_endpt[1]+'" stroke="'+packet.idcolor+'"></line></svg>'
 		var _marker = '<div class="marker" style="top:'+_endpt[0]+'px;left:'+_endpt[1]+'px;background:'+packet.idcolor+'"></div>'
@@ -114,9 +110,7 @@ function repaintMoves(packet){
 var grid_unit = {'h':0, 'w':0};
 function updateGridUnit(){
 	hasunitsize = true;
-	// grid_unit.h = $('#overlay #1a').height() + (5.5*2); //accounting for margins
-	// grid_unit.w = $('#overlay #1a').width() + (5*2);
-	grid_unit.h = $('#overlay #1a').outerHeight(true); //accounting for margins
+	grid_unit.h = $('#overlay #1a').outerHeight(true);
 	grid_unit.w = $('#overlay #1a').outerWidth(true);
 	console.log(grid_unit)
 }
@@ -232,7 +226,7 @@ function clean_and_supplement(data){
 	data['alpha_board'] = letter_of_alphabet(data['board'][0], true);
 
 	data['results'].forEach(function(element) {
-		var moves = element['order']['moves'];
+		var moves = element['moves'];
 		if(moves.length > 0){
 			moves.forEach(function(_move){
 				_move["alphabetized"] = [];

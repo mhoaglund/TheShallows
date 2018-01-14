@@ -29,13 +29,13 @@
               <h2>{author}  </h2>
               <span>{timestamp}</span>
               <span>{Abstract}</span>
-              {?order.moves}
+                {?moves}
                 <div class="moves">
-                {#order.moves}
-                  <span style="color:{idcolor};">{alphabetized[0]} ➞ {alphabetized[1]}</span>{@sep}, {/sep}
-                {/order.moves}
+                {#.moves}
+                  <span style="color:{?idcolor}{idcolor}{:else}#888{/idcolor};">{alphabetized[0]} ➞ {alphabetized[1]}</span>{@sep}, {/sep}
+                {/moves}
                 </div>
-              {/order.moves}
+              {/moves}
             </div>
           <div class="top">
               <div class="gridhost">
@@ -48,12 +48,12 @@
             </div>
           <div class="content">
               
-              {#order.rules}
+              {#rules}
                   <div class="rules"><span>{type}, {condition}{@sep}, </br>{/sep}</span></div>
-              {/order.rules}
-              {?order.thesis}
-                <div class="thesis"><p>{order.thesis}</p></div>
-              {/order.thesis}
+              {/rules}
+              {?thesis}
+                <div class="thesis"><p>{thesis}</p></div>
+              {/thesis}
           </div>
       </div>
       {/results}
