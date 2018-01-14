@@ -65,6 +65,7 @@ function set_focus(){
 		$('#'+center['id']).addClass('highlighted');
 		$('#overlay').html($('#'+center['id']).html())
 		adjustTileSize();
+		updateGridUnit();
 		//current_focus = '#'+center['id']
 		//TODO new vector drawing routine in here.
 		var centerdata = datamain.results.find(matchesID, center['id'])
@@ -197,22 +198,22 @@ function getProjectData(myUrl){
 		data: '',
 		success: function(data) { 
 			datamain = clean_and_supplement(data);
-			displayAll(datamain, '#list_host', 'CH_ORD', function(){
-				console.log("done");
-				$('.change-order').each(function(){
-					var waypoints = new Waypoint.Inview({
-						element: this,
-						entered: function(direction) {
-							if(view_data.indexOf(this.element.id) == -1){
-								view_data.push(this.element.id);
-							} 
-						},
-						exited: function(direction) {
-							view_data = view_data.filter(val => val !== this.element.id);
-						}
-					});
+			data['results'].forEach(function(element) {
+				displayAll(element, '#list_host', 'CH_ORD', function(){
 				});
-				
+			});
+			$('.change-order').each(function(){
+				var waypoints = new Waypoint.Inview({
+					element: this,
+					entered: function(direction) {
+						if(view_data.indexOf(this.element.id) == -1){
+							view_data.push(this.element.id);
+						} 
+					},
+					exited: function(direction) {
+						view_data = view_data.filter(val => val !== this.element.id);
+					}
+				});
 			});
 		},
 		error: function(data){
@@ -226,6 +227,8 @@ function clean_and_supplement(data){
 	data['alpha_board'] = letter_of_alphabet(data['board'][0], true);
 
 	data['results'].forEach(function(element) {
+		element['board'] = data['board'] //can this handle variable board sizes or will the css ruin that?
+		element['alpha_board'] = letter_of_alphabet(data['board'][0], true);
 		var moves = element['moves'];
 		if(moves.length > 0){
 			moves.forEach(function(_move){
@@ -253,7 +256,7 @@ function letter_of_alphabet(num, shouldSlice){
 
 function displayAll(_data, _target, _template = 'CH_ORD', _cb = null){
 	dust.render(_template, _data, function(err, out) {
-        $(_target).html(out);
+        $(_target).append(out);
 		if(_cb )_cb();
 	});
 }

@@ -21,9 +21,6 @@
   <script src="javascripts/jquery.nicescroll.min.js"></script>
   <script src="javascripts/inview.min.js"></script>
   <script id="co-template">
-    <div class="bumper"></div>
-    {?results}
-      {#results}
         <div class="change-order closed" id="{id}">
           <div class="inner flexfill">
               <h2>{author}  </h2>
@@ -56,9 +53,7 @@
               {/thesis}
           </div>
       </div>
-      {/results}
-    {/results}
-    <div class="bumper"></div>
+
   </script>
   </head>
   <body>
@@ -72,9 +67,11 @@
     </section>
     <aside id="time"></aside>
     <aside id="status"></aside>
+    <div class="bumper"></div>
     <section class="mainlist" id="list_host">
 
     </section>
+    <div class="bumper"></div>
     <section id="overlay" class="change-order"></section>
     <section id="await">
       <div class="sk-cube-grid">
