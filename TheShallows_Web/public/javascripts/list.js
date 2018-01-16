@@ -38,6 +38,7 @@ function set_focus(){
 					_item.moves = JSON.parse(_item.moves);
 					console.log(_item);
 					//crank out a new change order and append, figure out how to stabilize scroll throughout
+					//Play success thing
 					//$('html, body').animate({scrollTop: '0px'}, 300);
 				}
 			})
@@ -261,6 +262,9 @@ function displayAll(_data, _target, _template = 'CH_ORD', _cb = null){
 	});
 }
 
+function showSuccessOverlay(){
+	
+}
 
 $(function(){	
 	//$('#await').hide();
