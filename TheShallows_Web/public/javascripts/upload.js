@@ -39,6 +39,7 @@ function getObjectData(myUrl){
 		success: function(data) { 
 			datamain = clean_and_supplement(data);
 			displayAll(datamain, '#objecthost', 'ARR_OBJ', function(){
+				$('.gridhost').css('max-width', oallht-50);
                 adjustTileSize();
 				$('.object-main').each(function(){
                     var location = $(this).attr('id').split('_')[0].toLowerCase()
@@ -221,8 +222,6 @@ $(function(){
 		playIntro();
 	} else clearIntro();
 	setOalls();
-	//TODO localstorage cookie here and check to skip intro
-	
     getObjectData(data_location);
     $( window ).resize(function() {
 		adjustTileSize();
@@ -232,11 +231,11 @@ $(function(){
 	$(document.body).on('mousedown', '.object-main', function(e){
 		clickbuffer = true;
 	})
-	$(document.body).on('mouseup', '.object-main', function(e){
-		if(clickbuffer){
-			raiseDetailPopup($(this));
-		}
-	})
+	// $(document.body).on('mouseup', '.object-main', function(e){
+	// 	if(clickbuffer){
+	// 		raiseDetailPopup($(this));
+	// 	}
+	// })
 	$(document.body).on('input', '#authorentry', function(){
 		if($('#authorentry').val() != ''){
 			can_proceed = true;
@@ -264,6 +263,9 @@ $(function(){
 	})
 	$(document.body).on('click', '.detailpane', function(e){
 		clearElement($('#detailhost'), 200, false);
+	})
+	$(document.body).on('click', '#submit-all', function(e){
+		//TODO send data off and offer a redirect back to the form+refresh, or some other thing
 	})
 })
 
