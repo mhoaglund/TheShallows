@@ -40,6 +40,12 @@ function getObjectData(myUrl){
 			datamain = clean_and_supplement(data);
 			displayAll(datamain, '#objecthost', 'ARR_OBJ', function(){
 				$('.gridhost').css('max-width', oallht-50);
+				$('#submit-all').css(
+					{
+						'max-width': oallht-50,
+						'margin-left': ((oallht-50)/2)*-1
+					}
+				);
                 adjustTileSize();
 				$('.object-main').each(function(){
                     var location = $(this).attr('id').split('_')[0].toLowerCase()
