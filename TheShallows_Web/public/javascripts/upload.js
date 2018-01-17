@@ -222,6 +222,7 @@ $(function(){
 		playIntro();
 	} else clearIntro();
 	setOalls();
+	
     getObjectData(data_location);
     $( window ).resize(function() {
 		adjustTileSize();
@@ -265,7 +266,14 @@ $(function(){
 		clearElement($('#detailhost'), 200, false);
 	})
 	$(document.body).on('click', '#submit-all', function(e){
-		//TODO send data off and offer a redirect back to the form+refresh, or some other thing
+		//TODO debounce
+		submitOrder('/upload', {
+			'moves':moves,
+			'author':ppt_name
+		}, function(result){
+			//TODO what else here? possible error msg?
+			
+		})
 	})
 })
 
@@ -339,6 +347,24 @@ function skipIntro(){
 	cycleContent('#messages', 400);
 }
 
+function submitOrder(url, payload, callback){
+	$.ajax({
+        method: "POST",
+		url: url,
+		dataType: 'json',
+		contentType: 'application/json',
+		data: JSON.stringify(payload),
+		processData: false
+    })
+    .done(function( data ) {
+        console.log(data);
+        callback(data)
+	})
+	.always(function(){
+		showOverlay($('#alertcontainer'), 400);
+	});
+}
+
 function clearElement(element, rate, remove = false){
 	element.animate({
 		'opacity':'0.0'
@@ -367,15 +393,31 @@ function addAnimation(element, animation)
     $(element).css("animation", animation);
 }
 
-function cycleContent(element, rate, _callback){
+function cycleContent(element, rate){
 	stopAnimation(element);
 	$(element).animate({
 		'opacity':'0.0'
-	}, rate, function(callback){
+	}, rate, function(){
 		setText();
 		$(element).animate({
 			'opacity':'1.0'
 		}, rate)
+	})
+}
+
+function showOverlay(element, rate){
+	stopAnimation(element);
+	element.show();
+	$(element).animate({
+		'opacity':'1.0'
+	}, rate, function(){
+		window.setTimeout(function(){
+			$(element).animate({
+				'opacity':'0.0'
+			}, rate, function(){
+				element.hide();
+			})
+		}, rate*3)
 	})
 }
 
@@ -395,7 +437,7 @@ function setText(){
 	var textpacket = introtexts[current_text];
 	for(var property in textpacket){
 		if(textpacket.hasOwnProperty(property)){
-			$('.'+property).html(textpacket[property]);
+			$('#introcontainer '+'.'+property).html(textpacket[property]);
 		}
 	}
 	//fuckin a
