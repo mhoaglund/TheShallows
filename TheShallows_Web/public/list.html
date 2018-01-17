@@ -12,6 +12,7 @@
   <link href='https://fonts.googleapis.com/css?family=Cardo:400,700' rel='stylesheet' type='text/css'/>
   <link rel="stylesheet" href="stylesheets/ibm-type.min.css" type="text/css"/>
   <link rel="stylesheet" href="stylesheets/style.css" type="text/css"/>
+  <link rel="stylesheet" href="stylesheets/loading.css" type="text/css"/>
   <link rel="stylesheet" href="stylesheets/slicknav.css" type="text/css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="javascripts/dust-full.min.js"></script>
@@ -20,21 +21,18 @@
   <script src="javascripts/jquery.nicescroll.min.js"></script>
   <script src="javascripts/inview.min.js"></script>
   <script id="co-template">
-    <div class="bumper"></div>
-    {?results}
-      {#results}
         <div class="change-order closed" id="{id}">
           <div class="inner flexfill">
               <h2>{author}  </h2>
               <span>{timestamp}</span>
               <span>{Abstract}</span>
-              {?order.moves}
+                {?moves}
                 <div class="moves">
-                {#order.moves}
-                  <span style="color:{idcolor};">{alphabetized[0]} ➞ {alphabetized[1]}</span>{@sep}, {/sep}
-                {/order.moves}
+                {#.moves}
+                  <span style="color:{?idcolor}{idcolor}{:else}#888{/idcolor};">{alphabetized[0]} ➞ {alphabetized[1]}</span>{@sep}, {/sep}
+                {/moves}
                 </div>
-              {/order.moves}
+              {/moves}
             </div>
           <div class="top">
               <div class="gridhost">
@@ -47,17 +45,15 @@
             </div>
           <div class="content">
               
-              {#order.rules}
+              {#rules}
                   <div class="rules"><span>{type}, {condition}{@sep}, </br>{/sep}</span></div>
-              {/order.rules}
-              {?order.thesis}
-                <div class="thesis"><p>{order.thesis}</p></div>
-              {/order.thesis}
+              {/rules}
+              {?thesis}
+                <div class="thesis"><p>{thesis}</p></div>
+              {/thesis}
           </div>
       </div>
-      {/results}
-    {/results}
-    <div class="bumper"></div>
+
   </script>
   </head>
   <body>
@@ -71,11 +67,27 @@
     </section>
     <aside id="time"></aside>
     <aside id="status"></aside>
+    <div class="bumper"></div>
     <section class="mainlist" id="list_host">
 
     </section>
+    <div class="bumper"></div>
     <section id="overlay" class="change-order"></section>
+    <section id="await">
+      <div class="sk-cube-grid">
+        <div class="sk-cube sk-cube1"></div>
+        <div class="sk-cube sk-cube2"></div>
+        <div class="sk-cube sk-cube3"></div>
+        <div class="sk-cube sk-cube4"></div>
+        <div class="sk-cube sk-cube5"></div>
+        <div class="sk-cube sk-cube6"></div>
+        <div class="sk-cube sk-cube7"></div>
+        <div class="sk-cube sk-cube8"></div>
+        <div class="sk-cube sk-cube9"></div>
+      </div>
+</section>
   </body>
   <script src="javascripts/jquery.slicknav.min.js"></script>
   <script src="javascripts/list.js"></script>
+  <script src="javascripts/data-access.js"></script>
 </html>

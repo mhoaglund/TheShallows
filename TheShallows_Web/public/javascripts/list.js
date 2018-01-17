@@ -18,21 +18,38 @@ function get_before_oldest(){
 
 }
 
-//user has scrolled to the top, get newer change orders if there are any.
-function check_and_get_newest(){
-	//GET etc
-	//add
-	$('html, body').animate({scrollTop: '0px'}, 300);
-}
-
 var current_focus = ''
 var center = null
+var recent_refresh = false;
+var refresh_debouncer;
 function set_focus(){
 	var locs = [];
 	var isAtTop = ($(window).scrollTop() == 0) ? true : false;
 	var isAtBottom = ($(window).scrollTop() >= $(document).height() - window.innerHeight) ? true : false;
 	if(isAtTop){
-		return;
+		//trigger refresh of latest item
+		if(!recent_refresh){
+			console.log('At top, refreshing...')
+			recent_refresh = true;
+			do_get('/retrieve?latest=true', function(data){
+				if(data.id == _latestid) return;
+				else {
+					var _item = JSON.parse(data)[0];
+					_item.moves = JSON.parse(_item.moves);
+					console.log(_item);
+					//crank out a new change order and append, figure out how to stabilize scroll throughout
+					//Play success thing
+					//$('html, body').animate({scrollTop: '0px'}, 300);
+				}
+			})
+		}
+		if(!refresh_debouncer){
+			window.setTimeout(function(){
+				console.log('Clearing timeout')
+				recent_refresh = false;
+				refresh_debouncer = null;
+			}, 2000)
+		}
 	}
 	if(isAtBottom){
 		return;
@@ -49,6 +66,7 @@ function set_focus(){
 		$('#'+center['id']).addClass('highlighted');
 		$('#overlay').html($('#'+center['id']).html())
 		adjustTileSize();
+		updateGridUnit();
 		//current_focus = '#'+center['id']
 		//TODO new vector drawing routine in here.
 		var centerdata = datamain.results.find(matchesID, center['id'])
@@ -73,16 +91,9 @@ function adjustTileSize(){
 
 function repaintMoves(packet){
 	$('.vector').detach();
-	console.log(packet)
-	packet.order.moves.forEach(function(move){
-		//TODO derive cell size from gridhost size to get a pixel from our percent. build in margin.
+	packet.moves.forEach(function(move){
 		var _startpt = translateUnit(move.from)
 		var _endpt = translateUnit(move.to)
-		//var _endpt = centerpoint($('#overlay #' + reverseString(move.alphabetized[1])))
-		//console.log(move)
-		//console.log(_startpt)
-		//console.log(_endpt, )
-		// console.log($('#overlay').offset());
 		
 		var _svg = '<svg class="vector" id="from_'+reverseString(move.alphabetized[0])+'_to_'+reverseString(move.alphabetized[1])+'_'+packet.id+'"><line stroke-linecap="round" y1="'+_startpt[0]+'" x1="'+_startpt[1]+'" y2="'+_endpt[0]+'" x2="'+_endpt[1]+'" stroke="'+packet.idcolor+'"></line></svg>'
 		var _marker = '<div class="marker" style="top:'+_endpt[0]+'px;left:'+_endpt[1]+'px;background:'+packet.idcolor+'"></div>'
@@ -101,9 +112,7 @@ function repaintMoves(packet){
 var grid_unit = {'h':0, 'w':0};
 function updateGridUnit(){
 	hasunitsize = true;
-	// grid_unit.h = $('#overlay #1a').height() + (5.5*2); //accounting for margins
-	// grid_unit.w = $('#overlay #1a').width() + (5*2);
-	grid_unit.h = $('#overlay #1a').outerHeight(true); //accounting for margins
+	grid_unit.h = $('#overlay #1a').outerHeight(true);
 	grid_unit.w = $('#overlay #1a').outerWidth(true);
 	console.log(grid_unit)
 }
@@ -190,22 +199,22 @@ function getProjectData(myUrl){
 		data: '',
 		success: function(data) { 
 			datamain = clean_and_supplement(data);
-			displayAll(datamain, '#list_host', 'CH_ORD', function(){
-				console.log("done");
-				$('.change-order').each(function(){
-					var waypoints = new Waypoint.Inview({
-						element: this,
-						entered: function(direction) {
-							if(view_data.indexOf(this.element.id) == -1){
-								view_data.push(this.element.id);
-							} 
-						},
-						exited: function(direction) {
-							view_data = view_data.filter(val => val !== this.element.id);
-						}
-					});
+			data['results'].forEach(function(element) {
+				displayAll(element, '#list_host', 'CH_ORD', function(){
 				});
-				
+			});
+			$('.change-order').each(function(){
+				var waypoints = new Waypoint.Inview({
+					element: this,
+					entered: function(direction) {
+						if(view_data.indexOf(this.element.id) == -1){
+							view_data.push(this.element.id);
+						} 
+					},
+					exited: function(direction) {
+						view_data = view_data.filter(val => val !== this.element.id);
+					}
+				});
 			});
 		},
 		error: function(data){
@@ -219,7 +228,9 @@ function clean_and_supplement(data){
 	data['alpha_board'] = letter_of_alphabet(data['board'][0], true);
 
 	data['results'].forEach(function(element) {
-		var moves = element['order']['moves'];
+		element['board'] = data['board'] //can this handle variable board sizes or will the css ruin that?
+		element['alpha_board'] = letter_of_alphabet(data['board'][0], true);
+		var moves = element['moves'];
 		if(moves.length > 0){
 			moves.forEach(function(_move){
 				_move["alphabetized"] = [];
@@ -246,13 +257,17 @@ function letter_of_alphabet(num, shouldSlice){
 
 function displayAll(_data, _target, _template = 'CH_ORD', _cb = null){
 	dust.render(_template, _data, function(err, out) {
-        $(_target).html(out);
+        $(_target).append(out);
 		if(_cb )_cb();
 	});
 }
 
+function showSuccessOverlay(){
+	
+}
 
 $(function(){	
+	//$('#await').hide();
 	$("body").niceScroll({
 		scrollspeed: 5,
 		mousescrollstep: 5

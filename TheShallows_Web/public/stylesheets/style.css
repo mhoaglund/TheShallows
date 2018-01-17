@@ -128,7 +128,7 @@ p:last-child{
     .gridhost{
       display: flex;
       flex-flow: row wrap;
-      width: 80%;
+      width: 98%;
       /* margin: auto; */
       position: relative;
       z-index: 9;
@@ -300,13 +300,13 @@ p:last-child{
   margin-top: -33px;
 }
 
-@media screen and (max-width: 950px){
+@media screen and (max-width: 1300px){
   #overlay{
     position: fixed;
     right: 0%;
-    top: 31%;
+    top: 20%;
     width: 65%;
-    height: 66%;
+    height: 74%;
     border: 1px solid black;
     border-right: 0px;
     background: #efefef;
