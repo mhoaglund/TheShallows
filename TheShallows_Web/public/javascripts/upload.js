@@ -107,7 +107,7 @@ function paintMove(move){
 	var _endpt = centerpoint($('#' +move.to))
 	console.log(_startpt)
 	console.log(_endpt)
-	var _svg = '<svg class="vector animate" id="'+move.id+'"><line stroke-linecap="round" y1="'+_startpt[1]+'" x1="'+_startpt[0]+'" y2="'+_endpt[1]+'" x2="'+_endpt[0]+'" stroke="#FFCCFF"></line></svg>'
+	var _svg = '<svg class="vector animate" id="'+move.id+'"><line stroke-linecap="round" y1="'+_startpt[1]+'" x1="'+_startpt[0]+'" y2="'+_endpt[1]+'" x2="'+_endpt[0]+'" stroke="#888"></line></svg>'
 	//$('.overlay .gridhost').append(_svg);
 	$('#objecthost').append(_svg);
 }
@@ -119,7 +119,7 @@ function repaintMoves(){
 		var _endpt = centerpoint($('#' +move.to))
 		console.log(_startpt)
 		console.log(_endpt)
-		var _svg = '<svg class="vector animate" id="'+move.id+'"><line stroke-linecap="round" y1="'+_startpt[1]+'" x1="'+_startpt[0]+'" y2="'+_endpt[1]+'" x2="'+_endpt[0]+'" stroke="#FFCCFF"></line></svg>'
+		var _svg = '<svg class="vector animate" id="'+move.id+'"><line stroke-linecap="round" y1="'+_startpt[1]+'" x1="'+_startpt[0]+'" y2="'+_endpt[1]+'" x2="'+_endpt[0]+'" stroke="#888"></line></svg>'
 		//$('.overlay .gridhost').append(_svg);
 		$('#objecthost').append(_svg);
 	})

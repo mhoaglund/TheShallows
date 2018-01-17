@@ -159,6 +159,12 @@ a{
     border: 1px solid cornflowerblue;
 }
 
+    #submit-all:hover, #submit-all:active{
+        color: white;
+        background: cornflowerblue;
+        border: 1px solid blue;
+    }
+    
 .object-main br{
     display: none;
 }
