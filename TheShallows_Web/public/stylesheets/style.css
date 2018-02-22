@@ -140,6 +140,7 @@ p:last-child{
     }
 
     .change-order .gridhost .tile{
+      padding: 4px;
         position: relative;
         margin: 1%;
         border: 1px solid black;
@@ -148,7 +149,6 @@ p:last-child{
         border-collapse: collapse;
         opacity: 1;
     }
-
   .object-array.underlay,
   .object-array.overlay{
     position: absolute;

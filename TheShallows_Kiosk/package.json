@@ -1,0 +1,19 @@
+{
+  "name": "pdf_testing",
+  "version": "0.0.1",
+  "description": "...",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.14.1",
+    "cross-spawn": "^6.0.4",
+    "inquirer": "^5.1.0",
+    "node-pdftk": "^1.2.2",
+    "pdffiller": "0.0.10",
+    "uuid": "^3.2.1"
+  }
+}

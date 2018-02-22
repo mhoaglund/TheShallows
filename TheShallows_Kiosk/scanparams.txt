@@ -1,0 +1,5 @@
+OutFile: testscan.jpg
+Proc: DocScan
+Version: 1
+Init: ADF 0 AF 0 AS 0 GRAY DPI 200
+OutFmt: 100
