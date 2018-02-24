@@ -1,6 +1,8 @@
 var pdfFiller = require('pdffiller');
 const path = require('path')
-const uuidv4 = require('uuid/v4');
+const uuidv4 = require('uuid/v4')
+const moment = require('moment')
+var s3 = new AWS.S3();
 const { spawn } = require('child_process');
 
 var sourcePDF = "C:/Dev/PDF_testing/AOV_CO_form_test.pdf";
@@ -19,12 +21,34 @@ var data = {
 
 //TODO: unique scan naming and upload to s3.
 function scanDocument(callback){
+    //TODO: try to pass in params string instead so we can easily control
+    var filename = 'COscan' + moment().tz('America/Chicago').format('MM/DD/YYYY h:mm a')
     var scanjob = spawn('cmdtwain', ['-q', '-f', 'scanparams.txt']);
     scanjob.on('exit', function (code, signal) {
         //TODO: adjust message based on child proc's output signal
         // console.log('child process exited with ' +
         //             `code ${code} and signal ${signal}`);
-        callback('Scan Complete.')
+        callback('Scan Complete. File name: ' + filename)
+    });
+}
+
+function uploadScan(key){
+    var _file = null //TODO get file that was scanned, or pass in buffer?
+    var params = {
+        Bucket: 'shallows', 
+        Key: key, 
+        Body: _file, 
+        ACL: 'public-read',
+        ContentType: 'jpeg'
+    }
+    s3.putObject(params, function(err){
+        if(!err) {
+            cb("Successfully added item to bucket.")
+        }
+        else{
+            console.log(err.stack)
+            cb("Failed to put item in bucket. " + err.stack)
+        } 
     });
 }
 
