@@ -13,7 +13,7 @@ var SN = 0
 var sourcePDF = "C:/Dev/PDF_testing/AOV_CO_form_test.pdf";
 var destinationPDF =  "C:/Dev/PDF_testing/";
 var id = uuidv4();
-//test data
+
 var data = {
     "UIDtop": id,
     "UIDbtm": id,
@@ -73,8 +73,7 @@ function printDocument(docname, callback){
 function fillPDF(_input = data, key, cb){
     pdfFiller.fillForm( sourcePDF, destinationPDF + key, _input, function(err) {
         if (err) throw err;
-        console.log("In callback (we're done).");
-        cb(destinationPDF + key);
+        cb(destinationPDF + key, _input.SNtop);
     });
 }
 
@@ -96,8 +95,8 @@ function formatData(input){
         "SNbtm": SN,
         "EngSteps" : makeEnglishSteps(JSON.parse(input.moves)),
         "SpSteps" : makeSpanishSteps(JSON.parse(input.moves)),
-        "DateTop" : input.timestamp,
-        "DateBottom" : input.timestamp,
+        "DateTop" : moment().tz('America/Chicago').format('MM-DD-YYYY-h-mm-a'),
+        "DateBottom" : moment().tz('America/Chicago').format('MM-DD-YYYY-h-mm-a'),
         "IdentifierEntry" : "Please fill out the box below with your name or another identifier."
     }
     _.each(JSON.parse(input.moves), function(step){
