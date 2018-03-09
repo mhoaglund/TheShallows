@@ -9,6 +9,7 @@ var _ = require('underscore')
 var s3 = new AWS.S3();
 const { spawn } = require('child_process');
 
+var SN = 0
 var sourcePDF = "C:/Dev/PDF_testing/AOV_CO_form_test.pdf";
 var destinationPDF =  "C:/Dev/PDF_testing/";
 var id = uuidv4();
@@ -91,6 +92,8 @@ function formatData(input){
     var output = {
         "UIDtop": input.id,
         "UIDbtm": input.id,
+        "SNtop": SN,
+        "SNbtm": SN,
         "EngSteps" : makeEnglishSteps(JSON.parse(input.moves)),
         "SpSteps" : makeSpanishSteps(JSON.parse(input.moves)),
         "DateTop" : input.timestamp,
@@ -101,6 +104,7 @@ function formatData(input){
         output[step.to.toUpperCase()] = "O"
         output[step.from.toUpperCase()] = "X"
     })
+    SN++;
     return output;
 }
 
