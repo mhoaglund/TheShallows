@@ -1,4 +1,5 @@
 var pdfFiller = require('pdffiller');
+var pdfStream = require('pdffiller-stream')
 const path = require('path')
 const uuidv4 = require('uuid/v4')
 const moment = require('moment')
@@ -6,7 +7,7 @@ var s3 = new AWS.S3();
 const { spawn } = require('child_process');
 
 var sourcePDF = "C:/Dev/PDF_testing/AOV_CO_form_test.pdf";
-var destinationPDF =  "C:/Dev/PDF_testing/AOV_CO_filled.pdf";
+var destinationPDF =  "C:/Dev/PDF_testing/";
 var id = uuidv4();
 //test data
 var data = {
@@ -61,10 +62,21 @@ function printDocument(docname, callback){
     })
 }
 
-function fillPDF(_input = data){
-    pdfFiller.fillForm( sourcePDF, destinationPDF, _input, function(err) {
+function fillPDF(_input = data, key, cb){
+    pdfFiller.fillForm( sourcePDF, destinationPDF + key, _input, function(err) {
         if (err) throw err;
         console.log("In callback (we're done).");
+        cb(destinationPDF + key);
+    });
+}
+
+function streamFilledPDF(_input = data, key){
+    pdfFiller.fillForm( sourcePDF, data)
+    .then((outputStream) => {
+        // use the outputStream here; 
+        // will be instance of stream.Readable 
+    }).catch((err) => {
+        console.log(err);
     });
 }
 

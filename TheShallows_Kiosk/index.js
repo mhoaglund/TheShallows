@@ -4,8 +4,11 @@ const uuidv4 = require('uuid/v4');
 const { spawn } = require('child_process');
 const program = require('commander');
 var inquirer = require('inquirer');
+var _ = require('underscore');
 var docs = require('./docmanager.js')
+var serverbinding = require('./serverbinding.js')
 
+var printed = []
 var idtoprint = {
     type: 'input',
     name: 'printid',
@@ -22,6 +25,25 @@ var base_q = {
     ]
   }
 
+  //TODO: regular polling of server endpoint to check for new change orders. Automated printing of new arrivals.
+function pollForNew(){
+    var newest = serverbinding.getLatest()
+    var matched = _.find(printed, function(_id){
+        return _id == newest.id
+    })
+    if(!matched){
+        var _key = newest.id + '.pdf'
+        docs.fillPDF(newest, _key, function(destinationfile){
+            docs.printDocument(destinationfile, function(){
+                printed.push(newest.id)
+                console.log('####')
+                promptBaseAction();
+            })
+        })
+    }
+}
+
+setInterval(pollForNew, 10*1000);
 
 function promptBaseAction(){
     inquirer.prompt([base_q]).then(answers => {

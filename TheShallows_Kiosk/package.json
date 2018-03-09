@@ -12,8 +12,11 @@
     "commander": "^2.14.1",
     "cross-spawn": "^6.0.4",
     "inquirer": "^5.1.0",
+    "node-fetch": "^2.1.1",
     "node-pdftk": "^1.2.2",
     "pdffiller": "0.0.10",
+    "pdffiller-stream": "^0.2.0",
+    "underscore": "^1.8.3",
     "uuid": "^3.2.1"
   }
 }
