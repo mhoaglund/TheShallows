@@ -87,7 +87,7 @@ function formatData(input){
         "UIDtop": input.id,
         "UIDbtm": input.id,
         "EngSteps" : makeEnglishSteps(JSON.parse(input.moves)),
-        "SpSteps" : makeEnglishSteps(JSON.parse(input.moves)),
+        "SpSteps" : makeSpanishSteps(JSON.parse(input.moves)),
         "DateTop" : input.timestamp,
         "DateBottom" : input.timestamp,
         "IdentifierEntry" : "Please fill out the box below with your name or another identifier."
