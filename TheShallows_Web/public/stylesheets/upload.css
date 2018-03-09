@@ -253,9 +253,9 @@ a{
     #objecthost .gridhost {
         width: 90%;
     }
-    .object-main .object-name{
+    /* .object-main .object-name{
         display: none;
-    }
+    } */
 
 }
 
