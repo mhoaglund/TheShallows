@@ -1,19 +1,11 @@
-const fetch = require("node-fetch");
+const request = require("request");
 
 const url = "http://ec2-54-174-44-232.compute-1.amazonaws.com:3000/"
 
-function getLatest(){
-    fetch(url + "/retrieve?latest=true")
-    .then(response => {
-        response.json().then(json => {
-            return json.results[0]
-        //  console.log(
-        //      `co_id: ${json.results[0].id} -`
-        //  );
-        });
-    })
-    .catch(error => {
-        console.log(error);
+function getLatest(cb){
+    request(url + 'retrieve?latest=true', { json: true }, (err, res, body) => {
+        if (err) { return console.log(err); }
+        else cb(body[0])
     });
 }
 

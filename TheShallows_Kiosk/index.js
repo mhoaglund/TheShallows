@@ -27,20 +27,24 @@ var base_q = {
 
   //TODO: regular polling of server endpoint to check for new change orders. Automated printing of new arrivals.
 function pollForNew(){
-    var newest = serverbinding.getLatest()
-    var matched = _.find(printed, function(_id){
-        return _id == newest.id
-    })
-    if(!matched){
-        var _key = newest.id + '.pdf'
-        docs.fillPDF(newest, _key, function(destinationfile){
-            docs.printDocument(destinationfile, function(){
-                printed.push(newest.id)
-                console.log('####')
-                promptBaseAction();
-            })
+    serverbinding.getLatest(function(newest){
+        if(!newest) return;
+        newest.id = newest.id.split('_')[1]
+        var matched = _.find(printed, function(_id){
+            return _id == newest.id
         })
-    }
+        if(!matched){
+            var _key = newest.id + '.pdf'
+            var docinput = docs.formatData(newest)
+            docs.fillPDF(docinput, _key, function(destinationfile){
+                docs.printDocument(destinationfile, function(){
+                    printed.push(newest.id)
+                    console.log('####')
+                    promptBaseAction();
+                })
+            })
+        }
+    })
 }
 
 setInterval(pollForNew, 10*1000);

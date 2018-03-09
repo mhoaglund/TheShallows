@@ -3,6 +3,8 @@ var pdfStream = require('pdffiller-stream')
 const path = require('path')
 const uuidv4 = require('uuid/v4')
 const moment = require('moment')
+var AWS = require('aws-sdk')
+var _ = require('underscore')
 var s3 = new AWS.S3();
 const { spawn } = require('child_process');
 
@@ -80,8 +82,40 @@ function streamFilledPDF(_input = data, key){
     });
 }
 
-function writeSteps(_input){
-    //TODO: string formatting for steps
+function formatData(input){
+    var output = {
+        "UIDtop": input.id,
+        "UIDbtm": input.id,
+        "EngSteps" : makeEnglishSteps(JSON.parse(input.moves)),
+        "SpSteps" : makeEnglishSteps(JSON.parse(input.moves)),
+        "DateTop" : input.timestamp,
+        "DateBottom" : input.timestamp,
+        "IdentifierEntry" : "Please fill out the box below with your name or another identifier."
+    }
+    return output;
+}
+
+function makeEnglishSteps(input){
+    //TODO take in array of steps, narrate them, return string
+    var output = ""
+    var stepno = 1
+    _.each(input, function(step) {
+        var this_step = stepno + ": Move the " + step.itemname + " to space " + step.to + "\n"
+        output += this_step
+        stepno++
+    })
+    return output;
+}
+
+function makeSpanishSteps(input){
+    var output = ""
+    var stepno = 1
+    _.each(input, function(step) {
+        var this_step = stepno + ": Mueva al " + step.itemname + " hasta espacio " + step.to + "\n"
+        output += this_step
+        stepno++
+    })
+    return output;
 }
 
 function toLower(v) {
@@ -91,3 +125,4 @@ function toLower(v) {
 module.exports.printDocument = printDocument
 module.exports.scanDocument = scanDocument
 module.exports.fillPDF = fillPDF
+module.exports.formatData = formatData
