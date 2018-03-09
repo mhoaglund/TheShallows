@@ -46,8 +46,8 @@ function pollForNew(){
         }
     })
 }
-
-setInterval(pollForNew, 10*1000);
+//pollForNew();
+//setInterval(pollForNew, 10*1000);
 
 function promptBaseAction(){
     inquirer.prompt([base_q]).then(answers => {
@@ -75,4 +75,9 @@ function promptforID(){
     })
 }
 
-promptBaseAction();
+docs.scanDocument(function(msg){
+    console.log(msg)
+    console.log('####')
+    promptBaseAction();
+});
+//promptBaseAction();

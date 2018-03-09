@@ -1,8 +1,9 @@
-var pdfFiller = require('pdffiller');
+var pdfFiller = require('pdffiller')
 var pdfStream = require('pdffiller-stream')
+var fs = require('fs')
 const path = require('path')
 const uuidv4 = require('uuid/v4')
-const moment = require('moment')
+const moment = require('moment-timezone')
 var AWS = require('aws-sdk')
 var _ = require('underscore')
 var s3 = new AWS.S3();
@@ -25,28 +26,32 @@ var data = {
 //TODO: unique scan naming and upload to s3.
 function scanDocument(callback){
     //TODO: try to pass in params string instead so we can easily control
-    var filename = 'COscan' + moment().tz('America/Chicago').format('MM/DD/YYYY h:mm a')
-    var scanjob = spawn('cmdtwain', ['-q', '-f', 'scanparams.txt']);
+    var filename = 'COscan-' + moment().tz('America/Chicago').format('MM-DD-YYYY-h-mm-a') + '.jpg'
+    var scan_params_inline = "OutFile: " + filename + " Proc: DocScan Version: 1 Init: ADF 0 AF 0 AS 0 GRAY DPI 200 OutFmt: 100"
+    var scanjob = spawn('cmdtwain', ['-q', filename]);
+    //var scanjob = spawn('cmdtwain', ['-q', '-f', 'scanparams.txt']);
     scanjob.on('exit', function (code, signal) {
-        //TODO: adjust message based on child proc's output signal
-        // console.log('child process exited with ' +
-        //             `code ${code} and signal ${signal}`);
-        callback('Scan Complete. File name: ' + filename)
+        fs.readFile(filename, function(err,data){
+            if(err) {throw err;}
+            var base64data = new Buffer(data, 'binary')
+            uploadScan(filename, base64data, function(msg, err){
+                callback(msg)
+            })
+        })
     });
 }
 
-function uploadScan(key){
-    var _file = null //TODO get file that was scanned, or pass in buffer?
+function uploadScan(key, _file, cb){
     var params = {
         Bucket: 'shallows', 
-        Key: key, 
+        Key: 'scans/' + key, 
         Body: _file, 
         ACL: 'public-read',
         ContentType: 'jpeg'
     }
     s3.putObject(params, function(err){
         if(!err) {
-            cb("Successfully added item to bucket.")
+            cb('Scanned and Uploaded ' + key, null)
         }
         else{
             console.log(err.stack)
@@ -87,7 +92,7 @@ function formatData(input){
         "UIDtop": input.id,
         "UIDbtm": input.id,
         "EngSteps" : makeEnglishSteps(JSON.parse(input.moves)),
-        "SpSteps" : makeSpanishSteps(JSON.parse(input.moves)),
+        "SpSteps" : makeEnglishSteps(JSON.parse(input.moves)),
         "DateTop" : input.timestamp,
         "DateBottom" : input.timestamp,
         "IdentifierEntry" : "Please fill out the box below with your name or another identifier."
