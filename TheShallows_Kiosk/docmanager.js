@@ -92,11 +92,15 @@ function formatData(input){
         "UIDtop": input.id,
         "UIDbtm": input.id,
         "EngSteps" : makeEnglishSteps(JSON.parse(input.moves)),
-        "SpSteps" : makeEnglishSteps(JSON.parse(input.moves)),
+        "SpSteps" : makeSpanishSteps(JSON.parse(input.moves)),
         "DateTop" : input.timestamp,
         "DateBottom" : input.timestamp,
         "IdentifierEntry" : "Please fill out the box below with your name or another identifier."
     }
+    _.each(JSON.parse(input.moves), function(step){
+        output[step.to.toUpperCase()] = "O"
+        output[step.from.toUpperCase()] = "X"
+    })
     return output;
 }
 
@@ -105,7 +109,7 @@ function makeEnglishSteps(input){
     var output = ""
     var stepno = 1
     _.each(input, function(step) {
-        var this_step = stepno + ": Move the " + step.itemname + " to space " + step.to + "\n"
+        var this_step = stepno + ": Move the " + step.itemname + " from space " + step.from + " to space " + step.to + "\n"
         output += this_step
         stepno++
     })
@@ -116,7 +120,7 @@ function makeSpanishSteps(input){
     var output = ""
     var stepno = 1
     _.each(input, function(step) {
-        var this_step = stepno + ": Mueva al " + step.itemname + " hasta espacio " + step.to + "\n"
+        var this_step = stepno + ": Mueva al " + step.itemname + " desde espacio " + step.from + " hasta espacio " + step.to + "\n"
         output += this_step
         stepno++
     })
