@@ -95,9 +95,10 @@ function formatData(input){
         "SNbtm": SN,
         "EngSteps" : makeEnglishSteps(JSON.parse(input.moves)),
         "SpSteps" : makeSpanishSteps(JSON.parse(input.moves)),
-        "DateTop" : moment().tz('America/Chicago').format('MM-DD-YYYY-h-mm-a'),
-        "DateBottom" : moment().tz('America/Chicago').format('MM-DD-YYYY-h-mm-a'),
-        "IdentifierEntry" : "Please fill out the box below with your name or another identifier."
+        "DateTop" : moment().tz('America/Chicago').format('MM-DD-YYYY-h:mm-a'),
+        "DateBottom" : moment().tz('America/Chicago').format('MM-DD-YYYY-h:mm-a'),
+        "IdentifierEntry" : "Please fill out the box below with your name or another identifier.",
+        "ComposedBy": input.author
     }
     _.each(JSON.parse(input.moves), function(step){
         output[step.to.toUpperCase()] = "O"
