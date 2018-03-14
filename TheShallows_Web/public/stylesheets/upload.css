@@ -24,10 +24,10 @@ textarea:focus, input:focus{
     width: 100%;
     height: 100%;
     z-index: 9999;
-    animation: colorchange 15s;
+    /* animation: colorchange 15s;
     animation-iteration-count:infinite;
     -webkit-animation: colorchange 15s;
-    -webkit-animation-iteration-count:infinite;
+    -webkit-animation-iteration-count:infinite; */
 }
 
 #alertcontainer{
@@ -38,10 +38,10 @@ textarea:focus, input:focus{
     width: 100%;
     height: 100%;
     z-index: 9999;
-    animation: colorchange 15s;
+    /* animation: colorchange 15s;
     animation-iteration-count:infinite;
     -webkit-animation: colorchange 15s;
-    -webkit-animation-iteration-count:infinite;
+    -webkit-animation-iteration-count:infinite; */
     display: none;
     opacity: 0.0;
 }
@@ -72,6 +72,27 @@ textarea:focus, input:focus{
     opacity: 0;
     pointer-events: none;
     z-index: 9999;
+}
+#inputhost{
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background: rgba(211, 211, 211, 0.8);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+.inputcontainer{
+    width: 80%;
+    height: 200px;
+    position: absolute;
+    top: 40%;
+    left: 10%;
+}
+.inputcontainer h1{
+    font-family: "ibm-plex-sans", Georgia, Times, serif;
 }
 .detailpane{
     width: 50%;
@@ -147,11 +168,12 @@ a{
 
 
 #submit-all{
+    margin-left: -50%;
     position: fixed;
-    width: 80%;
+    width: 100%;
     left: 50%;
     z-index: 9997;
-    bottom: 0;
+    bottom: 2px;
     text-align: center;
     font-size: 1.5em;
     padding: 8px;
@@ -164,7 +186,27 @@ a{
         background: cornflowerblue;
         border: 1px solid blue;
     }
+
+.submit{
+    color:white;
+    z-index: 9997;
+    text-align: center;
+    font-size: 1.5em;
+    padding: 8px;
+    border: 1px solid cornflowerblue;
+}
+
+    .submit:hover, .submit:active{
+        color: white;
+        background: cornflowerblue;
+        border: 1px solid blue;
+    }
     
+#submit-final{
+    float: right;
+    margin-top: 12px;
+    background: cornflowerblue;
+}
 .object-main br{
     display: none;
 }

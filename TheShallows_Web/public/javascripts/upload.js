@@ -1,8 +1,11 @@
-var data_location = 'https://s3.amazonaws.com/shallows/current_array.json';
 var data = {
 	active: set_time,
 	google : {families: ['Cardo:italic', 'Roboto:300,100', 'Cutive Mono', 'Work Sans:100,300,500', 'Montserrat:300,500', 'Quattrocento']}
 };
+
+//var _host = 'http://ec2-54-174-44-232.compute-1.amazonaws.com:3000'
+//var _host = ''
+var _host = 'http://localhost:3000'
 
 WebFont.load(data);
 //Dev: dust compilation
@@ -40,12 +43,6 @@ function getObjectData(myUrl){
 			datamain = clean_and_supplement(data);
 			displayAll(datamain, '#objecthost', 'ARR_OBJ', function(){
 				$('.gridhost').css('max-width', oallht-50);
-				$('#submit-all').css(
-					{
-						'max-width': oallht-50,
-						'margin-left': ((oallht-50)/2)*-1
-					}
-				);
                 adjustTileSize();
 				$('.object-main').each(function(){
                     var location = $(this).attr('id').split('_')[0].toLowerCase()
@@ -65,9 +62,6 @@ function getObjectData(myUrl){
                     }
                 })
 			});
-		},
-		error: function(data){
-			alert("problem");
 		}
 	});
 	return result;
@@ -78,6 +72,7 @@ function recordMove(dropped_on){
 	var item_info = dragging.attr('id').split('_')
 	var move = {
 		'item': item_info[1],
+		'itemname':dragging.find('.object-name').html(),
 		'from': item_info[0],
 		'to':dropped_on.attr('id')
 	}
@@ -92,24 +87,27 @@ function recordMove(dropped_on){
 	moves.push(move)
 	if(to_remove != null){
 		moves.splice(to_remove, 1)
-		repaintMoves();
-	} else	paintMove(move);
-	//TODO reduncancy check
+	}
 
-
-	dragging.detach();
-	dragging.css({'position':'relative','top':'0px', 'left':'0px'})
-	dropped_on.append(dragging);
+	replaceTiles();
+	moves.forEach(function(_move){
+		var _mover = $('.overlay #'+_move.from).find('.draggable');
+		var _movee = $('.overlay #'+_move.to).find('.draggable');
+		_mover.detach().css({'position':'relative','top':'0px', 'left':'0px'});
+		_movee.detach().css({'position':'relative','top':'0px', 'left':'0px'});
+		$('.overlay #'+_move.from).html(_movee);
+		
+		$('.overlay #'+_move.to).html(_mover);
+		_mover.css('z-index','9999')
+	})
+	repaintMoves();
 }
 
-function paintMove(move){
-	var _startpt = centerpoint($('#' +move.from))
-	var _endpt = centerpoint($('#' +move.to))
-	console.log(_startpt)
-	console.log(_endpt)
-	var _svg = '<svg class="vector animate" id="'+move.id+'"><line stroke-linecap="round" y1="'+_startpt[1]+'" x1="'+_startpt[0]+'" y2="'+_endpt[1]+'" x2="'+_endpt[0]+'" stroke="#888"></line></svg>'
-	//$('.overlay .gridhost').append(_svg);
-	$('#objecthost').append(_svg);
+function replaceTiles(){
+	$('.object-main').each(function(){
+		var location = $(this).attr('id').split('_')[0].toLowerCase()
+		$('#'+location).append($(this))
+	});
 }
 
 function repaintMoves(){
@@ -119,7 +117,7 @@ function repaintMoves(){
 		var _endpt = centerpoint($('#' +move.to))
 		console.log(_startpt)
 		console.log(_endpt)
-		var _svg = '<svg class="vector animate" id="'+move.id+'"><line stroke-linecap="round" y1="'+_startpt[1]+'" x1="'+_startpt[0]+'" y2="'+_endpt[1]+'" x2="'+_endpt[0]+'" stroke="#888"></line></svg>'
+		var _svg = '<svg class="vector animate" id="'+move.id+'"><line stroke-linecap="round" y1="'+_startpt[1]+'" x1="'+_startpt[0]+'" y2="'+_endpt[1]+'" x2="'+_endpt[0]+'" stroke-dasharray="5,10" stroke="#888"></line></svg>'
 		//$('.overlay .gridhost').append(_svg);
 		$('#objecthost').append(_svg);
 	})
@@ -136,7 +134,7 @@ function centerpoint(element){
 }
 
 function adjustTileSize(){
-    var cols = (100-(datamain.board[0]*2))/(datamain.board[0]); //leaving 1% for margins
+    var cols = (100-(datamain.board[1]*2))/(datamain.board[1]); //leaving 1% for margins
     $('.tile').css('width', 'auto');
     $('.tile').css('width', cols+'%');
     $('.tile').each(function(){
@@ -181,13 +179,6 @@ function reverseString(str) {
     return str.split("").reverse().join("");
 }
 
-// function displayAll(_data, _target, _template = 'CH_ORD', _cb = null){
-// 	dust.render(_template, _data, function(err, out) {
-//         $(_target).html(out);
-// 		if(_cb )_cb();
-// 	});
-// }
-
 function raiseDetailPopup(sender, _cb = null){
 	var sender_id = sender.attr('id').split('_')[1]
 	var valid_object = null;
@@ -208,6 +199,14 @@ function raiseDetailPopup(sender, _cb = null){
 	}
 }
 
+function raiseNameInputPopup(){
+	$('#inputhost').css('pointer-events', 'auto').css('opacity', '1').css('z-index', 9999);
+}
+
+function clearInputPopup(){
+	$('#inputhost').css('pointer-events', 'none').css('opacity', '0');
+}
+
 var oallht;
 var oallwth;
 var oallctr;
@@ -224,12 +223,8 @@ var clickbuffer = false;
 var dropzone;
 $(function(){
 	setText();
-	if(!checkName('pptname')){
-		playIntro();
-	} else clearIntro();
-	setOalls();
 	
-    getObjectData(data_location);
+    getObjectData(_host + '/upload/latest');
     $( window ).resize(function() {
 		adjustTileSize();
 		cycleMovementLines(400);
@@ -238,19 +233,14 @@ $(function(){
 	$(document.body).on('mousedown', '.object-main', function(e){
 		clickbuffer = true;
 	})
-	// $(document.body).on('mouseup', '.object-main', function(e){
-	// 	if(clickbuffer){
-	// 		raiseDetailPopup($(this));
-	// 	}
-	// })
+	$(document.body).on('mouseup', '.object-main', function(e){
+		if(clickbuffer){
+			raiseDetailPopup($(this));
+		}
+	})
 	$(document.body).on('input', '#authorentry', function(){
 		if($('#authorentry').val() != ''){
-			can_proceed = true;
-			$('.beginbtn').removeClass('disabled')
 			ppt_name = $('#authorentry').val()
-		} else{
-			can_proceed = false;
-			$('.beginbtn').addClass('disabled')
 		}
 	})
 	$(document.body).on('click', '.skipbtn', function(e){
@@ -261,28 +251,26 @@ $(function(){
 		returnToIntro();
 		playIntro();
 	})
-	$(document.body).on('click', '.beginbtn', function(e){
-		if(can_proceed){
-			clearIntro();
-			storeItem('pptname', ppt_name);
-			$(this).css({'animation': 'btnpulse 0.3s'})
-		}
-	})
 	$(document.body).on('click', '.detailpane', function(e){
 		clearElement($('#detailhost'), 200, false);
 	})
 	$(document.body).on('click', '#submit-all', function(e){
-		//TODO debounce
-		submitOrder('/upload', {
-			'moves':moves,
-			'author':ppt_name
-		}, function(result){
-			//TODO what else here? possible error msg?
-			
-		})
+		raiseNameInputPopup();
+	})
+	$(document.body).on('click', '#submit-final', function(e){
+		if(!hassubmitted){
+			clearInputPopup();
+			hassubmitted = true;
+				submitOrder(_host + '/upload', {
+				'moves':moves,
+				'author':ppt_name,
+				'thesis':$('#addendaentry').val()
+			})
+		}
 	})
 })
 
+var hassubmitted = false;
 var ppt_name = '';
 var can_proceed = false;
 var introcycle;
@@ -353,7 +341,7 @@ function skipIntro(){
 	cycleContent('#messages', 400);
 }
 
-function submitOrder(url, payload, callback){
+function submitOrder(url, payload){
 	$.ajax({
         method: "POST",
 		url: url,
@@ -364,10 +352,12 @@ function submitOrder(url, payload, callback){
     })
     .done(function( data ) {
         console.log(data);
-        callback(data)
 	})
 	.always(function(){
-		showOverlay($('#alertcontainer'), 400);
+		showOverlay($('#alertcontainer'), 400, function(){
+			location.reload();
+		});
+
 	});
 }
 
@@ -411,18 +401,14 @@ function cycleContent(element, rate){
 	})
 }
 
-function showOverlay(element, rate){
+function showOverlay(element, rate, cb = null){
 	stopAnimation(element);
 	element.show();
 	$(element).animate({
 		'opacity':'1.0'
 	}, rate, function(){
 		window.setTimeout(function(){
-			$(element).animate({
-				'opacity':'0.0'
-			}, rate, function(){
-				element.hide();
-			})
+			if(cb) cb();
 		}, rate*3)
 	})
 }
@@ -475,8 +461,8 @@ var introtexts = [
 		'go-button':'<a class="skipbtn">Skip? --></a>'
 	},
 	{
-		'en':'Drag objects between stalls in the grid, and tap "send" when youre done.',
-		'es':'Arrastre objetos entre puestos en la grilla, y toque "send" cuando haya terminado.',
+		'en':'Drag objects between stalls in the grid to swap them, and tap "send" when youre done.',
+		'es':'Arrastra los objetos entre puestos en la grilla para intercambiarlos, y toca "enviar" cuando hayas terminado.',
 		'hm':'TODO localization three',
 		'go-button':'<a class="skipbtn">Skip? --></a>'
 	},
@@ -485,12 +471,12 @@ var introtexts = [
 		'es':'Toca un objeto para ver información detallada sobre él.',
 		'hm':'TODO localization three',
 		'go-button':'<a class="skipbtn">Skip? --></a>'
-	},
-	{
-		'en':'To begin, enter your name.',
-		'es':'Para empezar, entra su nombre.',
-		'hm':'TODO localization three',
-		'form-field':'<label for="author" class="fb-text-label"><span class="tooltip-element" tooltip="How you want to be known"></span></label> <input type="text" class="form-control" name="author" id="authorentry" value="">',
-		'go-button':'<a class="beginbtn disabled">✔</a>'
 	}
+	// {
+	// 	'en':'To begin, enter your name.',
+	// 	'es':'Para empezar, entra su nombre.',
+	// 	'hm':'TODO localization three',
+	// 	'form-field':'<label for="author" class="fb-text-label"><span class="tooltip-element" tooltip="How you want to be known"></span></label> <input type="text" class="form-control" name="author" id="authorentry" value="">',
+	// 	'go-button':'<a class="beginbtn disabled">✔</a>'
+	// }
 ]
