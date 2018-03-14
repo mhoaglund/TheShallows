@@ -17,7 +17,7 @@ textarea:focus, input:focus{
 }
 
 #introcontainer{
-    background: rgb(158, 49, 49);
+    background: rgb(39, 69, 114);
     position: absolute;
     top: 0px;
     left: 0px;
@@ -31,7 +31,7 @@ textarea:focus, input:focus{
 }
 
 #alertcontainer{
-    background: rgb(158, 49, 49);
+    background: rgb(39, 69, 114);
     position: absolute;
     top: 0px;
     left: 0px;
@@ -49,7 +49,7 @@ textarea:focus, input:focus{
 .transient section{
     width: 90%;
     margin: auto;
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 .text-column{

@@ -3,9 +3,9 @@ var data = {
 	google : {families: ['Cardo:italic', 'Roboto:300,100', 'Cutive Mono', 'Work Sans:100,300,500', 'Montserrat:300,500', 'Quattrocento']}
 };
 
-//var _host = 'http://ec2-54-174-44-232.compute-1.amazonaws.com:3000'
+var _host = 'http://ec2-54-174-44-232.compute-1.amazonaws.com:3000'
 //var _host = ''
-var _host = 'http://localhost:3000'
+//var _host = 'http://localhost:3000'
 
 WebFont.load(data);
 //Dev: dust compilation
@@ -445,25 +445,21 @@ var introtexts = [
 	{
 		'en':'Welcome to <em>The Shallows</em>',
 		'es':'Bienvenido a <em>The Shallows</em>',
-		'hm':'TODO localization three',
 		'go-button':'<a class="skipbtn">Skip? --></a>'
 	},
 	{
 		'en':'<em>The Shallows</em> is a project about substitution, proximity, and control.',
 		'es':'<em>The Shallows</em> es un proyecto sobre sustitución, proximidad y control.',
-		'hm':'TODO localization three',
 		'go-button':'<a class="skipbtn">Skip? --></a>'
 	},
 	{
 		'en':'You can contribute by changing the location of an object.',
 		'es':'Puede contribuir cambiando la ubicación de un objeto.',
-		'hm':'TODO localization three',
 		'go-button':'<a class="skipbtn">Skip? --></a>'
 	},
 	{
 		'en':'Drag objects between stalls in the grid to swap them, and tap "send" when youre done.',
 		'es':'Arrastra los objetos entre puestos en la grilla para intercambiarlos, y toca "enviar" cuando hayas terminado.',
-		'hm':'TODO localization three',
 		'go-button':'<a class="skipbtn">Skip? --></a>'
 	},
 	{
@@ -472,11 +468,4 @@ var introtexts = [
 		'hm':'TODO localization three',
 		'go-button':'<a class="skipbtn">Skip? --></a>'
 	}
-	// {
-	// 	'en':'To begin, enter your name.',
-	// 	'es':'Para empezar, entra su nombre.',
-	// 	'hm':'TODO localization three',
-	// 	'form-field':'<label for="author" class="fb-text-label"><span class="tooltip-element" tooltip="How you want to be known"></span></label> <input type="text" class="form-control" name="author" id="authorentry" value="">',
-	// 	'go-button':'<a class="beginbtn disabled">✔</a>'
-	// }
 ]
