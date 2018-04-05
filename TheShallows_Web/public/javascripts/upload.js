@@ -223,6 +223,7 @@ var clickbuffer = false;
 var dropzone;
 $(function(){
 	setText();
+	playIntro();
 	
     getObjectData(_host + '/upload/latest');
     $( window ).resize(function() {
@@ -335,7 +336,7 @@ function returnToIntro(){
 function skipIntro(){
 	if(current_text != introtexts.length-1){
 		current_text = introtexts.length-1
-	} else return;
+	} else clearIntro();
 
 	clearInterval(introcycle);
 	cycleContent('#messages', 400);
@@ -354,8 +355,12 @@ function submitOrder(url, payload){
         console.log(data);
 	})
 	.always(function(){
-		showOverlay($('#alertcontainer'), 400, function(){
-			location.reload();
+		showOverlay($('#alertcontainer'), 800, function(){
+			$('#alertcontainer .text-column').animate({
+				'opacity':'0.0'
+			}, 200, function(){
+				location.reload();
+			})
 		});
 
 	});
@@ -443,29 +448,8 @@ function setText(){
 var current_text = 0;
 var introtexts = [
 	{
-		'en':'Welcome to <em>The Shallows</em>',
-		'es':'Bienvenido a <em>The Shallows</em>',
-		'go-button':'<a class="skipbtn">Skip? --></a>'
-	},
-	{
-		'en':'<em>The Shallows</em> is a project about substitution, proximity, and control.',
-		'es':'<em>The Shallows</em> es un proyecto sobre sustitución, proximidad y control.',
-		'go-button':'<a class="skipbtn">Skip? --></a>'
-	},
-	{
-		'en':'You can contribute by changing the location of an object.',
-		'es':'Puede contribuir cambiando la ubicación de un objeto.',
-		'go-button':'<a class="skipbtn">Skip? --></a>'
-	},
-	{
-		'en':'Drag objects between stalls in the grid to swap them, and tap "send" when youre done.',
-		'es':'Arrastra los objetos entre puestos en la grilla para intercambiarlos, y toca "enviar" cuando hayas terminado.',
-		'go-button':'<a class="skipbtn">Skip? --></a>'
-	},
-	{
-		'en':'Tap an object to view detailed information about it.',
-		'es':'Toca un objeto para ver información detallada sobre él.',
-		'hm':'TODO localization three',
-		'go-button':'<a class="skipbtn">Skip? --></a>'
+		'en':'Tap an object to view detailed information about it. </br> Touch and drag an object to have it moved.',
+		'es':'Toca un objeto para ver información detallada sobre él. <br/> Toca y arrastra un objeto para que se mueva.',
+		'go-button':'<a class="skipbtn">Begin / Empieza</a>'
 	}
 ]

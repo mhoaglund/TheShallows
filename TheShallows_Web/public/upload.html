@@ -54,9 +54,8 @@
                   </div>
                   {?objects}
                     {#objects}
-                      <div class="object-main draggable ui-widget-content" id="{current}_{id}">
+                      <div class="object-main draggable ui-widget-content" id="{current}_{id}" style="background-image: url(https://s3.amazonaws.com/shallows/images/{image})">
                         <span>{current}</span><br/>
-                        <span class="object-name">{name}</span>
                       </div>
                     {/objects}
                 {/objects}
@@ -64,7 +63,7 @@
         </script>
     </head>
     <body>
-      <section id="introcontainer" class="transient" style="display: none;">
+      <section id="introcontainer" class="transient">
         <section id="messages">
           <div class="text-column">
             <p class="en"></p>  
@@ -82,9 +81,9 @@
       <section id="alertcontainer" class="transient">
         <section>
         <div class="text-column">
-            <p class="en">Thank you for submitting an order to <em>The Shallows.</em></p>  
+            <p class="en">Thank you for submitting an order to <em>The Shallows.</em> Your order will be printed and distributed to another viewer.</p>  
             <hr/>
-            <p class="es">Gracias por enviar un pedido a <em>The Shallows.</em></p>   
+            <p class="es">Gracias por enviar un pedido a <em>The Shallows.</em> Su pedido será impreso y distribuido a otro espectador.</p>   
           </div>
         </section>
       </section>
@@ -99,13 +98,15 @@
     </section>
     <section id="detailhost">
     </section>
-    <section id="inputhost">
+    <section id="inputhost" class="transient">
       <div class="inputcontainer">
-        <h1>How do you want to be known?</h1>
-        <label for="author" class="fb-text-label"><span class="tooltip-element" tooltip="How you want to be known"></span></label> <input type="text" style="height: 46px; width: 100%; padding-left: 14px;" class="form-control" name="author" id="authorentry" value="">
+        <p>Who are you? Offer a name, an identifier, or some initials.</p>
+        <label for="author" class="fb-text-label"><span class="tooltip-element" tooltip="How you want to be known"></span></label> 
+        <input type="text" style="height: 46px; width: 100%; padding-left: 14px;" class="form-control" name="author" id="authorentry" value="">
         <br/>
-        <h1>Anything else to add about the changes you're making?</h1>
-        <label for="author" class="fb-text-label"><span class="tooltip-element" tooltip="Addenda"></span></label> <textarea type="text" style="height: 200px; width: 100%; padding-left: 14px; padding-top: 8px;" class="form-control" name="addenda" id="addendaentry" value=""></textarea>
+        <p>Anything else to add about the changes you're making?</p>
+        <label for="author" class="fb-text-label"><span class="tooltip-element" tooltip="Addenda"></span></label> 
+        <textarea type="text" style="height: 200px; width: 100%; padding-left: 14px; padding-top: 8px;" class="form-control" name="addenda" id="addendaentry" value=""></textarea>
         <a class="submit" id="submit-final">Submit</a>
       </div>
     </section>

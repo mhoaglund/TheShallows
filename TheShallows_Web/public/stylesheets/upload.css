@@ -79,7 +79,7 @@ textarea:focus, input:focus{
     top: 0;
     left: 0;
     position: absolute;
-    background: rgba(211, 211, 211, 0.8);
+    background: rgba(244, 244, 244, 0.86);
     opacity: 0;
     pointer-events: none;
     z-index: 9999;
@@ -88,12 +88,29 @@ textarea:focus, input:focus{
     width: 80%;
     height: 200px;
     position: absolute;
-    top: 40%;
+    top: 30%;
     left: 10%;
 }
-.inputcontainer h1{
+.inputcontainer p{
+    font-family: "ibm-plex-sans", Georgia, Times, serif;
+    font-size: 1.5em;
+    color: rgb(39, 69, 114);
+}
+.inputcontainer input{
+    border: 1px solid rgb(39, 69, 114);
+    border-radius: 2px;
+    color: rgb(39, 69, 114);
     font-family: "ibm-plex-sans", Georgia, Times, serif;
 }
+.inputcontainer textarea {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    border-color: rgb(39, 69, 114);
+    font-family: "ibm-plex-sans", Georgia, Times, serif;
+    resize: none;
+}
+
 .detailpane{
     width: 50%;
     height: 50%;
@@ -124,9 +141,6 @@ textarea:focus, input:focus{
     display: inline-block;
     box-sizing: border-box;
     border-collapse: collapse;
-    border: 1px solid white;
-    padding: 8px;
-    border-radius: 2px;
     -webkit-margin-before: 1em;
     -webkit-margin-after: 1em;
 }
@@ -138,12 +152,21 @@ a{
     cursor: pointer;
 }
 .go-button a{
-    padding-left: 6px;
+    box-sizing: border-box;
+    border-collapse: collapse;
+    border: 1px solid white;
+    padding: 14px;
+    border-radius: 2px;
 }
 
 .go-button a.disabled{
     opacity: 0.5;
     cursor: default;
+}
+
+.go-button a:active{
+    background: white;
+    color: rgb(39, 69, 114);
 }
 
 .form-field input{
@@ -188,25 +211,23 @@ a{
     }
 
 .submit{
-    color:white;
-    z-index: 9997;
-    text-align: center;
+    color: rgb(39, 69, 114);;
     font-size: 1.5em;
-    padding: 8px;
-    border: 1px solid cornflowerblue;
+    box-sizing: border-box;
+    border-collapse: collapse;
+    border: 1px solid rgb(39, 69, 114);;
+    padding: 14px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    border-radius: 2px;
+    float: right;
+    margin-top: 8px;
 }
 
     .submit:hover, .submit:active{
-        color: white;
-        background: cornflowerblue;
-        border: 1px solid blue;
+        color: rgb(39, 69, 114);
+        background: grey;
     }
-    
-#submit-final{
-    float: right;
-    margin-top: 12px;
-    background: cornflowerblue;
-}
 .object-main br{
     display: none;
 }
