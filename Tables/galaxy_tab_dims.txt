@@ -1,0 +1,42 @@
+Galaxy S3 Tab Dimensions:
+.238" Thick
+
+USB-C: 2.75" Inches right side to center, 3.9" Inches left side to center
+	Port is .340" Wide
+	Port is .108" Thick
+	Port is centered vertically in thickness of tablet
+Home Button:
+	Pill shape, .245" tall by .635" wide
+	Corner radii are ~.125"--
+	Centered in width of tablet
+	Justified to bottom edge, center of button is .420" from bottom edge
+Edge Button Cluster:
+	1.650" Tall Overall
+	Begins 1.090" From top right corner
+	Buttons are .060" Thick
+	Short button: .390" Long (power key)
+	Long button: .866" Long
+	Gap between is .390"
+
+Light Sensor:
+	2.780" From top right corner
+	3.850" From top left corner
+	Justified .410" From top edge
+
+Logo:
+	Begins .120" away from the light sensor, on the left
+	Centered in width of tablet
+	.850" Wide
+	.150" Tall
+	Justified .410" from top edge
+
+Bezel:
+	Long sides bezel is .40"
+	Short sides bezel is .80"
+
+Camera:
+	To the right of the light sensor, .25" away
+	~.100" diameter
+
+Corner radius is roughly .5" on all four corners
+O'all dimensions: 9.34" x 6.65"

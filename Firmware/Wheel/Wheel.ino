@@ -1,3 +1,8 @@
+#include <Adafruit_GFX.h>
+#include <gfxfont.h>
+
+#include <Adafruit_SSD1306.h>
+
 #include <Mouse.h>
 
 #include <bitswap.h>
@@ -33,17 +38,22 @@
 const int LEDs = 8;
 int prev_pos = 0;
 
-#define BRIGHTNESS  64
-#define LED_TYPE    WS2811
-#define COLOR_ORDER RGB
-CRGB leds[LEDs];
-#define UPDATES_PER_SECOND 100
+#define OLED_RESET 4
+Adafruit_SSD1306 display(OLED_RESET);
 
 Encoder wheel(12,11);
 void setup() {
   Serial.begin(9600);
-  // put your setup code here, to run once:
-
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x32)
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(0,0);
+  display.println("Hello, world!");
+  display.display();
+  delay(2000);
+  display.clearDisplay();
+  display.display();
 }
 
 void loop() {
@@ -55,7 +65,23 @@ void loop() {
     else delta = 1.0;
     Mouse.scroll(delta);
     prev_pos = pos;
+    updateScreenVis();
   }
-
   Serial.println(pos, DEC);
+}
+
+void updateScreenVis(int dir){
+  //
+}
+
+void testdrawline() {  
+  for (int16_t i=0; i<display.width(); i+=4) {
+    display.drawLine(0, 0, i, display.height()-1, WHITE);
+    display.display();
+  }
+  for (int16_t i=0; i<display.height(); i+=4) {
+    display.drawLine(0, 0, display.width()-1, i, WHITE);
+    display.display();
+  }
+  delay(250);
 }
