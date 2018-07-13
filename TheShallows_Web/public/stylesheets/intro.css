@@ -12,6 +12,10 @@
     -webkit-animation: colorchange 40s;
     -webkit-animation-iteration-count:infinite;
 }
+
+.special{
+    text-shadow: 2px 2px green;
+}
 /* 
 .text-columns{
     display: flex;
