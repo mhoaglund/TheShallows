@@ -4,12 +4,15 @@ const uuidv4 = require('uuid/v4');
 const { spawn } = require('child_process');
 const program = require('commander');
 var inquirer = require('inquirer');
+var _ = require('underscore');
 var docs = require('./docmanager.js')
+var serverbinding = require('./serverbinding.js')
 
-var idtoprint = {
+var printed = []
+var sntoprint = {
     type: 'input',
     name: 'printid',
-    message: 'Enter a Change Order id to reprint. The ID can be found in the bottom left corner of the page.'
+    message: 'Enter a Change Order Serial Number to reprint. The Serial Number can be found in the bottom right corner of the page.'
 }
 var base_q = {
     type: 'list',
@@ -17,11 +20,32 @@ var base_q = {
     message: "What needs to be done?",
     choices: [
         'Scan a Change Order',
-        'Reprint a Change Order',
+        'Reprint a Change Order by Serial #',
         'Reset the System'
     ]
   }
 
+  //TODO: regular polling of server endpoint to check for new change orders. Automated printing of new arrivals.
+function pollForNew(){
+    serverbinding.getLatest(function(newest){
+        if(!newest) return;
+        newest.id = newest.id.split('_')[1]
+        var matched = _.find(printed, function(_doc){
+            return _doc.id == newest.id
+        })
+        if(!matched){
+            var _key = newest.id + '.pdf'
+            var docinput = docs.formatData(newest)
+            docs.fillPDF(docinput, _key, function(destinationfile, serialno){
+                docs.printDocument(destinationfile, function(){
+                    printed.push({"sn":serialno, "key":destinationfile, "id":newest.id})
+                })
+            })
+        }
+    })
+}
+
+setInterval(pollForNew, 8*1000);
 
 function promptBaseAction(){
     inquirer.prompt([base_q]).then(answers => {
@@ -32,21 +56,36 @@ function promptBaseAction(){
                 promptBaseAction();
             });
         }
-        if(answers.base == 'Reprint a Change Order'){
-            promptforID();
+        if(answers.base == 'Reprint a Change Order by Serial #'){
+            promptforSN();
         }
         console.log(answers)
     })
 }
 
-function promptforID(){
-    inquirer.prompt([idtoprint]).then(answers => {
-        console.log('Reprinting Change Order ID# ', answers)
-        docs.printDocument(answers.base + '.pdf', function(){
-            console.log('####')
-            promptBaseAction();
-        })
+function promptforSN(){
+    inquirer.prompt([sntoprint]).then(answers => {
+        var doc = serialNumberLookup(answers.base);
+        if(doc){
+            console.log('Reprinting Change Order SN# ', answers)
+            docs.printDocument(answers.base + '.pdf', function(){
+                console.log('####')
+                promptBaseAction();
+            })
+        }
+        else console.log('Serial Number not found.')
+        console.log('####')
+        promptBaseAction();
     })
+}
+
+
+function serialNumberLookup(_sn){
+    var match = _.find(printed, function(doc){
+        return doc.sn == _sn;
+    })
+    if(match) return match;
+    else return null;
 }
 
 promptBaseAction();

@@ -17,31 +17,31 @@ textarea:focus, input:focus{
 }
 
 #introcontainer{
-    background: rgb(158, 49, 49);
+    background: rgb(39, 69, 114);
     position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
     height: 100%;
     z-index: 9999;
-    animation: colorchange 15s;
+    /* animation: colorchange 15s;
     animation-iteration-count:infinite;
     -webkit-animation: colorchange 15s;
-    -webkit-animation-iteration-count:infinite;
+    -webkit-animation-iteration-count:infinite; */
 }
 
 #alertcontainer{
-    background: rgb(158, 49, 49);
+    background: rgb(39, 69, 114);
     position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
     height: 100%;
     z-index: 9999;
-    animation: colorchange 15s;
+    /* animation: colorchange 15s;
     animation-iteration-count:infinite;
     -webkit-animation: colorchange 15s;
-    -webkit-animation-iteration-count:infinite;
+    -webkit-animation-iteration-count:infinite; */
     display: none;
     opacity: 0.0;
 }
@@ -49,7 +49,7 @@ textarea:focus, input:focus{
 .transient section{
     width: 90%;
     margin: auto;
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 .text-column{
@@ -73,6 +73,44 @@ textarea:focus, input:focus{
     pointer-events: none;
     z-index: 9999;
 }
+#inputhost{
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background: rgba(244, 244, 244, 0.86);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9999;
+}
+.inputcontainer{
+    width: 80%;
+    height: 200px;
+    position: absolute;
+    top: 30%;
+    left: 10%;
+}
+.inputcontainer p{
+    font-family: "ibm-plex-sans", Georgia, Times, serif;
+    font-size: 1.5em;
+    color: rgb(39, 69, 114);
+}
+.inputcontainer input{
+    border: 1px solid rgb(39, 69, 114);
+    border-radius: 2px;
+    color: rgb(39, 69, 114);
+    font-family: "ibm-plex-sans", Georgia, Times, serif;
+}
+.inputcontainer textarea {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    border-color: rgb(39, 69, 114);
+    font-family: "ibm-plex-sans", Georgia, Times, serif;
+    resize: none;
+}
+
 .detailpane{
     width: 50%;
     height: 50%;
@@ -103,9 +141,6 @@ textarea:focus, input:focus{
     display: inline-block;
     box-sizing: border-box;
     border-collapse: collapse;
-    border: 1px solid white;
-    padding: 8px;
-    border-radius: 2px;
     -webkit-margin-before: 1em;
     -webkit-margin-after: 1em;
 }
@@ -117,12 +152,21 @@ a{
     cursor: pointer;
 }
 .go-button a{
-    padding-left: 6px;
+    box-sizing: border-box;
+    border-collapse: collapse;
+    border: 1px solid white;
+    padding: 14px;
+    border-radius: 2px;
 }
 
 .go-button a.disabled{
     opacity: 0.5;
     cursor: default;
+}
+
+.go-button a:active{
+    background: white;
+    color: rgb(39, 69, 114);
 }
 
 .form-field input{
@@ -147,11 +191,12 @@ a{
 
 
 #submit-all{
+    margin-left: -50%;
     position: fixed;
-    width: 80%;
+    width: 100%;
     left: 50%;
     z-index: 9997;
-    bottom: 0;
+    bottom: 2px;
     text-align: center;
     font-size: 1.5em;
     padding: 8px;
@@ -164,7 +209,25 @@ a{
         background: cornflowerblue;
         border: 1px solid blue;
     }
-    
+
+.submit{
+    color: rgb(39, 69, 114);;
+    font-size: 1.5em;
+    box-sizing: border-box;
+    border-collapse: collapse;
+    border: 1px solid rgb(39, 69, 114);;
+    padding: 14px;
+    padding-top: 10px;
+    padding-bottom: 8px;
+    border-radius: 2px;
+    float: right;
+    margin-top: 8px;
+}
+
+    .submit:hover, .submit:active{
+        color: rgb(39, 69, 114);
+        background: grey;
+    }
 .object-main br{
     display: none;
 }
@@ -178,7 +241,7 @@ a{
       background: rgb(158, 49, 49);
     }
   25%  {
-      background: rgb(207, 181, 31);
+      background:#ad931a
     }
   50%  {
       background: rgb(56, 34, 182);
@@ -253,9 +316,9 @@ a{
     #objecthost .gridhost {
         width: 90%;
     }
-    .object-main .object-name{
+    /* .object-main .object-name{
         display: none;
-    }
+    } */
 
 }
 

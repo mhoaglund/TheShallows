@@ -25,11 +25,11 @@
         <script src="javascripts/jquery.nicescroll.min.js"></script>
         <script id="detail-template">
           <div class="detailpane">
-              <div class="object-detail {txtcolor}" id="detail_{current}_{id}" >
+              <div class="object-detail" id="detail_{current}_{id}" >
                 <div class="lgimg" style="background-image: url(https://s3.amazonaws.com/shallows/images/{image})"></div>
                 <span>{current}</span>
-                <span class="object-name">{name}</span>
-                <span class="object-author">Added by {author}</span>
+                <span class="object-name">{name}</span><br/>
+                <span class="object-author">Added by {author}</span><br/>
                 <span class="object-supplement">{supplement}</span>
               </div>
           </div>
@@ -54,9 +54,8 @@
                   </div>
                   {?objects}
                     {#objects}
-                      <div class="object-main draggable ui-widget-content {txtcolor}" id="{current}_{id}" style="background-image: url(https://s3.amazonaws.com/shallows/images/{image})">
+                      <div class="object-main draggable ui-widget-content" id="{current}_{id}" style="background-image: url(https://s3.amazonaws.com/shallows/images/{image})">
                         <span>{current}</span><br/>
-                        <span class="object-name">{name}</span>
                       </div>
                     {/objects}
                 {/objects}
@@ -82,25 +81,36 @@
       <section id="alertcontainer" class="transient">
         <section>
         <div class="text-column">
-            <p class="en">Thank you for submitting an order to <em>The Shallows.</em></p>  
+            <p class="en">Thank you for submitting an order to <em>The Shallows.</em> Your order will be printed and distributed to another viewer.</p>  
             <hr/>
-            <p class="es">Gracias por enviar un pedido a <em>The Shallows.</em></p>  
-            <hr/>
-            <p class="hm">TODO localization three</p>  
+            <p class="es">Gracias por enviar un pedido a <em>The Shallows.</em> Su pedido será impreso y distribuido a otro espectador.</p>   
           </div>
         </section>
       </section>
-    <section id="shade"></section>
+    <section id="shade" style="display: none;"></section>
 
-    <aside id="time"></aside>
+    
     <aside id="status"></aside>
-    <aside id="rerun-instructions"><a class="rerun">Rerun Instructions</a></aside>
-    <a class="submit" id="submit-all">Send</a>
+    <!--<aside id="rerun-instructions"><a class="rerun">Show Instructions</a></aside>-->
+    <a class="submit" id="submit-all">Done</a>
     <section id="objecthost">
 
     </section>
     <section id="detailhost">
     </section>
+    <section id="inputhost" class="transient">
+      <div class="inputcontainer">
+        <p>Who are you? Offer a name, an identifier, or some initials.</p>
+        <label for="author" class="fb-text-label"><span class="tooltip-element" tooltip="How you want to be known"></span></label> 
+        <input type="text" style="height: 46px; width: 100%; padding-left: 14px;" class="form-control" name="author" id="authorentry" value="">
+        <br/>
+        <p>Anything else to add about the changes you're making?</p>
+        <label for="author" class="fb-text-label"><span class="tooltip-element" tooltip="Addenda"></span></label> 
+        <textarea type="text" style="height: 200px; width: 100%; padding-left: 14px; padding-top: 8px;" class="form-control" name="addenda" id="addendaentry" value=""></textarea>
+        <a class="submit" id="submit-final">Submit</a>
+      </div>
+    </section>
+
     <script src="javascripts/jquery.slicknav.min.js"></script>
     <script src="javascripts/upload.js"></script>
     </body>

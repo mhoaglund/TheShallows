@@ -8,6 +8,10 @@ WebFont.load(data);
 var _co_template = $('#gi-template').html();
 var cocompiled = dust.compile(_co_template, 'GL_ITEM');
 
+var _host = 'http://ec2-54-174-44-232.compute-1.amazonaws.com:3000'
+//var _host = ''
+//var _host = 'http://localhost:3000'
+
 function set_time(){
 	var time = moment().format();
 	$("#time").html(time);

@@ -1,14 +1,19 @@
-var pdfFiller = require('pdffiller');
+var pdfFiller = require('pdffiller')
+var pdfStream = require('pdffiller-stream')
+var fs = require('fs')
 const path = require('path')
 const uuidv4 = require('uuid/v4')
-const moment = require('moment')
+const moment = require('moment-timezone')
+var AWS = require('aws-sdk')
+var _ = require('underscore')
 var s3 = new AWS.S3();
 const { spawn } = require('child_process');
 
+var SN = 0
 var sourcePDF = "C:/Dev/PDF_testing/AOV_CO_form_test.pdf";
-var destinationPDF =  "C:/Dev/PDF_testing/AOV_CO_filled.pdf";
+var destinationPDF =  "C:/Dev/PDF_testing/";
 var id = uuidv4();
-//test data
+
 var data = {
     "UIDtop": id,
     "UIDbtm": id,
@@ -22,28 +27,32 @@ var data = {
 //TODO: unique scan naming and upload to s3.
 function scanDocument(callback){
     //TODO: try to pass in params string instead so we can easily control
-    var filename = 'COscan' + moment().tz('America/Chicago').format('MM/DD/YYYY h:mm a')
-    var scanjob = spawn('cmdtwain', ['-q', '-f', 'scanparams.txt']);
+    var filename = 'COscan-' + moment().tz('America/Chicago').format('MM-DD-YYYY-h-mm-a') + '.jpg'
+    var scan_params_inline = "OutFile: " + filename + " Proc: DocScan Version: 1 Init: ADF 0 AF 0 AS 0 GRAY DPI 200 OutFmt: 100"
+    var scanjob = spawn('cmdtwain', ['-q', filename]);
+    //var scanjob = spawn('cmdtwain', ['-q', '-f', 'scanparams.txt']);
     scanjob.on('exit', function (code, signal) {
-        //TODO: adjust message based on child proc's output signal
-        // console.log('child process exited with ' +
-        //             `code ${code} and signal ${signal}`);
-        callback('Scan Complete. File name: ' + filename)
+        fs.readFile(filename, function(err,data){
+            if(err) {throw err;}
+            var base64data = new Buffer(data, 'binary')
+            uploadScan(filename, base64data, function(msg, err){
+                callback(msg)
+            })
+        })
     });
 }
 
-function uploadScan(key){
-    var _file = null //TODO get file that was scanned, or pass in buffer?
+function uploadScan(key, _file, cb){
     var params = {
         Bucket: 'shallows', 
-        Key: key, 
+        Key: 'scans/' + key, 
         Body: _file, 
         ACL: 'public-read',
         ContentType: 'jpeg'
     }
     s3.putObject(params, function(err){
         if(!err) {
-            cb("Successfully added item to bucket.")
+            cb('Scanned and Uploaded ' + key, null)
         }
         else{
             console.log(err.stack)
@@ -61,15 +70,65 @@ function printDocument(docname, callback){
     })
 }
 
-function fillPDF(_input = data){
-    pdfFiller.fillForm( sourcePDF, destinationPDF, _input, function(err) {
+function fillPDF(_input = data, key, cb){
+    pdfFiller.fillForm( sourcePDF, destinationPDF + key, _input, function(err) {
         if (err) throw err;
-        console.log("In callback (we're done).");
+        cb(destinationPDF + key, _input.SNtop);
     });
 }
 
-function writeSteps(_input){
-    //TODO: string formatting for steps
+function streamFilledPDF(_input = data, key){
+    pdfFiller.fillForm( sourcePDF, data)
+    .then((outputStream) => {
+        // use the outputStream here; 
+        // will be instance of stream.Readable 
+    }).catch((err) => {
+        console.log(err);
+    });
+}
+
+function formatData(input){
+    var output = {
+        "UIDtop": input.id,
+        "UIDbtm": input.id,
+        "SNtop": SN,
+        "SNbtm": SN,
+        "EngSteps" : makeEnglishSteps(JSON.parse(input.moves)),
+        "SpSteps" : makeSpanishSteps(JSON.parse(input.moves)),
+        "DateTop" : moment().tz('America/Chicago').format('MM-DD-YYYY-h:mm-a'),
+        "DateBottom" : moment().tz('America/Chicago').format('MM-DD-YYYY-h:mm-a'),
+        "IdentifierEntry" : "Please fill out the box below with your name or another identifier.",
+        "ComposedBy": input.author
+    }
+    _.each(JSON.parse(input.moves), function(step){
+        output[step.to.toUpperCase()] = "O"
+        output[step.from.toUpperCase()] = "X"
+    })
+    SN++;
+    return output;
+}
+
+function makeEnglishSteps(input){
+    //TODO take in array of steps, narrate them, return string
+    var output = ""
+    var stepno = 1
+    _.each(input, function(step) {
+        var this_step = stepno + ": Move the " + step.itemname + " from space " + step.from + " to space " + step.to + "\n"
+        output += this_step
+        stepno++
+    })
+    return output;
+}
+
+function makeSpanishSteps(input){
+    var output = ""
+    var stepno = 1
+    _.each(input, function(step) {
+        var this_step = stepno + ": Mueva al " + step.itemname + " desde espacio " + step.from + " hasta espacio " + step.to + "\n"
+        output += this_step
+        stepno++
+    })
+    return output;
 }
 
 function toLower(v) {
@@ -79,3 +138,4 @@ function toLower(v) {
 module.exports.printDocument = printDocument
 module.exports.scanDocument = scanDocument
 module.exports.fillPDF = fillPDF
+module.exports.formatData = formatData
