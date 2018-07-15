@@ -16,13 +16,20 @@ textarea:focus, input:focus{
     z-index: 9998;
 }
 
+body{
+    background: #274572; /* Old browsers */
+    background: -moz-linear-gradient(top, #274572 0%, #4e48a8 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #274572 0%,#4e48a8 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #274572 0%,#4e48a8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#274572', endColorstr='#4e48a8',GradientType=0 ); /* IE6-9 */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
 #introcontainer{
-    background: rgb(39, 69, 114);
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 100%;
-    height: 100%;
     z-index: 9999;
     /* animation: colorchange 15s;
     animation-iteration-count:infinite;
@@ -47,9 +54,8 @@ textarea:focus, input:focus{
 }
 
 .transient section{
-    width: 90%;
-    margin: auto;
-    margin-top: 5%;
+    /* width: 90%; */
+    margin: 10%;
 }
 
 .text-column{
@@ -59,7 +65,8 @@ textarea:focus, input:focus{
 .transient section p,
 .transient section a{
     color: white;
-    font-size: 1.5em;
+    font-size: 2.5em;
+    letter-spacing: 1px;
 }
 
 #detailhost{
@@ -155,8 +162,11 @@ a{
     box-sizing: border-box;
     border-collapse: collapse;
     border: 1px solid white;
-    padding: 14px;
-    border-radius: 2px;
+    padding: 16px;
+    border-radius: 38px;
+    background-color: #532a73;
+    padding-left: 24px;
+    padding-right: 24px;
 }
 
 .go-button a.disabled{

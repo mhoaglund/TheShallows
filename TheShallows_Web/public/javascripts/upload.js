@@ -448,7 +448,7 @@ function setText(){
 var current_text = 0;
 var introtexts = [
 	{
-		'en':'Tap an object to view detailed information about it. </br> Touch and drag an object to have it moved.',
+		'en':'This tablet will allow you to order a set of movements to be made within the array of objects in this room. Orders will be printed and carried out by other visitors to this installation. To create a set of movements, touch "begin" and follow the prompts. You will be asked to provide minimal identifying information and background about the movements you create.',
 		'es':'Toca un objeto para ver información detallada sobre él. <br/> Toca y arrastra un objeto para que se mueva.',
 		'go-button':'<a class="skipbtn">Begin / Empieza</a>'
 	}
