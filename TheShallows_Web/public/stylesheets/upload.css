@@ -6,7 +6,13 @@ textarea:focus, input:focus{
 }
 
 #shade{
-    background-color: rgb(16, 5, 68);
+    background: #274572; /* Old browsers */
+    background: -moz-linear-gradient(top, #274572 0%, #4e48a8 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, #274572 0%,#4e48a8 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, #274572 0%,#4e48a8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#274572', endColorstr='#4e48a8',GradientType=0 ); /* IE6-9 */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     opacity: 1.0;
     position: absolute;
     top: 0px;
@@ -17,13 +23,7 @@ textarea:focus, input:focus{
 }
 
 body{
-    background: #274572; /* Old browsers */
-    background: -moz-linear-gradient(top, #274572 0%, #4e48a8 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top, #274572 0%,#4e48a8 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom, #274572 0%,#4e48a8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#274572', endColorstr='#4e48a8',GradientType=0 ); /* IE6-9 */
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+
 }
 
 #introcontainer{
@@ -164,10 +164,15 @@ a{
     border: 1px solid white;
     padding: 16px;
     border-radius: 38px;
-    background-color: #532a73;
+    background-color: white;
     padding-left: 24px;
     padding-right: 24px;
 }
+
+    .go-button a.skipbtn{
+        font-weight: 500;
+        color: #1f1cc1;
+    }
 
 .go-button a.disabled{
     opacity: 0.5;
