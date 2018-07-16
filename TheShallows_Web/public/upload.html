@@ -97,14 +97,26 @@
     </section>
     <section id="inputhost" class="transient">
       <div class="inputcontainer">
-        <p>Who are you? Offer a name, an identifier, or some initials.</p>
-        <label for="author" class="fb-text-label"><span class="tooltip-element" tooltip="How you want to be known"></span></label> 
-        <input type="text" style="height: 46px; width: 100%; padding-left: 14px;" class="form-control" name="author" id="authorentry" value="">
+        
+        <div class="rel">
+          <p>Who are you? Offer a name, an identifier, or some initials.</p>
+          <label for="author" class="fb-text-label"><span class="tooltip-element" tooltip="How you want to be known"></span></label> 
+          <input type="text" style="height: 46px; width: 100%; padding-left: 14px;" class="form-control" name="author" id="authorentry" value="">
+          <div class="refresh-field disabled" id="refresh-author">⟳</div>
+        </div>
+
         <br/>
-        <p>Anything else to add about the changes you're making?</p>
-        <label for="author" class="fb-text-label"><span class="tooltip-element" tooltip="Addenda"></span></label> 
-        <textarea type="text" style="height: 200px; width: 100%; padding-left: 14px; padding-top: 8px;" class="form-control" name="addenda" id="addendaentry" value=""></textarea>
-        <a class="submit" id="submit-final">Submit</a>
+        
+        <label for="author" class="fb-text-label"><span class="tooltip-element" tooltip="Addenda"></span></label>
+        <div class="rel">
+          <p>Anything else to add about the changes you're making?</p>
+          <textarea type="text" class="form-control" name="addenda" id="addendaentry" value=""></textarea>
+          <div class="refresh-field disabled" id="refresh-addenda">⟳</div>
+        </div>
+        <div class="justify-buttons">
+          <a class="submit" id="submit-final">Submit</a>
+          <a class="cancel" id="cancel">Cancel</a>
+        </div>
       </div>
     </section>
 

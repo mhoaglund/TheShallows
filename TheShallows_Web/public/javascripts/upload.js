@@ -242,10 +242,28 @@ $(function(){
 	$(document.body).on('input', '#authorentry', function(){
 		if($('#authorentry').val() != ''){
 			ppt_name = $('#authorentry').val()
+			$("#refresh-author").removeClass('disabled');
+		} else {
+			$("#refresh-author").addClass('disabled');
+		}
+	})
+	$(document.body).on('input', '#addendaentry', function(){
+		if($('#addendaentry').val() != ''){
+			$("#refresh-addenda").removeClass('disabled');
+		} else {
+			$("#refresh-addenda").addClass('disabled');
 		}
 	})
 	$(document.body).on('click', '.skipbtn', function(e){
 		skipIntro();
+	})
+	$(document.body).on('click', '#refresh-addenda', function(e){
+		$('#addendaentry').val('');
+		$("#refresh-addenda").addClass('disabled');
+	})
+	$(document.body).on('click', '#refresh-author', function(e){
+		$('#authorentry').val('');
+		$("#refresh-author").addClass('disabled');
 	})
 	$(document.body).on('click', '#rerun-instructions .rerun', function(e){
 		current_text = 0;
@@ -268,6 +286,10 @@ $(function(){
 				'thesis':$('#addendaentry').val()
 			})
 		}
+	})
+	$(document.body).on('click', '#cancel', function(e){
+		clearInputPopup();
+		//TODO: start timer for clearing text input and name field in case of abandoning user
 	})
 })
 

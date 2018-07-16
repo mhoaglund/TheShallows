@@ -14,7 +14,7 @@ textarea:focus, input:focus{
     background-repeat: no-repeat;
     background-attachment: fixed;
     opacity: 1.0;
-    position: absolute;
+    position: fixed;
     top: 0px;
     left: 0px;
     width: 100%;
@@ -22,8 +22,8 @@ textarea:focus, input:focus{
     z-index: 9998;
 }
 
-body{
-
+.rel{
+    position: relative;
 }
 
 #introcontainer{
@@ -53,6 +53,12 @@ body{
     opacity: 0.0;
 }
 
+.justify-buttons{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    margin-top: 24px;
+}
 .transient section{
     /* width: 90%; */
     margin: 10%;
@@ -65,7 +71,7 @@ body{
 .transient section p,
 .transient section a{
     color: white;
-    font-size: 2.5em;
+    font-size: 2.7em;
     letter-spacing: 1px;
 }
 
@@ -101,21 +107,43 @@ body{
 .inputcontainer p{
     font-family: "ibm-plex-sans", Georgia, Times, serif;
     font-size: 1.5em;
-    color: rgb(39, 69, 114);
+    color: #1f1cc1;
 }
 .inputcontainer input{
-    border: 1px solid rgb(39, 69, 114);
+    border: 1px solid #1f1cc1;
     border-radius: 2px;
-    color: rgb(39, 69, 114);
+    color: #1f1cc1;
     font-family: "ibm-plex-sans", Georgia, Times, serif;
+    font-size: 1.3em;
 }
 .inputcontainer textarea {
+    line-height: 1.2em;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-    border-color: rgb(39, 69, 114);
+    color: #1f1cc1;
     font-family: "ibm-plex-sans", Georgia, Times, serif;
     resize: none;
+    border: 1px solid #1f1cc1;
+    font-size: 1.3em;
+    height: 200px; 
+    width: 100%; 
+    padding-left: 14px; 
+    padding-top: 14px;
+}
+
+.inputcontainer .refresh-field{
+    font-size: 1.5em;
+    color: #1f1cc1;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    text-shadow: 0 0 3px white;
+    cursor: pointer;
+}
+
+.refresh-field.disabled{
+    color: #adadad;
 }
 
 .detailpane{
@@ -169,7 +197,7 @@ a{
     padding-right: 24px;
 }
 
-    .go-button a.skipbtn{
+    .go-button a.skipbtn, a#submit-all, a{
         font-weight: 500;
         color: #1f1cc1;
     }
@@ -206,43 +234,45 @@ a{
 
 
 #submit-all{
-    margin-left: -50%;
     position: fixed;
-    width: 100%;
-    left: 50%;
+    right: 24px;
     z-index: 9997;
-    bottom: 2px;
+    bottom: 24px;
     text-align: center;
     font-size: 1.5em;
-    padding: 8px;
-    color: cornflowerblue;
-    border: 1px solid cornflowerblue;
+    padding: 12px;
+    box-sizing: border-box;
+    border-collapse: collapse;
+    border-radius: 32px;
+    background-color: white;
+    padding-left: 24px;
+    padding-right: 24px;
 }
 
-    #submit-all:hover, #submit-all:active{
-        color: white;
-        background: cornflowerblue;
-        border: 1px solid blue;
-    }
-
 .submit{
-    color: rgb(39, 69, 114);;
+    border: 1px solid teal;
     font-size: 1.5em;
     box-sizing: border-box;
     border-collapse: collapse;
-    border: 1px solid rgb(39, 69, 114);;
-    padding: 14px;
-    padding-top: 10px;
-    padding-bottom: 8px;
-    border-radius: 2px;
-    float: right;
-    margin-top: 8px;
+    border-radius: 32px;
+    background-color: white;
+    padding: 12px;
+    padding-left: 24px;
+    padding-right: 24px;
 }
 
-    .submit:hover, .submit:active{
-        color: rgb(39, 69, 114);
-        background: grey;
-    }
+.cancel{
+    border: 1px solid red;
+    font-size: 1.5em;
+    box-sizing: border-box;
+    border-collapse: collapse;
+    border-radius: 32px;
+    background-color: white;
+    padding: 12px;
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
 .object-main br{
     display: none;
 }
