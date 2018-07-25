@@ -25,9 +25,10 @@
           <div class="inner flexfill">
             <div class="moves">
               <h2><strong>{author}</strong></h2>
-              <span>{timestamp}</span>
+              <span> {timestamp} </span>
               <span>{Abstract}</span>
                 {?moves}
+                <br class="overlay_only"/>
                   {#.moves}
                     <span style="color:{?idcolor}{idcolor}{:else}#888{/idcolor};">{alphabetized[0]} ➞ {alphabetized[1]}</span>{@sep}, {/sep}
                   {/moves}

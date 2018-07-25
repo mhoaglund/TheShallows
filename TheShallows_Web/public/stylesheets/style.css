@@ -58,9 +58,6 @@ p:last-child{
     width: 40em;
   }
 
-  #overlay > div.inner.flexfill{
-    flex-basis: 100%;
-  }
   .titlecard{
   }
     .titlecard h1{
@@ -111,6 +108,7 @@ p:last-child{
     .change-order.closed .gridhost .tile{display: none; opacity: 0.0; height:0px;}
     .change-order.closed .gridhost .marker,
     .change-order.closed .rules span{display: none;}
+    #overlay .rules{display: none;}
     .change-order.closed .thesis{display:none;}
     .change-order.closed h2, .change-order.closed span, .change-order.drowsy h2, .change-order.drowsy span{font-size: 0.8rem;}
 
@@ -310,9 +308,11 @@ p:last-child{
   }
   #overlay.change-order > div {
       flex-basis: 100%;
+      padding-left: 8px;
   }
   .gridhost{
     width: 100%;
+    margin-left: -4px;
   }
 }
 
@@ -352,7 +352,16 @@ p:last-child{
   animation: vectorfade .7s;
   animation-fill-mode: both
 } */
+.overlay_only{
+  display: none;
+}
 
+#overlay .overlay_only{
+  display: block;
+}
+.blurred{
+  filter: blur(4px);
+}
 @keyframes tilefade {
   from {
       filter: blur(10px);
