@@ -23,16 +23,16 @@
   <script id="co-template">
         <div class="change-order closed" id="{id}">
           <div class="inner flexfill">
-              <h2>{author}  </h2>
+            <div class="moves">
+              <h2><strong>{author}</strong></h2>
               <span>{timestamp}</span>
               <span>{Abstract}</span>
                 {?moves}
-                <div class="moves">
-                {#.moves}
-                  <span style="color:{?idcolor}{idcolor}{:else}#888{/idcolor};">{alphabetized[0]} ➞ {alphabetized[1]}</span>{@sep}, {/sep}
+                  {#.moves}
+                    <span style="color:{?idcolor}{idcolor}{:else}#888{/idcolor};">{alphabetized[0]} ➞ {alphabetized[1]}</span>{@sep}, {/sep}
+                  {/moves}
                 {/moves}
-                </div>
-              {/moves}
+              </div>
             </div>
           <div class="top">
               <div class="gridhost">

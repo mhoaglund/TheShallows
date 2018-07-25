@@ -62,6 +62,7 @@ function set_focus(){
 	var h = (Math.max(document.documentElement.clientHeight, window.innerHeight || 0)/2)-100;
 	center = closest(locs,h);
 	if(current_focus != '#'+center['id']){
+		$('#overlay').css({filter: 'blur(4px)'})
 		close_all();
 		$('#'+center['id']).addClass('highlighted');
 		$('#overlay').html($('#'+center['id']).html())
@@ -71,7 +72,9 @@ function set_focus(){
 		//TODO new vector drawing routine in here.
 		var centerdata = datamain.results.find(matchesID, center['id'])
 		if(centerdata){
-			repaintMoves(centerdata);
+			repaintMoves(centerdata, function(){
+				
+			});
 			current_focus = '#'+center['id']
 		}
 
@@ -89,8 +92,9 @@ function adjustTileSize(){
 	if(!hasunitsize) updateGridUnit();
 }
 
-function repaintMoves(packet){
+function repaintMoves(packet, cb){
 	$('.vector').detach();
+	var steps = 0;
 	packet.moves.forEach(function(move){
 		var _startpt = translateUnit(move.from)
 		var _endpt = translateUnit(move.to)
@@ -106,7 +110,10 @@ function repaintMoves(packet){
 			'margin-top':'-=0.35em',
 			'margin-left':'-=0.35em'
 		})
+		steps++;
+		if(steps == packet.moves.length)$('#overlay').css({filter: 'none'})
 	})
+
 }
 
 var grid_unit = {'h':0, 'w':0};

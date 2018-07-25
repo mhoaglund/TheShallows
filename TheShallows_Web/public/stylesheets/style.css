@@ -82,10 +82,11 @@ p:last-child{
 
     .change-order{
       box-sizing: border-box;
-      border: 1px solid grey;
-      padding: 10px;
-      margin-bottom: 12px;
       background-color: #efefef;
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: flex-end;
+      justify-content: flex-end;
     }
 
     .change-order .inner{
@@ -276,8 +277,6 @@ p:last-child{
   top: 10%;
   width: 65%;
   height: 80%;
-  border: 1px solid black;
-  border-right: 0px;
   background: #efefef;
 }
 
@@ -303,12 +302,10 @@ p:last-child{
 @media screen and (max-width: 1300px){
   #overlay{
     position: fixed;
-    right: 0%;
+    left: 0%;
     top: 20%;
-    width: 65%;
+    width: 50%;
     height: 74%;
-    border: 1px solid black;
-    border-right: 0px;
     background: #efefef;
   }
   #overlay.change-order > div {
@@ -344,7 +341,7 @@ p:last-child{
       border-collapse: collapse;
     }
 }
-
+/* 
 .gridhost .tile.animate  {
   animation: tilefade .5s;
   animation-fill-mode: both
@@ -354,7 +351,7 @@ p:last-child{
 .gridhost .marker.animate  {
   animation: vectorfade .7s;
   animation-fill-mode: both
-}
+} */
 
 @keyframes tilefade {
   from {
