@@ -290,9 +290,9 @@ p:last-child{
 
 .marker{
   position: absolute;
-  height: 0.7em;
-  width: 0.7em;
-  border-radius: 0.5em;
+  height: 14px;
+  width: 14px;
+  border-radius: 7px;
   margin-left: -35px;
   margin-top: -33px;
 }

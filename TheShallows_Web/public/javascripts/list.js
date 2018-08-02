@@ -17,7 +17,7 @@ function set_time(){
 function get_before_oldest(){
 
 }
-
+var stale = true;
 var current_focus = ''
 var center = null
 var recent_refresh = false;
@@ -65,10 +65,12 @@ function set_focus(){
 		close_all();
 		$('#'+center['id']).addClass('highlighted');
 		$('#overlay').html($('#'+center['id']).html())
-		adjustTileSize();
-		updateGridUnit();
+		if(stale){
+			adjustTileSize();
+			updateGridUnit();
+			stale = false;
+		}
 		//current_focus = '#'+center['id']
-		//TODO new vector drawing routine in here.
 		var centerdata = datamain.results.find(matchesID, center['id'])
 		if(centerdata){
 			repaintMoves(centerdata);
@@ -81,32 +83,35 @@ function set_focus(){
 var hasunitsize = false;
 function adjustTileSize(){
     var cols = (100-(datamain.board[0]*2))/(datamain.board[0]); //leaving 1% for margins
-    $('.tile').css('width', 'auto');
-    $('.tile').css('width', cols+'%');
-    $('.tile').each(function(){
-        $(this).css('height', $(this).width())
-	})
+	var colwidth = cols+'%';
 	if(!hasunitsize) updateGridUnit();
+	$('<style>.tile { width:'+colwidth+' !important; height: '+40+'px;  }</style>').appendTo('head'); 
 }
 
 function repaintMoves(packet){
 	$('.vector').detach();
+	var temp = "";
 	packet.moves.forEach(function(move){
 		var _startpt = translateUnit(move.from)
 		var _endpt = translateUnit(move.to)
-		
-		var _svg = '<svg class="vector" id="from_'+reverseString(move.alphabetized[0])+'_to_'+reverseString(move.alphabetized[1])+'_'+packet.id+'"><line stroke-linecap="round" y1="'+_startpt[0]+'" x1="'+_startpt[1]+'" y2="'+_endpt[0]+'" x2="'+_endpt[1]+'" stroke="'+packet.idcolor+'"></line></svg>'
-		var _marker = '<div class="marker" style="top:'+_endpt[0]+'px;left:'+_endpt[1]+'px;background:'+packet.idcolor+'"></div>'
-		$('#overlay .gridhost').append(_svg).append(_marker);
-		$('.vector, .marker').css({
-			'margin-top':'-'+grid_unit.h/2+'px',
-			'margin-left':'-'+grid_unit.w/2+'px'
-		})
-		$('.marker').css({
-			'margin-top':'-=0.35em',
-			'margin-left':'-=0.35em'
-		})
+		var _svg = '<svg class="vector" style="margin-top: -'+grid_unit.h/2+'px; '+'margin-left: -'+grid_unit.w/2+'px; '+'" id="from_'
+		_svg += reverseString(move.alphabetized[0])
+		_svg += '_to_'
+		_svg += reverseString(move.alphabetized[1])
+		_svg += '_'+packet.id+'"><line stroke-linecap="round" y1="'
+		_svg += _startpt[0]
+		_svg += '" x1="'
+		_svg += _startpt[1]
+		_svg += '" y2="'
+		_svg += _endpt[0]
+		_svg += '" x2="'+_endpt[1]
+		_svg += '" stroke="'
+		_svg += packet.idcolor+'"></line></svg>'
+		var _marker = '<div class="marker" style="top:'+_endpt[0]+'px; left:'+_endpt[1]+'px;background:'+packet.idcolor+'; margin-top: -'+(14+grid_unit.h)/2+'px; '+'margin-left: -'+(14+grid_unit.w)/2+'px; "></div>'
+		_svg += _marker;
+		temp += _svg
 	})
+	$('#overlay .gridhost').append(temp);
 
 }
 
@@ -115,7 +120,6 @@ function updateGridUnit(){
 	hasunitsize = true;
 	grid_unit.h = $('#overlay #1a').outerHeight(true);
 	grid_unit.w = $('#overlay #1a').outerWidth(true);
-	console.log(grid_unit)
 }
 
 function translateUnit(coords, xpad = false, ypad = false){
@@ -276,6 +280,7 @@ $(function(){
 	$( window ).resize(function() {
 		setOalls();
 		updateGridUnit();
+		stale = true;
 	});
 
 	$(document).on('scroll', function() {
