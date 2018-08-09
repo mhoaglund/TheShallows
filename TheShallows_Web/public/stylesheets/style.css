@@ -57,9 +57,6 @@ p:last-child{
     max-width: 90%;
     width: 40em;
   }
-
-  .titlecard{
-  }
     .titlecard h1{
       font-size: 2em;
       color: black;
@@ -72,9 +69,9 @@ p:last-child{
     }
 
     .tile{
-      /* transition: .25s ease-in-out;
+      transition: .25s ease-in-out;
       -moz-transition: .25s ease-in-out;
-      -webkit-transition: .25s ease-in-out; */
+      -webkit-transition: .25s ease-in-out;
     }
 
     .change-order{
@@ -341,7 +338,7 @@ p:last-child{
       border-collapse: collapse;
     }
 }
-/* 
+
 .gridhost .tile.animate  {
   animation: tilefade .5s;
   animation-fill-mode: both
@@ -351,7 +348,7 @@ p:last-child{
 .gridhost .marker.animate  {
   animation: vectorfade .7s;
   animation-fill-mode: both
-} */
+}
 .overlay_only{
   display: none;
 }
@@ -387,10 +384,6 @@ p:last-child{
 }
 
 /*Glossary stuff*/
-
-.glossary-view{
-  
-}
 
 .txtblack{
   color: black;

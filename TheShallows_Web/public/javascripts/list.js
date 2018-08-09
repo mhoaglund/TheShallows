@@ -37,9 +37,6 @@ function set_focus(){
 					var _item = JSON.parse(data)[0];
 					_item.moves = JSON.parse(_item.moves);
 					console.log(_item);
-					//crank out a new change order and append, figure out how to stabilize scroll throughout
-					//Play success thing
-					//$('html, body').animate({scrollTop: '0px'}, 300);
 				}
 			})
 		}
@@ -84,8 +81,8 @@ var hasunitsize = false;
 function adjustTileSize(){
     var cols = (100-(datamain.board[0]*2))/(datamain.board[0]); //leaving 1% for margins
 	var colwidth = cols+'%';
-	if(!hasunitsize) updateGridUnit();
-	$('<style>.tile { width:'+colwidth+' !important; height: '+40+'px;  }</style>').appendTo('head'); 
+	if(!hasunitsize) updateGridUnit(); //rem unit for this 85px guy?
+	$('<style>.tile { width:'+colwidth+' !important; height: '+85+'px;  }</style>').appendTo('head'); 
 }
 
 function repaintMoves(packet){
@@ -112,6 +109,7 @@ function repaintMoves(packet){
 		temp += _svg
 	})
 	$('#overlay .gridhost').append(temp);
+	$('#overlay').css({filter: 'none'})
 
 }
 

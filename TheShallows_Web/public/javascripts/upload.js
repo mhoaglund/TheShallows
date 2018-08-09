@@ -3,9 +3,7 @@ var data = {
 	google : {families: ['Cardo:italic', 'Roboto:300,100', 'Cutive Mono', 'Work Sans:100,300,500', 'Montserrat:300,500', 'Quattrocento']}
 };
 
-var _host = 'http://ec2-54-174-44-232.compute-1.amazonaws.com:3000'
-//var _host = ''
-//var _host = 'http://localhost:3000'
+var _host = ''
 
 WebFont.load(data);
 //Dev: dust compilation
@@ -48,7 +46,7 @@ function getObjectData(myUrl){
                     var location = $(this).attr('id').split('_')[0].toLowerCase()
                     //console.log(location);
                     $('#'+location).append($(this))
-                });
+				});
                 $( ".draggable" ).draggable({ 
 					revert: true,
 					start: function(){
@@ -84,11 +82,15 @@ function recordMove(dropped_on){
 			to_remove = x
 		}
 	}
-	moves.push(move)
+	if(move.from == move.to){
+		console.log("redundant move detected")
+	} else {
+		moves.push(move)
+	}
+
 	if(to_remove != null){
 		moves.splice(to_remove, 1)
 	}
-
 	replaceTiles();
 	moves.forEach(function(_move){
 		var _mover = $('.overlay #'+_move.from).find('.draggable');
@@ -96,7 +98,6 @@ function recordMove(dropped_on){
 		_mover.detach().css({'position':'relative','top':'0px', 'left':'0px'});
 		_movee.detach().css({'position':'relative','top':'0px', 'left':'0px'});
 		$('.overlay #'+_move.from).html(_movee);
-		
 		$('.overlay #'+_move.to).html(_mover);
 		_mover.css('z-index','9999')
 	})
@@ -105,6 +106,10 @@ function recordMove(dropped_on){
 
 function replaceTiles(){
 	$('.object-main').each(function(){
+		$(this).css({
+			'top':'0px',
+			'left':'0px'
+		})
 		var location = $(this).attr('id').split('_')[0].toLowerCase()
 		$('#'+location).append($(this))
 	});
@@ -115,12 +120,14 @@ function repaintMoves(){
 	moves.forEach(function(move){
 		var _startpt = centerpoint($('#' +move.from))
 		var _endpt = centerpoint($('#' +move.to))
-		console.log(_startpt)
-		console.log(_endpt)
 		var _svg = '<svg class="vector animate" id="'+move.id+'"><line stroke-linecap="round" y1="'+_startpt[1]+'" x1="'+_startpt[0]+'" y2="'+_endpt[1]+'" x2="'+_endpt[0]+'" stroke-dasharray="5,10" stroke="#888"></line></svg>'
-		//$('.overlay .gridhost').append(_svg);
 		$('#objecthost').append(_svg);
 	})
+	if(moves.length < 1){
+		$("#submit-all").removeClass('enabled');
+	} else {
+		$("#submit-all").addClass('enabled');
+	}
 }
 
 function centerpoint(element){
@@ -206,7 +213,6 @@ function raiseNameInputPopup(){
 function clearInputPopup(){
 	$('#inputhost').css('pointer-events', 'none').css('opacity', '0');
 }
-
 var oallht;
 var oallwth;
 var oallctr;
@@ -241,6 +247,8 @@ $(function(){
 	})
 	$(document.body).on('input', '#authorentry', function(){
 		if($('#authorentry').val() != ''){
+			//can_proceed = true;
+			//$('.beginbtn').removeClass('disabled')
 			ppt_name = $('#authorentry').val()
 			$("#refresh-author").removeClass('disabled');
 		} else {
@@ -270,10 +278,18 @@ $(function(){
 		returnToIntro();
 		playIntro();
 	})
+	//This click may be deprecated.
+	$(document.body).on('click', '.beginbtn', function(e){
+		if(can_proceed){
+			clearIntro();
+			storeItem('pptname', ppt_name);
+			$(this).css({'animation': 'btnpulse 0.3s'})
+		}
+	})
 	$(document.body).on('click', '.detailpane', function(e){
 		clearElement($('#detailhost'), 200, false);
 	})
-	$(document.body).on('click', '#submit-all', function(e){
+	$(document.body).on('click', '#submit-all.enabled', function(e){
 		raiseNameInputPopup();
 	})
 	$(document.body).on('click', '#submit-final', function(e){
@@ -470,7 +486,7 @@ function setText(){
 var current_text = 0;
 var introtexts = [
 	{
-		'en':'This tablet will allow you to order a set of movements to be made within the array of objects in this room. Orders will be printed and carried out by other visitors to this installation. To create a set of movements, touch "begin" and follow the prompts. You will be asked to provide minimal identifying information and background about the movements you create.',
+		'en':'Tap an object to view detailed information about it. </br> Touch and drag an object to have it moved.',
 		'es':'Toca un objeto para ver información detallada sobre él. <br/> Toca y arrastra un objeto para que se mueva.',
 		'go-button':'<a class="skipbtn">Begin / Empieza</a>'
 	}
