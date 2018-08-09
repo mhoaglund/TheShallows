@@ -1,5 +1,6 @@
 var pdfFiller = require('pdffiller')
 var pdfStream = require('pdffiller-stream')
+var nconf = require('nconf')
 var fs = require('fs')
 const path = require('path')
 const uuidv4 = require('uuid/v4')
@@ -9,7 +10,19 @@ var _ = require('underscore')
 var s3 = new AWS.S3();
 const { spawn } = require('child_process');
 
-var SN = 0
+// Then load configuration from a designated file.
+nconf.file({ file: 'config.json' });
+
+// Provide default values for settings not provided above.
+nconf.defaults({
+    'sourcepdf': "C:/Dev/PDF_testing/AOV_CO_form_test.pdf",
+    'destpdf': "C:/Dev/PDF_testing/",
+    'printer': "Brother HL-L2300D series",
+    'scanner': "",
+    'timezone': "America/Chicago",
+    'datestring': "MM-DD-YYYY-h-mm-a"
+});
+
 var sourcePDF = "C:/Dev/PDF_testing/AOV_CO_form_test.pdf";
 var destinationPDF =  "C:/Dev/PDF_testing/";
 var id = uuidv4();
@@ -27,7 +40,7 @@ var data = {
 //TODO: unique scan naming and upload to s3.
 function scanDocument(callback){
     //TODO: try to pass in params string instead so we can easily control
-    var filename = 'COscan-' + moment().tz('America/Chicago').format('MM-DD-YYYY-h-mm-a') + '.jpg'
+    var filename = 'COscan-' + prettyDate() + '.jpg'
     var scan_params_inline = "OutFile: " + filename + " Proc: DocScan Version: 1 Init: ADF 0 AF 0 AS 0 GRAY DPI 200 OutFmt: 100"
     var scanjob = spawn('cmdtwain', ['-q', filename]);
     //var scanjob = spawn('cmdtwain', ['-q', '-f', 'scanparams.txt']);
@@ -61,19 +74,19 @@ function uploadScan(key, _file, cb){
     });
 }
 
-//TODO: pass in doc name, printer name in env variable or config.json
 function printDocument(docname, callback){
     var pathtodoc = path.resolve(__dirname, docname)
-    var printjob = spawn('PDFtoPrinter', [pathtodoc, "Brother HL-L2300D series"]);
+    var printjob = spawn('PDFtoPrinter', [pathtodoc, nconf.get('printer')]);
     printjob.on('exit', function(code, signal){
         callback('Printing complete.')
     })
 }
 
+//TODO catch the ioerror the fillform throws from time to time
 function fillPDF(_input = data, key, cb){
-    pdfFiller.fillForm( sourcePDF, destinationPDF + key, _input, function(err) {
+    pdfFiller.fillForm( nconf.get('sourcepdf'), nconf.get('destpdf') + key, _input, function(err) {
         if (err) throw err;
-        cb(destinationPDF + key, _input.SNtop);
+        cb(nconf.get('destpdf') + key, _input.SNtop);
     });
 }
 
@@ -87,16 +100,17 @@ function streamFilledPDF(_input = data, key){
     });
 }
 
+//TODO verify serial number arrival
 function formatData(input){
     var output = {
         "UIDtop": input.id,
         "UIDbtm": input.id,
-        "SNtop": SN,
-        "SNbtm": SN,
+        "SNtop": input.SN,
+        "SNbtm": input.SN,
         "EngSteps" : makeEnglishSteps(JSON.parse(input.moves)),
         "SpSteps" : makeSpanishSteps(JSON.parse(input.moves)),
-        "DateTop" : moment().tz('America/Chicago').format('MM-DD-YYYY-h:mm-a'),
-        "DateBottom" : moment().tz('America/Chicago').format('MM-DD-YYYY-h:mm-a'),
+        "DateTop" : prettyDate(),
+        "DateBottom" : prettyDate(),
         "IdentifierEntry" : "Please fill out the box below with your name or another identifier.",
         "ComposedBy": input.author
     }
@@ -104,12 +118,14 @@ function formatData(input){
         output[step.to.toUpperCase()] = "O"
         output[step.from.toUpperCase()] = "X"
     })
-    SN++;
     return output;
 }
 
+function prettyDate(){
+    return moment().tz(nconf.get('timezone')).format(nconf.get('datestring'));
+}
+
 function makeEnglishSteps(input){
-    //TODO take in array of steps, narrate them, return string
     var output = ""
     var stepno = 1
     _.each(input, function(step) {

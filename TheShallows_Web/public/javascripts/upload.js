@@ -247,8 +247,6 @@ $(function(){
 	})
 	$(document.body).on('input', '#authorentry', function(){
 		if($('#authorentry').val() != ''){
-			//can_proceed = true;
-			//$('.beginbtn').removeClass('disabled')
 			ppt_name = $('#authorentry').val()
 			$("#refresh-author").removeClass('disabled');
 		} else {
@@ -305,7 +303,7 @@ $(function(){
 	})
 	$(document.body).on('click', '#cancel', function(e){
 		clearInputPopup();
-		//TODO: start timer for clearing text input and name field in case of abandoning user
+		//TODO: start long timer for clearing text input and name field in case of abandoning user
 	})
 })
 
@@ -320,10 +318,6 @@ function playIntro(){
 			current_text++;
 			console.log(current_text);
 			cycleContent('#messages', 400);
-		}
-		else {
-			//clearInterval(introcycle);
-			//clearIntro();
 		}
 	}, 4000);
 }

@@ -9,6 +9,8 @@ var docs = require('./docmanager.js')
 var serverbinding = require('./serverbinding.js')
 
 var printed = []
+
+//inquirer terminal interaction scripts
 var sntoprint = {
     type: 'input',
     name: 'printid',
@@ -45,7 +47,7 @@ function pollForNew(){
     })
 }
 
-setInterval(pollForNew, 8*1000);
+setInterval(pollForNew, 3*1000);
 
 function promptBaseAction(){
     inquirer.prompt([base_q]).then(answers => {
@@ -79,7 +81,7 @@ function promptforSN(){
     })
 }
 
-
+//Add server lookup here?
 function serialNumberLookup(_sn){
     var match = _.find(printed, function(doc){
         return doc.sn == _sn;
