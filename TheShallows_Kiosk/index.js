@@ -27,6 +27,8 @@ var base_q = {
     ]
   }
 
+  isPrinterConnected = false; //TODO actual check
+
   //TODO: regular polling of server endpoint to check for new change orders. Automated printing of new arrivals.
 function pollForNew(){
     serverbinding.getLatest(function(newest){
@@ -39,9 +41,11 @@ function pollForNew(){
             var _key = newest.id + '.pdf'
             var docinput = docs.formatData(newest)
             docs.fillPDF(docinput, _key, function(destinationfile, serialno){
-                docs.printDocument(destinationfile, function(){
-                    printed.push({"sn":serialno, "key":destinationfile, "id":newest.id})
-                })
+                if(isPrinterConnected){
+                    docs.printDocument(destinationfile, function(){
+                        printed.push({"sn":serialno, "key":destinationfile, "id":newest.id})
+                    })
+                }
             })
         }
     })
@@ -70,10 +74,12 @@ function promptforSN(){
         var doc = serialNumberLookup(answers.base);
         if(doc){
             console.log('Reprinting Change Order SN# ', answers)
-            docs.printDocument(answers.base + '.pdf', function(){
-                console.log('####')
-                promptBaseAction();
-            })
+            if(isPrinterConnected){
+                docs.printDocument(answers.base + '.pdf', function(){
+                    console.log('####')
+                    promptBaseAction();
+                })
+            }
         }
         else console.log('Serial Number not found.')
         console.log('####')

@@ -27,7 +27,8 @@ function set_focus(){
 	var isAtTop = ($(window).scrollTop() == 0) ? true : false;
 	var isAtBottom = ($(window).scrollTop() >= $(document).height() - window.innerHeight) ? true : false;
 	if(isAtTop){
-		//trigger refresh of latest item
+		//trigger refresh of latest item/
+		//TODO: retrieve latest endpoint should support a max item age parameter
 		if(!recent_refresh){
 			console.log('At top, refreshing...')
 			recent_refresh = true;
@@ -49,6 +50,7 @@ function set_focus(){
 		}
 	}
 	if(isAtBottom){
+		//TODO: retrieve items from the past? what's the workflow here?
 		return;
 	}
 	view_data.forEach(function(id){

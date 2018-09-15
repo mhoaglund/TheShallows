@@ -103,20 +103,18 @@ function streamFilledPDF(_input = data, key){
 //TODO verify serial number arrival
 function formatData(input){
     var output = {
-        "UIDtop": input.id,
-        "UIDbtm": input.id,
-        "SNtop": input.SN,
-        "SNbtm": input.SN,
-        "EngSteps" : makeEnglishSteps(JSON.parse(input.moves)),
-        "SpSteps" : makeSpanishSteps(JSON.parse(input.moves)),
-        "DateTop" : prettyDate(),
-        "DateBottom" : prettyDate(),
-        "IdentifierEntry" : "Please fill out the box below with your name or another identifier.",
-        "ComposedBy": input.author
+        "LeftSN": "SN " + input.SN + " ID:" + input.id,
+        "COsteps" : makeEnglishSteps(JSON.parse(input.moves)),
+        "Top": "Change Order Directive",
+        "OverallInstructions": "If you'd like to perform this Change Order, follow the steps below. Bring this sheet with you. You'll be moving objects in the grid in front of you from position to position. If for any reason you are unable to move one of the objects in this instruction set, you are encouraged to ask for assistance from other gallery visitors or staff.",
+        "Disclaimer": "If you need to move an object to a position within the grid which is already occupied, you may choose between moving the existing object to the position which originally contained the object you are carrying, effectively swapping the two. Alternately, if the object you are carrying can be placed alongside the existing object, they can be left together.",
+        "LeftDate" : prettyDate(),
+        "SigLabel" : "Performer Signature",
+        "SigningInstructions" : "In the large box below, please make a unique identifying mark using the pen on the kiosk you retrieved this sheet from. It can be your initials, a drawing, or a simpler mark. Thank You!",
+        "ComposedBy": "Order Composed By: " + input.author
     }
     _.each(JSON.parse(input.moves), function(step){
-        output[step.to.toUpperCase()] = "O"
-        output[step.from.toUpperCase()] = "X"
+        output[step.to.toUpperCase()] = "✔"
     })
     return output;
 }
@@ -129,7 +127,7 @@ function makeEnglishSteps(input){
     var output = ""
     var stepno = 1
     _.each(input, function(step) {
-        var this_step = stepno + ": Move the " + step.itemname + " from space " + step.from + " to space " + step.to + "\n"
+        var this_step = stepno + ":Locate the " + step.itemname + ". Carefully pick it up, and move it to space " + step.to + "." + step.special + "\n"
         output += this_step
         stepno++
     })
