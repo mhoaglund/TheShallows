@@ -1,6 +1,6 @@
 const request = require("request");
 
-const url = "http://ec2-54-174-44-232.compute-1.amazonaws.com:3000/"
+const url = "http://ec2-52-205-31-232.compute-1.amazonaws.com:3000/"
 
 function getLatest(cb){
     request(url + 'retrieve?latest=true', { json: true }, (err, res, body) => {
