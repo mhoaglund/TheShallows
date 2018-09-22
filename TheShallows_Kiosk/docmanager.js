@@ -82,6 +82,14 @@ function printDocument(docname, callback){
     })
 }
 
+//PDFkit implementation here for non-form pdfs
+function generatePDF(){
+    pdfutility.chromeGeneratePDF(nconf.get('destpdf') + key, _input, function(err){
+        if (err) throw err;
+        cb(nconf.get('destpdf') + key, _input.SNtop);
+    })
+}
+
 //TODO catch the ioerror the fillform throws from time to time
 function fillPDF(_input = data, key, cb){
     pdfFiller.fillForm( nconf.get('sourcepdf'), nconf.get('destpdf') + key, _input, function(err) {
@@ -103,7 +111,9 @@ function streamFilledPDF(_input = data, key){
 //TODO verify serial number arrival
 function formatData(input){
     var output = {
+        "Title": "Change Order",
         "LeftSN": "SN " + input.SN + " ID:" + input.id,
+        "ID": input.id,
         "COsteps" : makeEnglishSteps(JSON.parse(input.moves)),
         "Top": "Change Order Directive",
         "OverallInstructions": "If you'd like to perform this Change Order, follow the steps below. Bring this sheet with you. You'll be moving objects in the grid in front of you from position to position. If for any reason you are unable to move one of the objects in this instruction set, you are encouraged to ask for assistance from other gallery visitors or staff.",

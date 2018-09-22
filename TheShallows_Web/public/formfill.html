@@ -1,0 +1,136 @@
+<!doctype <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>FormFill</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js" type="text/javascript"></script>
+    <script src="javascripts/dust-full.min.js"></script>
+    <script src="javascripts/dust-helpers.min.js"></script>
+    <script src="javascripts/qs.min.js"></script>
+    <script src="javascripts/fillout.js"></script>
+    <link rel="stylesheet" href="stylesheets/ibm-type.min.css" type="text/css"/>
+    <style>
+        html,body{
+            height: 98vh;
+            width: 100%;
+            font-family: "ibm-plex-mono", sans-serif;
+            font-size: 0.8em;
+            line-height: 1.2em;
+        }
+        body .main{
+            display: grid;
+            height: 48vh;
+            width: 98vw;
+            column-gap: 1rem;
+            grid-template-columns: 40px 1fr;
+            grid-template-rows: 24px 100px 1fr 100px;
+        }
+
+        .main:nth-child(1){
+            height: 52vh;
+        }
+        .main:nth-child(2){
+            height: 44vh;
+        }
+        p{
+            -webkit-margin-before: 0px;
+            -webkit-margin-after: 0px;
+        }
+        .vertical{
+            grid-row: 1 / span 3;
+            grid-column: 1 / span 1;
+            writing-mode:vertical-rl; /* vertical text */
+        }
+        .outline{
+            border: 1px solid black;
+        }
+        .meta_top, .meta_bottom{
+            grid-row: 1 / span 3;
+            grid-column: 1 / span 1;
+            writing-mode:vertical-rl; /* vertical text */
+        }
+        .meta_bottom{
+            grid-row: 1 / span 3;
+        }
+        .copy, .header{
+            grid-column: 2;
+        }
+        .copy{
+            grid-column: 2 / span 2;
+        }
+        .header, .signature{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .section1bottom{
+            grid-row: 4;
+            grid-column: 2;
+        }
+        .section2top{
+            grid-row: 1;
+            grid-column: 2;
+        }
+        .section2copy{
+            grid-row: 2;
+            grid-column: 2;
+        }
+
+        .signature{
+            grid-row: 4;
+            grid-column: 2;
+            grid-template-columns: 4fr 1fr;
+        }
+
+        hr.halfline{
+            position: fixed;
+            top: 52vh;
+            left: 0;
+            width: 100%;
+            margin-top: -1px;
+            border:none;
+            border-top:2px dotted #000;
+            color:#fff;
+            background-color:#fff;
+            height:1px;
+        }
+    </style>
+    <script id="fill-template">
+        <section class="main">
+            <section class="meta_top">
+                <p class="vertical" id="leftsn">{LeftSN}<br/>{LeftDate}</p>
+            </section>
+            <section class="header">
+                <span class="" id="top">{Top}</span>
+                <span class="" id="composedby">{ComposedBy}</span>
+            </section>
+            <section class="copy">
+                <p id="overallinstructions">{OverallInstructions}</p>
+                <p id="steps">{COsteps|s}</p>
+            </section>
+            <section class="section1bottom">
+                <p id="disclaimer">{Disclaimer}</p>
+            </section>
+            <hr class="halfline"/>
+        </section>
+        <section class="main">
+            <section class="meta_bottom">
+                <p class="vertical" id="leftsn">{LeftSN}<br/>{LeftDate}</p>
+            </section>
+            <section class="section2top">
+                <p id="siglabel">{SigLabel}</p>
+            </section>
+            <section class="section2copy">
+                <p id="signinginstructions">{SigningInstructions}</p>
+            </section>
+            <section class="signature">
+                <div class="outline" id="signinginstructions"></div>
+                <div id="ornamentation"></div>
+            </section>
+        </section>
+    </script>
+</head>
+<body>
+</body>
+</html>
