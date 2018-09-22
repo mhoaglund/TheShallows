@@ -27,7 +27,7 @@ var base_q = {
     ]
   }
 
-  isPrinterConnected = false; //TODO actual check
+  isPrinterConnected = true; //TODO actual check
 
   //TODO: regular polling of server endpoint to check for new change orders. Automated printing of new arrivals.
 function pollForNew(){
@@ -40,7 +40,7 @@ function pollForNew(){
         if(!matched){
             var _key = newest.id + '.pdf'
             var docinput = docs.formatData(newest)
-            docs.fillPDF(docinput, _key, function(destinationfile, serialno){
+            docs.generatePDF(docinput, _key, function(destinationfile, serialno){
                 if(isPrinterConnected){
                     docs.printDocument(destinationfile, function(){
                         printed.push({"sn":serialno, "key":destinationfile, "id":newest.id})
@@ -51,7 +51,10 @@ function pollForNew(){
     })
 }
 
-setInterval(pollForNew, 3*1000);
+//TODO: re-figure this loop out. The PDF generation process is time consuming. so we need to either extend the interval or figure out another system.
+//setInterval(pollForNew, 3*1000);
+
+pollForNew();
 
 function promptBaseAction(){
     inquirer.prompt([base_q]).then(answers => {

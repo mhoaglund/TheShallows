@@ -10,13 +10,15 @@ var _ = require('underscore')
 var s3 = new AWS.S3();
 const { spawn } = require('child_process');
 
+pdfutility = require('./pdfutility.js')
+
 // Then load configuration from a designated file.
 nconf.file({ file: 'config.json' });
 
 // Provide default values for settings not provided above.
 nconf.defaults({
     'sourcepdf': "C:/Dev/PDF_testing/AOV_CO_form_test.pdf",
-    'destpdf': "C:/Dev/PDF_testing/",
+    'destpdf': path.resolve(__dirname)+"\\",
     'printer': "Brother HL-L2300D series",
     'scanner': "",
     'timezone': "America/Chicago",
@@ -24,7 +26,7 @@ nconf.defaults({
 });
 
 var sourcePDF = "C:/Dev/PDF_testing/AOV_CO_form_test.pdf";
-var destinationPDF =  "C:/Dev/PDF_testing/";
+var destinationPDF =  "";
 var id = uuidv4();
 
 var data = {
@@ -75,7 +77,9 @@ function uploadScan(key, _file, cb){
 }
 
 function printDocument(docname, callback){
-    var pathtodoc = path.resolve(__dirname, docname)
+    var pathtodoc = path.resolve(__dirname, '../' + docname)
+    //var pathtodoc = docname;
+    console.log(pathtodoc);
     var printjob = spawn('PDFtoPrinter', [pathtodoc, nconf.get('printer')]);
     printjob.on('exit', function(code, signal){
         callback('Printing complete.')
@@ -83,10 +87,10 @@ function printDocument(docname, callback){
 }
 
 //PDFkit implementation here for non-form pdfs
-function generatePDF(){
-    pdfutility.chromeGeneratePDF(nconf.get('destpdf') + key, _input, function(err){
+function generatePDF(_input = data, key, cb){
+    pdfutility.chromeGeneratePDF(key, _input, function(err){
         if (err) throw err;
-        cb(nconf.get('destpdf') + key, _input.SNtop);
+        cb(key, _input.SNtop);
     })
 }
 
@@ -162,4 +166,5 @@ function toLower(v) {
 module.exports.printDocument = printDocument
 module.exports.scanDocument = scanDocument
 module.exports.fillPDF = fillPDF
+module.exports.generatePDF = generatePDF
 module.exports.formatData = formatData
