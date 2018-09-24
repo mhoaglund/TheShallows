@@ -4,6 +4,7 @@
 #include <Adafruit_SSD1306.h>
 
 #include <Mouse.h>
+#include <Bounce.h>
 
 #include <bitswap.h>
 #include <chipsets.h>
@@ -40,10 +41,12 @@ int prev_pos = 0;
 
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
+Bounce pushbutton = Bounce(PIN, 50);  
 
 Encoder wheel(12,11);
 void setup() {
   Serial.begin(9600);
+  pinMode(PIN, INPUT_PULLUP);
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x32)
   display.clearDisplay();
   display.setTextSize(1);
@@ -57,7 +60,6 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   int pos = wheel.read();
   if(pos != prev_pos){
     double delta = (prev_pos - pos);
@@ -65,7 +67,12 @@ void loop() {
     else delta = 1.0;
     Mouse.scroll(delta);
     prev_pos = pos;
-    updateScreenVis();
+    updateScreenVis(1);
+  }
+  if (pushbutton.update()) {
+   if (pushbutton.fallingEdge()) {
+     Keyboard.print("k");
+   }
   }
   Serial.println(pos, DEC);
 }

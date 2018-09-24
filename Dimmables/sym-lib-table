@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name dimmable-rescue)(type Legacy)(uri ${KIPRJMOD}/dimmable-rescue.lib)(options "")(descr ""))
+)
