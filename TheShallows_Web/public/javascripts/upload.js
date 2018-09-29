@@ -1,11 +1,5 @@
-var data = {
-	active: set_time,
-	google : {families: ['Cardo:italic', 'Roboto:300,100', 'Cutive Mono', 'Work Sans:100,300,500', 'Montserrat:300,500', 'Quattrocento']}
-};
-
+//var _host = 'http://ec2-52-205-31-232.compute-1.amazonaws.com:3000'
 var _host = ''
-
-WebFont.load(data);
 //Dev: dust compilation
 var _obj_template = $('#obj-template').html();
 var _detail_template = $('#detail-template').html();
