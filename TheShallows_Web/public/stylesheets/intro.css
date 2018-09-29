@@ -20,10 +20,17 @@ html, body{
 }
 
 .transient section p,
-.transient section a{
+.transient section a,
+ol li{
     color: white;
-    font-size: 2.2em;
+    font-size: 2em;
     letter-spacing: 1px;
+}
+
+.border{
+    padding: 1em;
+    border: 1px solid white;
+    padding-left: 3em;
 }
 /* 
 .text-columns{
