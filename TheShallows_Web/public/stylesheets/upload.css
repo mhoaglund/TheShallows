@@ -79,22 +79,35 @@ textarea:focus, input:focus{
     z-index: 9999;
 }
 #inputhost{
-    height: 100%;
-    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
     top: 0;
     left: 0;
     position: absolute;
-    background: rgba(236, 236, 236, 0.86);
     opacity: 0;
     pointer-events: none;
     z-index: 9999;
+    
 }
+
+    #inputshade{
+        height: 100%;
+        overflow: hidden;
+        width: 100%;
+        top: 0;
+        left: 0;
+        position: absolute;
+        background: rgba(236, 236, 236, 0.86);
+        opacity: 0;
+        pointer-events: none;
+        z-index: 9998;
+    }
 .inputcontainer{
     width: 80%;
-    height: 200px;
-    position: absolute;
-    top: 30%;
-    left: 10%;
 }
 .inputcontainer p{
     color: #1f1cc1;

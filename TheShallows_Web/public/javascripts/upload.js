@@ -202,10 +202,12 @@ function raiseDetailPopup(sender, _cb = null){
 }
 
 function raiseNameInputPopup(){
+	$('#inputshade').css('pointer-events', 'auto').css('opacity', '1').css('z-index', 9998);
 	$('#inputhost').css('pointer-events', 'auto').css('opacity', '1').css('z-index', 9999);
 }
 
 function clearInputPopup(){
+	$('#inputshade').css('pointer-events', 'none').css('opacity', '0');
 	$('#inputhost').css('pointer-events', 'none').css('opacity', '0');
 }
 var oallht;
@@ -300,6 +302,7 @@ $(function(){
 		clearInputPopup();
 		//TODO: start long timer for clearing text input and name field in case of abandoning user
 	})
+	$("#inputshade").css({'height':document.documentElement.clientHeight+'px'});
 })
 
 var hassubmitted = false;
@@ -476,7 +479,7 @@ var current_text = 0;
 var introtexts = [
 	{
 		'en':'Tap an object to view detailed information about it. </br> Touch and drag an object to have it moved.',
-		'es':'Toca un objeto para ver información detallada sobre él. <br/> Toca y arrastra un objeto para que se mueva.',
-		'go-button':'<a class="skipbtn">Begin / Empieza</a>'
+		'es':'',
+		'go-button':'<a class="skipbtn">Begin</a>'
 	}
 ]
