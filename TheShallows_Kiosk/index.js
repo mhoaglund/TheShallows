@@ -39,7 +39,7 @@ function pollForNew(){
         })
         if(!matched){
             var _key = newest.id + '.pdf'
-            var docinput = docs.formatData(newest)
+            var docinput = newest
             docs.generatePDF(docinput, _key, function(destinationfile, serialno){
                 if(isPrinterConnected){
                     docs.printDocument(destinationfile, function(){
