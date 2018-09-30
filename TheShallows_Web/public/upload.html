@@ -36,7 +36,7 @@
             <div class="object-array underlay">
                 <div class="gridhost">
                     {#alpha_board}
-                      {@loop from=1 to="{board[1]}"}
+                      {@loop from=1 to="{board[0]}"}
                         <div class="tile animate" id="under_{alpha_board[$idx]}{.}"><span>{alpha_board[$idx]}{.}</span></div>
                       {/loop}
                     {/alpha_board}
@@ -45,7 +45,7 @@
             <div class="object-array overlay">
                 <div class="gridhost">
                     {#alpha_board}
-                      {@loop from=1 to="{board[1]}"}
+                      {@loop from=1 to="{board[0]}"}
                         <div class="tile animate invisible dropzone" id="{alpha_board[$idx]}{.}"><div class="dropcontain"></div></div>
                       {/loop}
                     {/alpha_board}
@@ -71,7 +71,7 @@
             <p class="hm"></p>  
           </div>
           <div class="bottom-form">
-            <div class='go-button'></div>
+            <div class='button go-button'></div>
             <div class='form-field'></div>
           </div>
         </section>
@@ -87,7 +87,7 @@
       </section>
     <section id="shade"></section>
     <!--<aside id="rerun-instructions"><a class="rerun">Show Instructions</a></aside>-->
-    <a class="submit" id="submit-all">Done</a>
+    <a class="button submit" id="submit-all">Done</a>
     <section id="objecthost">
     </section>
     <section id="detailhost">
@@ -111,8 +111,8 @@
           <div class="refresh-field disabled" id="refresh-addenda">⟳</div>
         </div>
         <div class="justify-buttons">
-          <a class="submit" id="submit-final">Submit</a>
-          <a class="cancel" id="cancel">Cancel</a>
+          <a class="button submit" id="submit-final">Submit</a>
+          <a class="button cancel" id="cancel">Cancel</a>
         </div>
       </div>
     </section>

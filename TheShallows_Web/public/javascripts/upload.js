@@ -134,12 +134,13 @@ function centerpoint(element){
 	return [centerX, centerY]
 }
 
+//TODO redo this with css grid
 function adjustTileSize(){
-    var cols = (100-(datamain.board[1]*2))/(datamain.board[1]); //leaving 1% for margins
+    var cols = (100-(datamain.board[0]*2))/(datamain.board[0]); //leaving 1% for margins
     $('.tile').css('width', 'auto');
     $('.tile').css('width', cols+'%');
     $('.tile').each(function(){
-        $(this).css('height', $(this).width())
+        $(this).css('height', $(this).width()*1.5)
     })
 }
 
@@ -156,7 +157,7 @@ function set_time(){
 }
 
 function clean_and_supplement(data){
-	data['alpha_board'] = letter_of_alphabet(data['board'][0], true);
+	data['alpha_board'] = letter_of_alphabet(data['board'][1], true);
 	data['objects'].forEach(function(element) {
 		element['current'] = element['current'].toLowerCase();
 	});

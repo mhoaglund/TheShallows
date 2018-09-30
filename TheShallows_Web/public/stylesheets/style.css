@@ -157,9 +157,10 @@ p:last-child{
   }
 
   .object-array .gridhost .tile{
+    
     margin: 1%;
+    margin-bottom: 3%;
     height: 50px;
-    border: 1px solid black;
     background: white;
     box-sizing: border-box;
     border-collapse: collapse;
@@ -168,10 +169,14 @@ p:last-child{
     z-index: 9;
   }
 
+    .underlay .tile{
+      box-shadow: 4px 4px 5px #888888;
+    }
+
   .object-array .gridhost .tile.invisible{
     height: 50px;
     background: rgba(255, 255, 255, 0);
-    padding: 1px;
+    /* padding: 1px; */
     border: none;
     box-sizing: border-box;
     border-collapse: collapse;
@@ -195,6 +200,7 @@ p:last-child{
       box-sizing: border-box;
       border-collapse: collapse;
       background-size: cover;
+      background-position: center center;
       background-repeat: no-repeat;
       /* flex-flow: row wrap; */
       display: flex;
