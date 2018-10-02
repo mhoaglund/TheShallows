@@ -14,8 +14,8 @@ html, body{
     z-index: 9999;
     font-size: 3em;
     position: fixed;
-    bottom: 12px;
-    right: 24px;
+    bottom: 104px;
+    right: 42px;
     color: white;
 }
 
@@ -23,7 +23,7 @@ html, body{
 .transient section a,
 ol li{
     color: white;
-    font-size: 2em;
+    font-size: 1.4em;
     letter-spacing: 1px;
 }
 

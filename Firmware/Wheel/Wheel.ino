@@ -39,6 +39,7 @@
 #define HOTKEYPIN 18
 const int LEDs = 8;
 int prev_pos = 0;
+bool reducer = true;
 
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
@@ -51,20 +52,19 @@ void setup() {
   pinMode(PIN, INPUT_PULLUP);
   pinMode(HOTKEYPIN, INPUT_PULLUP);
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x32)
-  display.clearDisplay();
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.setCursor(0,0);
-  display.println("Hello, world!");
-  display.display();
-  delay(2000);
-  display.clearDisplay();
-  display.display();
+  defaultText();
 }
 
 void loop() {
   int pos = wheel.read();
   if(pos != prev_pos){
+    //Ignore every other event
+    if(reducer){
+      return;
+      reducer = false;
+    } else{
+      reducer = true;
+    }
     double delta = (prev_pos - pos);
     if(delta < 0) delta = -1.0;
     else delta = 1.0;
@@ -74,7 +74,15 @@ void loop() {
   }
   if (topbutton.update()) {
    if (topbutton.fallingEdge()) {
-     Keyboard.print("k");
+    Keyboard.print("k");
+    display.clearDisplay();
+    display.setTextSize(3);
+    display.setTextColor(WHITE);
+    display.setCursor(0,0);
+    display.println("REFRESHING...");
+    display.display();
+    delay(1500);
+    defaultText();
    }
   }
   if (hotkeybutton.update()) {
@@ -106,4 +114,13 @@ void testdrawline() {
     display.display();
   }
   delay(250);
+}
+
+void defaultText(){
+    display.clearDisplay();
+    display.setTextSize(4);
+    display.setTextColor(WHITE);
+    display.setCursor(0,0);
+    display.println("INTRO");
+    display.display();
 }
