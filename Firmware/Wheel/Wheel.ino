@@ -36,17 +36,20 @@
 #include <Encoder.h>
 
 #define PIN 17
+#define HOTKEYPIN 18
 const int LEDs = 8;
 int prev_pos = 0;
 
 #define OLED_RESET 4
 Adafruit_SSD1306 display(OLED_RESET);
-Bounce pushbutton = Bounce(PIN, 50);  
+Bounce topbutton = Bounce(PIN, 50);  
+Bounce hotkeybutton = Bounce(HOTKEYPIN, 50);
 
 Encoder wheel(12,11);
 void setup() {
   Serial.begin(9600);
   pinMode(PIN, INPUT_PULLUP);
+  pinMode(HOTKEYPIN, INPUT_PULLUP);
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x32)
   display.clearDisplay();
   display.setTextSize(1);
@@ -69,9 +72,21 @@ void loop() {
     prev_pos = pos;
     updateScreenVis(1);
   }
-  if (pushbutton.update()) {
-   if (pushbutton.fallingEdge()) {
+  if (topbutton.update()) {
+   if (topbutton.fallingEdge()) {
      Keyboard.print("k");
+   }
+  }
+  if (hotkeybutton.update()) {
+   if (hotkeybutton.fallingEdge()) {
+     //Alt-Shift-A: Hotkey setup
+     Keyboard.set_modifier(MODIFIERKEY_CTRL | MODIFIERKEY_SHIFT);
+     Keyboard.send_now();
+     Keyboard.set_key1(KEY_A);
+     Keyboard.send_now();
+     Keyboard.set_modifier(0);
+     Keyboard.set_key1(0);
+     Keyboard.send_now();
    }
   }
   Serial.println(pos, DEC);
