@@ -33,9 +33,10 @@ const getBrowserInstance = async function() {
 function chromeGeneratePDF(filename, _input, cb){
     (async() => {
         try{
+            //console.log(toparams(_input));
             const browser = await getBrowserInstance();
             const page = await browser.newPage();
-            await page.goto('http://ec2-52-205-31-232.compute-1.amazonaws.com:3000/formfill.html?'+toparams(_input), {waitUntil: 'networkidle2'});
+            await page.goto('http://ec2-52-205-31-232.compute-1.amazonaws.com:3000/formfill.html?'+toparams(_input), {waitUntil: 'networkidle2', timeout: 0});
             await page.pdf({
               path: _input.ID + '.pdf',
               format: 'letter'
