@@ -163,6 +163,5 @@ function toLower(v) {
 
 module.exports.printDocument = printDocument
 module.exports.scanDocument = scanDocument
-module.exports.fillPDF = fillPDF
 module.exports.generatePDF = generatePDF
 module.exports.formatData = formatData

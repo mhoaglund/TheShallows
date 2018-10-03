@@ -33,12 +33,12 @@ const getBrowserInstance = async function() {
 function chromeGeneratePDF(filename, _input, cb){
     (async() => {
         try{
-            //console.log(toparams(_input));
+            console.log(toparams(_input));
             const browser = await getBrowserInstance();
             const page = await browser.newPage();
             await page.goto('http://ec2-52-205-31-232.compute-1.amazonaws.com:3000/formfill.html?'+toparams(_input), {waitUntil: 'networkidle2', timeout: 0});
             await page.pdf({
-              path: _input.ID + '.pdf',
+              path: _input.id + '.pdf',
               format: 'letter'
             });
             await browser.close(); //TODO optimize the close routine
@@ -60,6 +60,6 @@ function cleanUp(){
     })();
 }
 
-chromeGeneratePDF("filename", output, function(droppedfile, sn){var self = this;});
+//chromeGeneratePDF("filename", output, function(droppedfile, sn){var self = this;});
 module.exports.chromeGeneratePDF = chromeGeneratePDF
 module.exports.cleanUp = cleanUp
