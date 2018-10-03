@@ -1,5 +1,3 @@
-var pdfFiller = require('pdffiller')
-var pdfStream = require('pdffiller-stream')
 var nconf = require('nconf')
 var fs = require('fs')
 const path = require('path')
@@ -95,22 +93,22 @@ function generatePDF(_input = data, key, cb){
 }
 
 //TODO catch the ioerror the fillform throws from time to time
-function fillPDF(_input = data, key, cb){
-    pdfFiller.fillForm( nconf.get('sourcepdf'), nconf.get('destpdf') + key, _input, function(err) {
-        if (err) throw err;
-        cb(nconf.get('destpdf') + key, _input.SNtop);
-    });
-}
+// function fillPDF(_input = data, key, cb){
+//     pdfFiller.fillForm( nconf.get('sourcepdf'), nconf.get('destpdf') + key, _input, function(err) {
+//         if (err) throw err;
+//         cb(nconf.get('destpdf') + key, _input.SNtop);
+//     });
+// }
 
-function streamFilledPDF(_input = data, key){
-    pdfFiller.fillForm( sourcePDF, data)
-    .then((outputStream) => {
-        // use the outputStream here; 
-        // will be instance of stream.Readable 
-    }).catch((err) => {
-        console.log(err);
-    });
-}
+// function streamFilledPDF(_input = data, key){
+//     pdfFiller.fillForm( sourcePDF, data)
+//     .then((outputStream) => {
+//         // use the outputStream here; 
+//         // will be instance of stream.Readable 
+//     }).catch((err) => {
+//         console.log(err);
+//     });
+// }
 
 //TODO verify serial number arrival
 function formatData(input){

@@ -1,5 +1,7 @@
 #include <Adafruit_GFX.h>
 #include <gfxfont.h>
+#include <SPI.h>
+#include <Wire.h>
 
 #include <Adafruit_SSD1306.h>
 
@@ -36,7 +38,7 @@
 #include <Encoder.h>
 
 #define PIN 17
-#define HOTKEYPIN 18
+#define HOTKEYPIN 16
 const int LEDs = 8;
 int prev_pos = 0;
 bool reducer = true;
@@ -60,8 +62,8 @@ void loop() {
   if(pos != prev_pos){
     //Ignore every other event
     if(reducer){
-      return;
       reducer = false;
+      return;     
     } else{
       reducer = true;
     }
@@ -71,16 +73,12 @@ void loop() {
     Mouse.scroll(delta);
     prev_pos = pos;
     updateScreenVis(1);
+    Serial.println("Scrolled");
   }
   if (topbutton.update()) {
    if (topbutton.fallingEdge()) {
     Keyboard.print("k");
-    display.clearDisplay();
-    display.setTextSize(3);
-    display.setTextColor(WHITE);
-    display.setCursor(0,0);
-    display.println("REFRESHING...");
-    display.display();
+    refreshText();
     delay(1500);
     defaultText();
    }
@@ -116,11 +114,20 @@ void testdrawline() {
   delay(250);
 }
 
+void refreshText(){
+    display.clearDisplay();
+    display.setTextSize(3);
+    display.setTextColor(WHITE);
+    display.setCursor(0,12);
+    display.println("REFRESH");
+    display.display();  
+}
+
 void defaultText(){
     display.clearDisplay();
-    display.setTextSize(4);
+    display.setTextSize(3);
     display.setTextColor(WHITE);
-    display.setCursor(0,0);
+    display.setCursor(18,12);
     display.println("INTRO");
     display.display();
 }
