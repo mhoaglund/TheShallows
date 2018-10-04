@@ -38,7 +38,7 @@ function chromeGeneratePDF(filename, _input, cb){
             const page = await browser.newPage();
             await page.goto('http://ec2-52-205-31-232.compute-1.amazonaws.com:3000/formfill.html?'+toparams(_input), {waitUntil: 'networkidle2', timeout: 0});
             await page.pdf({
-              path: _input.id + '.pdf',
+              path: _input.ID + '.pdf',
               format: 'letter'
             });
             await browser.close(); //TODO optimize the close routine
