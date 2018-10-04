@@ -33,7 +33,7 @@ function pollForNew(){
     if(subsystem_busy) return;
     serverbinding.getLatest(function(newest){
         if(!newest) return;
-        newest.id = newest.id.split('_')[1]
+        newest.ID = newest.ID.split('_')[1]
         var matched = _.find(printed, function(_doc){
             return _doc.id == newest.id
         })
