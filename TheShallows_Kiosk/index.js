@@ -35,17 +35,17 @@ function pollForNew(){
         if(!newest) return;
         newest.ID = newest.ID.split('_')[1]
         var matched = _.find(printed, function(_doc){
-            return _doc.id == newest.id
+            return _doc.ID == newest.ID
         })
         if(!matched){
             subsystem_busy = true;
-            var _key = newest.id + '.pdf'
+            var _key = newest.ID + '.pdf'
             var docinput = newest
             docs.generatePDF(docinput, _key, function(destinationfile, serialno){
                 if(isPrinterConnected){
                     docs.printDocument(destinationfile, function(){
                         subsystem_busy = false;
-                        printed.push({"sn":serialno, "key":destinationfile, "id":newest.id})
+                        printed.push({"sn":serialno, "key":destinationfile, "ID":newest.ID})
                     })
                 }
             })
