@@ -3,6 +3,9 @@ var data = {
 	google : {families: ['Cardo:italic', 'Roboto:300,100', 'Cutive Mono', 'Work Sans:100,300,500', 'Montserrat:300,500']}
 };
 
+//var _host = 'http://ec2-52-205-31-232.compute-1.amazonaws.com:3000'
+var _host = ''
+var _latestid = 0;
 WebFont.load(data);
 //Dev: dust compilation
 var _co_template = $('#co-template').html();
@@ -16,6 +19,17 @@ function set_time(){
 //user has scrolled down to the bottom. get change orders from the past and populate.
 function get_before_oldest(){
 
+}
+
+function refresh_content(){
+	do_get(_host + '/upload/latestdelta', function(data){
+		if(data.id == _latestid) return;
+		else {
+			$('#list_host').empty();
+			$('#overlay').empty();
+			getProjectData(data_location);
+		}
+   })
 }
 var stale = true;
 var current_focus = ''
@@ -32,14 +46,7 @@ function set_focus(){
 		if(!recent_refresh){
 			console.log('At top, refreshing...')
 			recent_refresh = true;
-			do_get('/retrieve?latest=true', function(data){
-				if(data.id == _latestid) return;
-				else {
-					var _item = JSON.parse(data)[0];
-					_item.moves = JSON.parse(_item.moves);
-					console.log(_item);
-				}
-			})
+			refresh_content();
 		}
 		if(!refresh_debouncer){
 			window.setTimeout(function(){
@@ -69,8 +76,7 @@ function set_focus(){
 			updateGridUnit();
 			stale = false;
 		}
-		//current_focus = '#'+center['id']
-		var centerdata = datamain.results.find(matchesID, center['id'])
+		var centerdata = datamain.find(matchesID, center['id'])
 		if(centerdata){
 			repaintMoves(centerdata);
 			current_focus = '#'+center['id']
@@ -124,7 +130,7 @@ function updateGridUnit(){
 
 function translateUnit(coords, xpad = false, ypad = false){
 	var xpadding = (xpad) ? grid_unit.w*0.5 : 0;
-	return [coords[0]*grid_unit.h + xpadding,coords[1]*grid_unit.w]
+	return [serialized_letter(coords[0])*grid_unit.h + xpadding,coords[1]*grid_unit.w]
 }
 
 function centerpoint(element){
@@ -191,7 +197,7 @@ function setOalls(){
 	 oallctr = {x: (oallwth/2), y: (oallht/2) };
 }
 
-var data_location = 'https://s3.amazonaws.com/shallows/order1.json';
+var data_location = _host + '/upload/recent';
 function getProjectData(myUrl){
 	var result = null;
 	$.ajax( { url: myUrl, 
@@ -204,7 +210,7 @@ function getProjectData(myUrl){
 		data: '',
 		success: function(data) { 
 			datamain = clean_and_supplement(data);
-			data['results'].forEach(function(element) {
+			datamain.forEach(function(element) {
 				displayAll(element, '#list_host', 'CH_ORD', function(){
 				});
 			});
@@ -230,21 +236,23 @@ function getProjectData(myUrl){
 }
 
 function clean_and_supplement(data){
-	data['alpha_board'] = letter_of_alphabet(data['board'][0], true);
-
-	data['results'].forEach(function(element) {
-		element['board'] = data['board'] //can this handle variable board sizes or will the css ruin that?
-		element['alpha_board'] = letter_of_alphabet(data['board'][0], true);
-		var moves = element['moves'];
+	_newdata = []
+	_latestid = data[0].id;
+	data.forEach(function(_element) {
+		//_element = JSON.parse(element)
+		_element['alpha_board'] = letter_of_alphabet(_element['board'][1], true);
+		var moves = _element['moves'];
 		if(moves.length > 0){
 			moves.forEach(function(_move){
 				_move["alphabetized"] = [];
-				_move["alphabetized"][0] = letter_of_alphabet(_move.from[0]-1, false) + _move.from[1].toString();
-				_move["alphabetized"][1] = letter_of_alphabet(_move.to[0]-1, false) + _move.to[1].toString();
+				_move["alphabetized"][0] = _move.from;
+				_move["alphabetized"][1] = _move.to;
 			});
 		}
+		_newdata.push(_element)
 	});
-	return data;
+	_newdata.board = data[0].board;
+	return _newdata;
 }
 
 function letter_of_alphabet(num, shouldSlice){
@@ -260,6 +268,13 @@ function letter_of_alphabet(num, shouldSlice){
 	}
 }
 
+function serialized_letter(letter){
+	var alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+	if(alphabet.indexOf(letter) != -1){
+		return alphabet.indexOf(letter)+1;
+	}
+}
+
 function displayAll(_data, _target, _template = 'CH_ORD', _cb = null){
 	dust.render(_template, _data, function(err, out) {
         $(_target).append(out);
@@ -272,10 +287,10 @@ function showSuccessOverlay(){
 }
 
 $(function(){	
-	//$('#await').hide();
+	$('#await').hide();
 	$("body").niceScroll({
-		scrollspeed: 5,
-		mousescrollstep: 5
+		scrollspeed: 1,
+		mousescrollstep: 2
 	});
 	$( window ).resize(function() {
 		setOalls();
@@ -291,9 +306,8 @@ $(function(){
 
 	});
 	
-	if(document.body.requestFullscreen){
-		document.body.requestFullscreen();
-	}
+	adjustTileSize();
+	updateGridUnit();
 });
 
 getProjectData(data_location);

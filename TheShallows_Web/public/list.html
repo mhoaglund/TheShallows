@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="stylesheets/ibm-type.min.css" type="text/css"/>
   <link rel="stylesheet" href="stylesheets/style.css" type="text/css"/>
   <link rel="stylesheet" href="stylesheets/loading.css" type="text/css"/>
+  <link rel="stylesheet" href="stylesheets/intro.css" type="text/css"/>
   <link rel="stylesheet" href="stylesheets/slicknav.css" type="text/css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="javascripts/dust-full.min.js"></script>
@@ -30,7 +31,7 @@
                 {?moves}
                 <br class="overlay_only"/>
                   {#.moves}
-                    <span style="color:{?idcolor}{idcolor}{:else}#888{/idcolor};">{alphabetized[0]} ➞ {alphabetized[1]}</span>{@sep}, {/sep}
+                    <span style="color:#56ffa3;">{alphabetized[0]} ➞ {alphabetized[1]}</span>{@sep}, {/sep}
                   {/moves}
                 {/moves}
               </div>
@@ -38,7 +39,7 @@
           <div class="top">
               <div class="gridhost">
                   {#alpha_board}
-                    {@loop from=1 to="{board[1]}"}
+                    {@loop from=1 to="{board[0]}"}
                       <div class="tile" id="{.}{alpha_board[$idx]}"><span>{alpha_board[$idx]}{.}</span></div>
                     {/loop}
                   {/alpha_board}
@@ -87,6 +88,7 @@
         <div class="sk-cube sk-cube9"></div>
       </div>
 </section>
+<section id="shade"></section>
   </body>
   <script src="javascripts/jquery.slicknav.min.js"></script>
   <script src="javascripts/list.js"></script>
