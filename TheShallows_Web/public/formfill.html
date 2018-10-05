@@ -47,6 +47,9 @@
         .outline{
             border: 1px solid black;
         }
+        .tweak{
+            margin-right: 1px;
+        }
         .meta_top, .meta_bottom{
             grid-row: 1 / span 3;
             grid-column: 1 / span 1;
@@ -103,7 +106,6 @@
             grid-template-rows: 1fr 1fr 1fr 1fr;
             grid-gap: 1px 1px;
             display: grid;
-            margin-left: 1px;
         }
             #ornamentation .position{
                 border: 1px solid black;
@@ -141,7 +143,7 @@
                 <p id="signinginstructions">{SigningInstructions}</p>
             </section>
             <section class="signature">
-                <div class="outline" id="signinginstructions"></div>
+                <div class="outline tweak" id="signinginstructions"></div>
                 <div id="ornamentation">
                     <div class="position">{?A1}<div>{A1}</div>{/A1}</div>
                     <div class="position">{?A2}<div>{A2}</div>{/A2}</div>
