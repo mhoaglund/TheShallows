@@ -75,10 +75,8 @@ function uploadScan(key, _file, cb){
 }
 
 function printDocument(docname, callback){
-    var pathtodoc = path.resolve(__dirname, '../' + docname)
-    //var pathtodoc = docname;
-    console.log(pathtodoc);
-    var printjob = spawn('PDFtoPrinter', [pathtodoc, nconf.get('printer')]);
+    console.log(docname);
+    var printjob = spawn('PDFtoPrinter', [docname, nconf.get('printer')]);
     printjob.on('exit', function(code, signal){
         callback('Printing complete.')
     })
