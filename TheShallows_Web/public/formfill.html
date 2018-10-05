@@ -97,15 +97,18 @@
             height:1px;
         }
         #ornamentation{
+            width: 100%;
+            height: 100%;
             grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
             grid-template-rows: 1fr 1fr 1fr 1fr;
             grid-gap: 1px 1px;
+            display: grid;
+            margin-left: 1px;
         }
             #ornamentation .position{
                 border: 1px solid black;
-            }
-            #ornamentation .position div{
-                color: red;
+                text-align: center;
+                padding: 4px;
             }
     </style>
     <script id="fill-template">

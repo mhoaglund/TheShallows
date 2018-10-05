@@ -54,7 +54,7 @@ function pollForNew(){
 }
 
 //TODO: re-figure this loop out. The PDF generation process is time consuming. so we need to either extend the interval or figure out another system.
-setInterval(pollForNew, 3*1000);
+setInterval(pollForNew, 7*1000);
 
 //pollForNew();
 

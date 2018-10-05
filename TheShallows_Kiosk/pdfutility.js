@@ -41,7 +41,7 @@ function chromeGeneratePDF(filename, _input, cb){
               path: _input.ID + '.pdf',
               format: 'letter'
             });
-            await browser.close(); //TODO optimize the close routine
+            //await browser.close(); //TODO optimize the close routine
             cb(null);
         }
         catch(err){
