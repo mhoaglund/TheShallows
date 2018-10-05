@@ -7,6 +7,9 @@ var _ = require('underscore');
 var docs = require('./docmanager.js')
 var serverbinding = require('./serverbinding.js')
 
+const path = require('path')
+var appDir = path.dirname(require.main.filename);
+
 var printed = []
 
 //inquirer terminal interaction scripts
@@ -42,10 +45,12 @@ function pollForNew(){
             var _key = newest.ID + '.pdf'
             var docinput = newest
             docs.generatePDF(docinput, _key, function(destinationfile, serialno){
-                if(isPrinterConnected){
+                 if(isPrinterConnected){
                     docs.printDocument(destinationfile, function(){
                         subsystem_busy = false;
-                        printed.push({"sn":serialno, "key":destinationfile, "ID":newest.ID})
+                        var _record = {"sn":serialno, "key":destinationfile, "ID":newest.ID}; 
+                        printed.push(_record)
+                        managePrintedCache(_record)
                     })
                 }
             })
@@ -53,8 +58,22 @@ function pollForNew(){
     })
 }
 
-//TODO: re-figure this loop out. The PDF generation process is time consuming. so we need to either extend the interval or figure out another system.
+function managePrintedCache(toAdd = null){
+    var printedcache = JSON.parse(fs.readFileSync(appDir + '/printed.json', 'utf8'));
+    if(toAdd){
+        printedcache.push(toAdd);
+    }
+    else{
+        printed = printedcache;
+        return;
+    }
+    var _string = JSON.stringify(printedcache);
+    fs.writeFile(appDir + '/printed.json', _string, 'utf8');
+}
+
 setInterval(pollForNew, 7*1000);
+managePrintedCache(_record);
+
 function promptBaseAction(){
     inquirer.prompt([base_q]).then(answers => {
         if(answers.base == 'Scan a Change Order'){
