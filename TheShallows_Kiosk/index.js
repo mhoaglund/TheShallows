@@ -1,4 +1,5 @@
-const path = require('path')
+const path = require('path');
+const fs = require('fs');
 const uuidv4 = require('uuid/v4');
 const { spawn } = require('child_process');
 const program = require('commander');
@@ -6,8 +7,6 @@ var inquirer = require('inquirer');
 var _ = require('underscore');
 var docs = require('./docmanager.js')
 var serverbinding = require('./serverbinding.js')
-
-const path = require('path')
 var appDir = path.dirname(require.main.filename);
 
 var printed = []
@@ -37,7 +36,7 @@ function pollForNew(){
     serverbinding.getLatest(function(newest){
         if(!newest) return;
         newest.ID = newest.ID.split('_')[1]
-        var matched = _.find(printed, function(_doc){
+        var matched = _.find(printed.records, function(_doc){
             return _doc.ID == newest.ID
         })
         if(!matched){
@@ -48,8 +47,8 @@ function pollForNew(){
                  if(isPrinterConnected){
                     docs.printDocument(destinationfile, function(){
                         subsystem_busy = false;
-                        var _record = {"sn":serialno, "key":destinationfile, "ID":newest.ID}; 
-                        printed.push(_record)
+                        var _record = {"key":destinationfile, "ID":newest.ID}; 
+                        printed.records.push(_record)
                         managePrintedCache(_record)
                     })
                 }
@@ -61,18 +60,18 @@ function pollForNew(){
 function managePrintedCache(toAdd = null){
     var printedcache = JSON.parse(fs.readFileSync(appDir + '/printed.json', 'utf8'));
     if(toAdd){
-        printedcache.push(toAdd);
+        printedcache.records.push(toAdd);
     }
     else{
         printed = printedcache;
         return;
     }
     var _string = JSON.stringify(printedcache);
-    fs.writeFile(appDir + '/printed.json', _string, 'utf8');
+    fs.writeFile(appDir + '/printed.json', _string, 'utf8',function(){});
 }
 
 setInterval(pollForNew, 7*1000);
-managePrintedCache(_record);
+managePrintedCache();
 
 function promptBaseAction(){
     inquirer.prompt([base_q]).then(answers => {
