@@ -5,7 +5,7 @@ $(function(){
 	});
 	$(document).on("keypress", function (e) {
 		// use e.which
-		if(e.which == 75){
+		if(e.originalEvent.which == 75){
 			location.reload();
 		}
 	});
