@@ -1,3 +1,6 @@
+const path = require('path')
+var appDir = path.dirname(require.main.filename);
+
 'use strict';
 const puppeteer = require('puppeteer');
 //TODO deprecate this sample data
@@ -33,19 +36,19 @@ const getBrowserInstance = async function() {
 function chromeGeneratePDF(filename, _input, cb){
     (async() => {
         try{
-            console.log(toparams(_input));
+            var droplocation = appDir + '\\' + _input.ID + '.pdf';
             const browser = await getBrowserInstance();
             const page = await browser.newPage();
             await page.goto('http://ec2-52-205-31-232.compute-1.amazonaws.com:3000/formfill.html?'+toparams(_input), {waitUntil: 'networkidle2', timeout: 0});
             await page.pdf({
-              path: _input.ID + '.pdf',
+              path: droplocation,
               format: 'letter'
             });
             //await browser.close(); //TODO optimize the close routine
-            cb(null);
+            cb(droplocation, null);
         }
         catch(err){
-            cb(err)
+            cb(null, err)
         }
       })();
 }

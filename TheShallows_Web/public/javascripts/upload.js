@@ -300,7 +300,6 @@ $(function(){
 	})
 	$(document.body).on('click', '#cancel', function(e){
 		clearInputPopup();
-		//TODO: start long timer for clearing text input and name field in case of abandoning user
 	})
 	$("#inputshade").css({'height':document.documentElement.clientHeight+'px'});
 })

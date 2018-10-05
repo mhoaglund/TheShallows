@@ -94,6 +94,10 @@ textarea:focus, input:focus{
         pointer-events: none;
         z-index: 9998;
     }
+
+#messages .text-column{
+    line-height: 3em;
+}
 .inputcontainer{
     width: 80%;
 }
@@ -234,10 +238,8 @@ a{
 #submit-all{
     position: fixed;
     right: 24px;
-    z-index: 9997;
+    z-index: 8999;
     bottom: 24px;
-
-
 }
 
 .submit{
@@ -258,6 +260,10 @@ a{
 #detailhost span, #detailhost h2{
     color: black;
     text-shadow: none;
+}
+
+#shade{
+    z-index: 9000;
 }
 
 @keyframes colorchange

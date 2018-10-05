@@ -86,9 +86,9 @@ function printDocument(docname, callback){
 
 //PDFkit implementation here for non-form pdfs
 function generatePDF(_input = data, key, cb){
-    pdfutility.chromeGeneratePDF(key, _input, function(err){
+    pdfutility.chromeGeneratePDF(key, _input, function(filename, err){
         if (err) throw err;
-        cb(key, _input.SNtop);
+        cb(filename, _input.SNtop);
     })
 }
 
