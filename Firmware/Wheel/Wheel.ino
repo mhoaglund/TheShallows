@@ -77,7 +77,10 @@ void loop() {
   }
   if (topbutton.update()) {
    if (topbutton.fallingEdge()) {
-    Keyboard.print("k");
+    Keyboard.set_key1(KEY_F5);
+    Keyboard.send_now();
+    Keyboard.set_key1(0);
+    Keyboard.send_now();
     refreshText();
     delay(1500);
     defaultText();

@@ -218,10 +218,10 @@ p:last-child{
 
     
 #shade{
-  background: #274572; /* Old browsers */
-  background: -moz-linear-gradient(top, #274572 0%, #4e48a8 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #274572 0%,#4e48a8 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #274572 0%,#4e48a8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background: #274572; 
+  background: -moz-linear-gradient(top, #274572 0%, #4e48a8 100%);
+  background: -webkit-linear-gradient(top, #274572 0%,#4e48a8 100%);
+  background: linear-gradient(to bottom, #274572 0%,#4e48a8 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#274572', endColorstr='#4e48a8',GradientType=0 ); /* IE6-9 */
   background-repeat: no-repeat;
   background-attachment: fixed;
