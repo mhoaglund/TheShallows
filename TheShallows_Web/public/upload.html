@@ -24,11 +24,13 @@
         <script id="detail-template">
           <div class="detailpane">
               <div class="object-detail" id="detail_{current}_{id}" >
-                <div class="lgimg" style="background-image: url(https://s3.amazonaws.com/shallows/images/{image}.png)"></div>
-                <span>{current}</span>
+                <div class="lgimg" style="background-image: url(https://s3.amazonaws.com/shallows/images/{image}_med.png)"></div>
+                <br/>
+                <span>Possibly located in {current}</span><br/>
                 <span class="object-name">{name}</span><br/>
                 <span class="object-author">Added by {author}</span><br/>
-                <span class="object-supplement">{supplement}</span>
+                <span class="object-supplement">{supplement}</span><br/>
+                <span class="object-supplement">{special}</span><br/>
               </div>
           </div>
         </script>
