@@ -129,7 +129,7 @@ textarea:focus, input:focus{
     color: #1f1cc1;
     position: absolute;
     right: 8px;
-    top: 8px;
+    top: 0px;
     text-shadow: 0 0 3px white;
     cursor: pointer;
 }
