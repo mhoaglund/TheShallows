@@ -384,7 +384,7 @@ function submitOrder(url, payload){
         console.log(data);
 	})
 	.always(function(){
-		showOverlay($('#alertcontainer'), 800, function(){
+		showOverlay($('#alertcontainer'), 1600, function(){
 			$('#alertcontainer .text-column').animate({
 				'opacity':'0.0'
 			}, 200, function(){
@@ -477,7 +477,7 @@ function setText(){
 var current_text = 0;
 var introtexts = [
 	{
-		'en':'Tap an object to view detailed information about it. </br> Touch and drag an object to have it moved.',
+		'en':'Tap an object to view detailed information about it. </br> Touch and drag an object to have it moved. The objects shown in this app may not entirely match the order of those present in the gallery.',
 		'es':'',
 		'go-button':'<a class="skipbtn">Begin</a>'
 	}

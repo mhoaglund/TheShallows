@@ -95,7 +95,7 @@ textarea:focus, input:focus{
         z-index: 9998;
     }
 
-#messages .text-column{
+#messages .text-column, #alertcontainer .text-column{
     line-height: 3em;
 }
 .inputcontainer{
