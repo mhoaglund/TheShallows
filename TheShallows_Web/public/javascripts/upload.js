@@ -1,5 +1,5 @@
-//var _host = 'http://ec2-52-205-31-232.compute-1.amazonaws.com:3000'
-var _host = ''
+var _host = 'http://ec2-52-205-31-232.compute-1.amazonaws.com:3000'
+//var _host = ''
 //Dev: dust compilation
 var _obj_template = $('#obj-template').html();
 var _detail_template = $('#detail-template').html();
@@ -59,33 +59,86 @@ function getObjectData(myUrl){
 	return result;
 }
 
+function resetLocations(){
+	moves = []
+	shadowmoves = []
+	moved = {}
+	displayAll(datamain, '#objecthost', 'ARR_OBJ', function(){
+		$('.gridhost').css('max-width', oallht-50);
+		adjustTileSize();
+		$('.object-main').each(function(){
+			var location = $(this).attr('id').split('_')[0].toLowerCase()
+			//console.log(location);
+			$('#'+location).append($(this))
+		});
+		$( ".draggable" ).draggable({ 
+			revert: true,
+			start: function(){
+				dragging = $(this)
+				clickbuffer = false;
+			}
+		});
+		$('.tile.invisible').droppable({
+			drop: function(event, ui){
+				recordMove($(this))
+			}
+		})
+	});
+}
+function addNonRedundantly(move, container){
+	removeRelated(move, container);
+	if(move.from == move.to){
+		console.log("redundant move detected")
+	} else {
+		container.push(move)
+	}
+
+}
+
+	function removeRelated(move, container){
+		var to_remove = null
+		for(x = 0; x<container.length; x++){
+			var _existing = container[x]
+			if(_existing.item === move.item){
+				to_remove = x
+			}
+		}
+		if(to_remove != null){
+			container.splice(to_remove, 1)
+		}
+	}
+
 var moves = []
+var shadowmoves = {}
+var moved = {}
 function recordMove(dropped_on){
 	var item_info = dragging.attr('id').split('_')
+	var occupant = $('.overlay .gridhost #' + dropped_on.attr('id') + ' .object-main');
+	if(moved[dropped_on.attr('id')]) return;
+	if(occupant.length > 0){
+		var occ_info = occupant.attr('id').split('_');
+		//shadow move here: we need to record a move for a swapped item.
+		var shadowmove = {
+			'item': occ_info[1],
+			'itemname':occupant.find('.object-name').html(),
+			'from': occ_info[0],
+			'to': item_info[0]
+		}
+
+		shadowmove.id = shadowmove.item + '_from_' + shadowmove.from + '_to_' + shadowmove.to;
+		shadowmoves[shadowmove.item] = shadowmove;
+	}
 	var move = {
 		'item': item_info[1],
 		'itemname':dragging.find('.object-name').html(),
 		'from': item_info[0],
 		'to':dropped_on.attr('id')
 	}
-	var to_remove = null
+	moved[move.to] = true;
 	move.id = move.item + '_from_' + move.from + '_to_' + move.to;
-	for(x = 0; x<moves.length; x++){
-		var _existing = moves[x]
-		if(_existing.item === move.item){
-			to_remove = x
-		}
-	}
-	if(move.from == move.to){
-		console.log("redundant move detected")
-	} else {
-		moves.push(move)
-	}
-
-	if(to_remove != null){
-		moves.splice(to_remove, 1)
-	}
+	addNonRedundantly(move, moves);
 	replaceTiles();
+	dragging.addClass('settled');
 	moves.forEach(function(_move){
 		var _mover = $('.overlay #'+_move.from).find('.draggable');
 		var _movee = $('.overlay #'+_move.to).find('.draggable');
@@ -96,6 +149,8 @@ function recordMove(dropped_on){
 		_mover.css('z-index','9999')
 	})
 	repaintMoves();
+	console.log("Moves: ", moves)
+	console.log("Shadow Moves: ", shadowmoves)
 }
 
 function replaceTiles(){
@@ -268,6 +323,9 @@ $(function(){
 		$('#authorentry').val('');
 		$("#refresh-author").addClass('disabled');
 	})
+	$(document.body).on('click', '#refresh-all', function(e){
+		resetLocations();
+	})
 	$(document.body).on('click', '#rerun-instructions .rerun', function(e){
 		current_text = 0;
 		returnToIntro();
@@ -290,6 +348,13 @@ $(function(){
 	$(document.body).on('click', '#submit-final', function(e){
 		if(!hassubmitted){
 			clearInputPopup();
+			//TODO add shadow moves to moves
+			for (var property in shadowmoves) {
+				if (shadowmoves.hasOwnProperty(property)) {
+					moves.push(shadowmoves[property])
+				}
+			}
+			console.log("Final moves: ", moves)
 			hassubmitted = true;
 				submitOrder(_host + '/upload', {
 				'moves':moves,

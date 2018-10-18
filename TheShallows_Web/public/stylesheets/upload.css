@@ -240,9 +240,18 @@ a{
     right: 24px;
     z-index: 8999;
     bottom: 24px;
+    font-size: 1.5em;
 }
 
-.submit{
+#refresh-all{
+    position: fixed;
+    left: 24px;
+    z-index: 8999;
+    bottom: 24px;
+    font-size: 1.5em;
+}
+
+.submit, .refresh{
     color: teal;
 }
 
@@ -264,6 +273,11 @@ a{
 
 #shade{
     z-index: 9000;
+}
+
+.settled{
+    /* background-color: grey;
+    background-blend-mode: luminosity; */
 }
 
 @keyframes colorchange
