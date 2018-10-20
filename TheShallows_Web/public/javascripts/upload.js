@@ -60,9 +60,7 @@ function getObjectData(myUrl){
 }
 
 function resetLocations(){
-	moves = []
-	shadowmoves = []
-	moved = {}
+	moves_clean = []
 	displayAll(datamain, '#objecthost', 'ARR_OBJ', function(){
 		$('.gridhost').css('max-width', oallht-50);
 		adjustTileSize();
@@ -85,72 +83,32 @@ function resetLocations(){
 		})
 	});
 }
-function addNonRedundantly(move, container){
-	removeRelated(move, container);
-	if(move.from == move.to){
-		console.log("redundant move detected")
-	} else {
-		container.push(move)
-	}
-
-}
-
-	function removeRelated(move, container){
-		var to_remove = null
-		for(x = 0; x<container.length; x++){
-			var _existing = container[x]
-			if(_existing.item === move.item){
-				to_remove = x
-			}
-		}
-		if(to_remove != null){
-			container.splice(to_remove, 1)
-		}
-	}
 
 var moves = []
 var shadowmoves = {}
 var moved = {}
 function recordMove(dropped_on){
 	var item_info = dragging.attr('id').split('_')
-	var occupant = $('.overlay .gridhost #' + dropped_on.attr('id') + ' .object-main');
-	if(moved[dropped_on.attr('id')]) return;
-	if(occupant.length > 0){
-		var occ_info = occupant.attr('id').split('_');
-		//shadow move here: we need to record a move for a swapped item.
-		var shadowmove = {
-			'item': occ_info[1],
-			'itemname':occupant.find('.object-name').html(),
-			'from': occ_info[0],
-			'to': item_info[0]
-		}
-
-		shadowmove.id = shadowmove.item + '_from_' + shadowmove.from + '_to_' + shadowmove.to;
-		shadowmoves[shadowmove.item] = shadowmove;
-	}
 	var move = {
 		'item': item_info[1],
 		'itemname':dragging.find('.object-name').html(),
 		'from': item_info[0],
 		'to':dropped_on.attr('id')
 	}
-	moved[move.to] = true;
 	move.id = move.item + '_from_' + move.from + '_to_' + move.to;
-	addNonRedundantly(move, moves);
-	replaceTiles();
 	dragging.addClass('settled');
-	moves.forEach(function(_move){
-		var _mover = $('.overlay #'+_move.from).find('.draggable');
-		var _movee = $('.overlay #'+_move.to).find('.draggable');
-		_mover.detach().css({'position':'relative','top':'0px', 'left':'0px'});
-		_movee.detach().css({'position':'relative','top':'0px', 'left':'0px'});
-		$('.overlay #'+_move.from).html(_movee);
-		$('.overlay #'+_move.to).html(_mover);
-		_mover.css('z-index','9999')
-	})
+
+	var _mover = $('.overlay #'+move.from).find('.draggable');
+	var _movee = $('.overlay #'+move.to).find('.draggable');
+	_mover.detach().css({'position':'relative','top':'0px', 'left':'0px'});
+	_movee.detach().css({'position':'relative','top':'0px', 'left':'0px'});
+	$('.overlay #'+move.from).html(_movee);
+	$('.overlay #'+move.to).html(_mover);
+	_mover.css('z-index','9999')
+
+	track();
+	get_delta(starting_config, newconfig);
 	repaintMoves();
-	console.log("Moves: ", moves)
-	console.log("Shadow Moves: ", shadowmoves)
 }
 
 function replaceTiles(){
@@ -166,16 +124,53 @@ function replaceTiles(){
 
 function repaintMoves(){
 	$('.vector.animate').detach();
-	moves.forEach(function(move){
+	var markup = ""
+	moves_clean.forEach(function(move){
 		var _startpt = centerpoint($('#' +move.from))
 		var _endpt = centerpoint($('#' +move.to))
 		var _svg = '<svg class="vector animate" id="'+move.id+'"><line stroke-linecap="round" y1="'+_startpt[1]+'" x1="'+_startpt[0]+'" y2="'+_endpt[1]+'" x2="'+_endpt[0]+'" stroke-dasharray="5,10" stroke="#888"></line></svg>'
-		$('#objecthost').append(_svg);
+		markup += _svg;
 	})
-	if(moves.length < 1){
+	$('#objecthost').append(markup);
+	if(moves_clean.length < 1){
 		$("#submit-all").removeClass('enabled');
 	} else {
 		$("#submit-all").addClass('enabled');
+	}
+}
+
+var starting_config = {}
+var newconfig = {}
+
+function track(){
+	//TODO assemble a final map of objects so we don't lose any.
+	$('.overlay .gridhost .tile').each(function(index, element){
+		var stallid = $(this).attr('id');
+		var occupant = $(this).find('.object-main');
+		if(occupant.length > 0){
+			var itemid = occupant.attr('id').split('_')[1]
+			newconfig[itemid] = stallid;
+		}
+	})
+}
+
+var moves_clean = []
+
+function get_delta(begin, end){
+	moves_clean = []
+	for (var property in begin) {
+		if (begin.hasOwnProperty(property)) {
+			if(begin[property] != end[property]){
+				//indicates a move has occurred
+				var move = {
+					'item': property,
+					'from': begin[property],
+					'to':end[property] 
+				}
+				move.id = move.item + '_from_' + move.from + '_to_' + move.to;
+				moves_clean.push(move)
+			}
+		}
 	}
 }
 
@@ -215,6 +210,7 @@ function clean_and_supplement(data){
 	data['alpha_board'] = letter_of_alphabet(data['board'][1], true);
 	data['objects'].forEach(function(element) {
 		element['current'] = element['current'].toLowerCase();
+		starting_config[element['id']] = element['current']
 	});
 	return data;
 }
@@ -348,16 +344,42 @@ $(function(){
 	$(document.body).on('click', '#submit-final', function(e){
 		if(!hassubmitted){
 			clearInputPopup();
-			//TODO add shadow moves to moves
-			for (var property in shadowmoves) {
-				if (shadowmoves.hasOwnProperty(property)) {
-					moves.push(shadowmoves[property])
+
+			var locations = {
+				'a1':'',
+				'a2':'',
+				'a3':'',
+				'a4':'',
+				'a5':'',
+				'b1':'',
+				'b2':'',
+				'b3':'',
+				'b4':'',
+				'b5':'',
+				'c1':'',
+				'c2':'',
+				'c3':'',
+				'c4':'',
+				'c5':'',
+				'd1':'',
+				'd2':'',
+				'd3':'',
+				'd4':'',
+				'd5':''
+			}
+			//building an inverted copy for the server here
+			for (var property in newconfig) {
+				if (newconfig.hasOwnProperty(property)) {
+					locations[newconfig[property]] = property;
 				}
 			}
-			console.log("Final moves: ", moves)
+			console.log("Final objects: ", newconfig);
+			console.log("Final location packet: ", locations)
+			console.log("New Final moves: ", moves_clean)
 			hassubmitted = true;
-				submitOrder(_host + '/upload', {
+			submitOrder(_host + '/upload', {
 				'moves':moves,
+				'locations':locations,
 				'author':ppt_name,
 				'thesis':$('#addendaentry').val()
 			})
@@ -368,6 +390,7 @@ $(function(){
 	})
 	$("#inputshade").css({'height':document.documentElement.clientHeight+'px'});
 })
+
 
 var hassubmitted = false;
 var ppt_name = '';
