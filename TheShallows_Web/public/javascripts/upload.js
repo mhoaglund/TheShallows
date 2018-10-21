@@ -378,7 +378,7 @@ $(function(){
 			console.log("New Final moves: ", moves_clean)
 			hassubmitted = true;
 			submitOrder(_host + '/upload', {
-				'moves':moves,
+				'moves':moves_clean,
 				'locations':locations,
 				'author':ppt_name,
 				'thesis':$('#addendaentry').val()
